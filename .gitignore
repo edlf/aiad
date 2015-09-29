@@ -13,3 +13,8 @@ hs_err_pid*
 
 # Intellij
 .idea/
+out/
+
+# Jade
+APDescription.txt
+MTPs-Main-Container.txt
