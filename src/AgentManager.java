@@ -2,8 +2,9 @@ import jade.core.Agent;
 import jade.wrapper.ContainerController;
 
 /**
- * Created by eluis on 29/09/2015.
+ * Eduardo Fernandes
  */
+
 public class AgentManager extends Agent {
     ContainerController mainContainer;
 

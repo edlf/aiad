@@ -5,6 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Eduardo Fernandes
+ */
+
 public class Main extends Application {
     private final static String appTitle = "TITLE";
 

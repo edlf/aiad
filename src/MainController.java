@@ -12,6 +12,10 @@ import javafx.fxml.FXML;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Eduardo Fernandes
+ */
+
 public class MainController {
     private static final boolean JADE_GUI = true;
     private static boolean isJadeRunning = false;
