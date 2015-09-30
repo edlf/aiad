@@ -18,6 +18,6 @@ public class PassengerAgent extends Agent {
     }
 
     protected void takeDown(){
-
+        System.out.println("PassengerAgent::takeDown()");
     }
 }

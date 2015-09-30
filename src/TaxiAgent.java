@@ -18,6 +18,6 @@ public class TaxiAgent extends Agent {
     }
 
     protected void takeDown(){
-
+        System.out.println("TaxiAgent::takeDown()");
     }
 }

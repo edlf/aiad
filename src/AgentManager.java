@@ -68,6 +68,17 @@ public class AgentManager extends Agent {
     protected void takeDown() {
         System.out.println("AgentManager::takeDown()");
 
+        /* Shutdown agents */
+        /* Create passenger agents */
+        for (int i = 0; i < passengerAgents.size(); i++){
+            passengerAgents.get(i).takeDown();
+        }
+
+        /* Create taxi agents */
+        for (int i = 0; i < taxiAgents.size(); i++){
+            taxiAgents.get(i).takeDown();
+        }
+
         // Shutdown Jade
         Codec codec = new SLCodec();
         Ontology jmo = JADEManagementOntology.getInstance();
