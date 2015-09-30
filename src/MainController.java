@@ -26,7 +26,11 @@ public class MainController {
     @FXML
     MenuItem menuSimStep;
     @FXML
+    MenuItem menuSimAutoStep;
+    @FXML
     MenuItem menuSimStop;
+    @FXML
+    MenuItem menuSimRestart;
 
     @FXML
     Button buttonSimStart;
@@ -98,6 +102,9 @@ public class MainController {
         menuSimStart.setDisable(true);
         buttonSimStart.setDisable(true);
         initJade();
+        menuSimStep.setDisable(false);
+        menuSimAutoStep.setDisable(false);
+        menuSimRestart.setDisable(false);
         menuSimStop.setDisable(false);
         buttonSimStop.setDisable(false);
     }
@@ -107,6 +114,9 @@ public class MainController {
         menuSimStart.setDisable(false);
         buttonSimStart.setDisable(false);
         stopJade();
+        menuSimStep.setDisable(true);
+        menuSimAutoStep.setDisable(true);
+        menuSimRestart.setDisable(true);
         menuSimStop.setDisable(true);
         buttonSimStop.setDisable(true);
     }
@@ -119,6 +129,8 @@ public class MainController {
     public void start(){
         menuSimStop.setDisable(true);
         menuSimStep.setDisable(true);
+        menuSimAutoStep.setDisable(true);
+        menuSimRestart.setDisable(true);
         buttonSimStop.setDisable(true);
         buttonSimStep.setDisable(true);
     }
