@@ -2,15 +2,22 @@ import jade.BootProfileImpl;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
+import jade.content.onto.basic.Action;
 import jade.core.ProfileImpl;
 import jade.domain.JADEAgentManagement.JADEManagementOntology;
+import jade.domain.JADEAgentManagement.ShutdownPlatform;
 import jade.lang.acl.ACLMessage;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Eduardo Fernandes
@@ -23,6 +30,24 @@ public class MainController {
     private static ContainerController containerController;
     private static jade.core.Runtime jadeRuntime;
     AgentManager agentManager;
+
+    @FXML
+    MenuItem menuSimStart;
+    @FXML
+    MenuItem menuSimStep;
+    @FXML
+    MenuItem menuSimStop;
+
+    @FXML
+    Button buttonSimStart;
+    @FXML
+    Button buttonSimStep;
+    @FXML
+    Button buttonSimStop;
+
+    public MainController(){
+
+    }
 
     void initJade() {
         if (isJadeRunning) {
@@ -64,27 +89,13 @@ public class MainController {
             return;
         }
 
+        menuSimStart.setDisable(false);
         // Stop all agents
 
         // Stop Agent Manager
         agentManager.doDelete();
 
-        // TODO: Shutdown Jade
-        /*
-        Codec codec = new SLCodec();
-        Ontology jmo = JADEManagementOntology.getInstance();
-        getContentManager().registerLanguage(codec);
-        getContentManager().registerOntology(jmo);
-        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-        msg.addReceiver(getAMS());
-        msg.setLanguage(codec.getName());
-        msg.setOntology(jmo.getName());
-        try {
-            getContentManager().fillContent(msg, new Action(getAID(), new ShutdownPlatform()));
-            send(msg);
-        }
-        catch (Exception e) {}
-        */
+        isJadeRunning = false;
     }
 
     private void lostCommunicationJADE(){
@@ -94,11 +105,31 @@ public class MainController {
     /* GUI */
     @FXML
     private void handleSimStart() {
+        menuSimStart.setDisable(true);
+        buttonSimStart.setDisable(true);
         initJade();
+        menuSimStop.setDisable(false);
+        buttonSimStop.setDisable(false);
     }
 
     @FXML
     private void handleSimStop() {
+        menuSimStart.setDisable(false);
+        buttonSimStart.setDisable(false);
         stopJade();
+        menuSimStop.setDisable(true);
+        buttonSimStop.setDisable(true);
+    }
+
+    public void close(){
+        stopJade();
+        System.exit(0);
+    }
+
+    public void start(){
+        menuSimStop.setDisable(true);
+        menuSimStep.setDisable(true);
+        buttonSimStop.setDisable(true);
+        buttonSimStep.setDisable(true);
     }
 }

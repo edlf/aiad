@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -19,7 +20,7 @@
                                 <MenuItem fx:id="menuSimStart" mnemonicParsing="false" onAction="#handleSimStart" text="Start" />
                                 <MenuItem fx:id="menuSimStep" mnemonicParsing="false" text="Step" />
                                 <MenuItem fx:id="menuSimAutoStep" mnemonicParsing="false" text="Auto Step" />
-                                <MenuItem fx:id="menuSimStop" mnemonicParsing="false"  onAction="#handleSimStop" text="Stop" />
+                                <MenuItem fx:id="menuSimStop" mnemonicParsing="false" onAction="#handleSimStop" text="Stop" />
                                 <MenuItem fx:id="menuSimRestart" mnemonicParsing="false" text="Restart" />
                             </items>
                         </Menu>
@@ -36,9 +37,9 @@
             <children>
                 <ToolBar prefHeight="40.0" prefWidth="607.0" HBox.hgrow="ALWAYS">
                     <items>
-                        <Button mnemonicParsing="false" text="Start" onAction="#handleSimStart" />
-                        <Button mnemonicParsing="false" text="Step" />
-                        <Button mnemonicParsing="false" text="Stop" onAction="#handleSimStop" />
+                        <Button fx:id="buttonSimStart" mnemonicParsing="false" onAction="#handleSimStart" text="Start" />
+                        <Button fx:id="buttonSimStep" mnemonicParsing="false" text="Step" />
+                        <Button fx:id="buttonSimStop"  mnemonicParsing="false" onAction="#handleSimStop" text="Stop" />
                     </items>
                 </ToolBar>
             </children>

@@ -1,4 +1,11 @@
+import jade.content.lang.Codec;
+import jade.content.lang.sl.SLCodec;
+import jade.content.onto.Ontology;
+import jade.content.onto.basic.Action;
 import jade.core.Agent;
+import jade.domain.JADEAgentManagement.JADEManagementOntology;
+import jade.domain.JADEAgentManagement.ShutdownPlatform;
+import jade.lang.acl.ACLMessage;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
@@ -10,7 +17,6 @@ import java.util.ArrayList;
 
 public class AgentManager extends Agent {
     ContainerController mainContainer;
-    AgentManager agentManager;
 
     ArrayList<TaxiAgent> taxiAgents;
     ArrayList<PassengerAgent> passengerAgents;
@@ -62,6 +68,19 @@ public class AgentManager extends Agent {
     protected void takeDown() {
         System.out.println("AgentManager::takeDown()");
 
-        /**/
+        // Shutdown Jade
+        Codec codec = new SLCodec();
+        Ontology jmo = JADEManagementOntology.getInstance();
+        getContentManager().registerLanguage(codec);
+        getContentManager().registerOntology(jmo);
+        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+        msg.addReceiver(getAMS());
+        msg.setLanguage(codec.getName());
+        msg.setOntology(jmo.getName());
+        try {
+            getContentManager().fillContent(msg, new Action(getAID(), new ShutdownPlatform()));
+            send(msg);
+        }
+        catch (Exception e) {}
     }
 }
