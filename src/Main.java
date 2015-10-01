@@ -38,12 +38,9 @@ public class Main extends Application {
 
         mainController.start();
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
-            public void handle(WindowEvent we) {
-                mainController.close();
-                primaryStage.close();
-            }
+        primaryStage.setOnCloseRequest(windowEvent -> {
+            mainController.close();
+            primaryStage.close();
         });
     }
 }
