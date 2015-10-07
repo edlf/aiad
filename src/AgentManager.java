@@ -31,6 +31,10 @@ public class AgentManager extends Agent {
         passengerAgents = new ArrayList<>();
     }
 
+    public void loadMap(){
+        
+    }
+
     protected void setup(){
         System.out.println("AgentManager::setup()");
 

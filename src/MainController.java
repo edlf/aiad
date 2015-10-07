@@ -121,6 +121,11 @@ public class MainController {
         buttonSimStop.setDisable(true);
     }
 
+    @FXML
+    private void handleClose(){
+        close();
+    }
+
     public void close(){
         stopJade();
         System.exit(0);
