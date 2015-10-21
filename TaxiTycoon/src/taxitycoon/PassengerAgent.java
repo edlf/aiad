@@ -9,9 +9,15 @@ public class PassengerAgent extends Agent {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	
-	public PassengerAgent(ContinuousSpace<Object> space, Grid<Object> grid) {
+	private int posX, posY;
+	
+	public PassengerAgent(ContinuousSpace<Object> space, Grid<Object> grid, int posX, int posY) {
 		this.space = space;
 		this.grid = grid;
+		
+		this.posX = posX;
+		this.posY = posY;
+		
 	}
 
 

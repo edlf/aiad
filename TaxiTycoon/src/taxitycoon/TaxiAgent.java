@@ -7,10 +7,17 @@ import sajas.core.Agent;
 public class TaxiAgent extends Agent {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
-		
-	public TaxiAgent(ContinuousSpace<Object> space, Grid<Object> grid) {
+	
+	private int posX, posY;
+	private int capacity;
+	
+	public TaxiAgent(ContinuousSpace<Object> space, Grid<Object> grid, int posX, int posY) {
 		this.space = space;
 		this.grid = grid;
+		
+		this.posX = posX;
+		this.posY = posY;
+		
 		
 	}
 	

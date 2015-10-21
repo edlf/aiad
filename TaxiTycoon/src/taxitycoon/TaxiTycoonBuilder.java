@@ -15,17 +15,18 @@ import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 
 public class TaxiTycoonBuilder implements ContextBuilder<Object> {
-	private int mapSizeX = 50, mapSizeY = 50;
+	private final String contextID = "TaxiTycoon";
+	private int mapSizeX = 100, mapSizeY = 100;
 	private int taxisCount = 5, passengerCount = 20;
 	
 	
 	public TaxiTycoonBuilder() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public Context build(Context<Object> context) {
-		context.setId("TaxiTycoon");
+		context.setId(this.contextID);
 		
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context,
@@ -41,13 +42,14 @@ public class TaxiTycoonBuilder implements ContextBuilder<Object> {
 		
 		/* Create Agents */
 		for (int i=0; i < taxisCount; i++){
-			context.add(new TaxiAgent(space, grid));
+			context.add(new TaxiAgent(space, grid, 0, 0));
 		}
 		
 		for (int i=0; i < passengerCount; i++){
-			context.add(new PassengerAgent(space, grid));
+			context.add(new PassengerAgent(space, grid,0 ,0));
 		}
 		
+		/* ? */
 		for (Object object : context){
 			NdPoint ndPoint = space.getLocation(object);
 			grid.moveTo(object, (int)ndPoint.getX(), (int)ndPoint.getY());
