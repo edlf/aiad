@@ -1,5 +1,5 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Map Display</name>
+  <name>Map</name>
   <type>2D</type>
   <styles>
     <entry>
@@ -18,7 +18,7 @@
     </entry>
     <entry>
       <string>taxiTycoon.TaxiAgent</string>
-      <string>taxiTycoon.TaxiAgent.style_1.xml</string>
+      <string>taxiTycoon.TaxiAgent.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -31,7 +31,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1589671152</hashCode>
+    <hashCode>-1853548752</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
