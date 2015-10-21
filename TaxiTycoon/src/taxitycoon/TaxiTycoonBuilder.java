@@ -7,6 +7,7 @@ import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.RandomCartesianAdder;
 import repast.simphony.space.continuous.WrapAroundBorders;
 import repast.simphony.space.grid.Grid;
@@ -45,6 +46,11 @@ public class TaxiTycoonBuilder implements ContextBuilder<Object> {
 		
 		for (int i=0; i < passengerCount; i++){
 			context.add(new PassengerAgent(space, grid));
+		}
+		
+		for (Object object : context){
+			NdPoint ndPoint = space.getLocation(object);
+			grid.moveTo(object, (int)ndPoint.getX(), (int)ndPoint.getY());
 		}
 		
 		return context;
