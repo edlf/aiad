@@ -3,22 +3,22 @@
   <type>2D</type>
   <styles>
     <entry>
-      <string>taxiTycoon.PassengerAgent</string>
+      <string>taxitycoon.PassengerAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>taxiTycoon.TaxiAgent</string>
+      <string>taxitycoon.TaxiAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>taxiTycoon.PassengerAgent</string>
+      <string>taxitycoon.PassengerAgent</string>
       <string>taxiTycoon.PassengerAgent.style_0.xml</string>
     </entry>
     <entry>
-      <string>taxiTycoon.TaxiAgent</string>
-      <string>taxiTycoon.TaxiAgent.style_0.xml</string>
+      <string>taxitycoon.TaxiAgent</string>
+      <string>taxitycoon.TaxiAgent.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -38,11 +38,11 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>taxiTycoon.PassengerAgent</string>
+      <string>taxitycoon.PassengerAgent</string>
       <int>0</int>
     </entry>
     <entry>
-      <string>taxiTycoon.TaxiAgent</string>
+      <string>taxitycoon.TaxiAgent</string>
       <int>1</int>
     </entry>
   </layerOrder>

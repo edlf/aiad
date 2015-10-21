@@ -1,4 +1,4 @@
-package taxiTycoon;
+package taxitycoon;
 
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;

@@ -1,4 +1,4 @@
-package taxiTycoon;
+package taxitycoon;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
