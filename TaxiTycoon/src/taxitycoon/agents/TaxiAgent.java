@@ -25,8 +25,8 @@ public class TaxiAgent extends Agent {
 	protected void setup(){
 		System.out.println(getLocalName() + " setup()");
 		
-		/* Move to specified position */
-		space.moveTo(this, this.posX, this.posY);
+		/* Move to initial position */
+		move(this.posX, this.posY);
 		
 		/* Add initial behavior */
 		addBehaviour(new taxitycoon.behaviours.taxi.Waiting());
@@ -35,5 +35,9 @@ public class TaxiAgent extends Agent {
 	@Override
 	protected void takeDown(){
 		System.out.println(getLocalName() + " takeDown()");
+	}
+	
+	public boolean move(int x, int y){
+		return space.moveTo(this, x, y);
 	}
 }

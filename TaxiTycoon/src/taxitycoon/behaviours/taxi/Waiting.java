@@ -1,6 +1,7 @@
 package taxitycoon.behaviours.taxi;
 
 import sajas.core.behaviours.Behaviour;
+import taxitycoon.agents.TaxiAgent;
 
 public class Waiting extends Behaviour {
 
@@ -12,7 +13,8 @@ public class Waiting extends Behaviour {
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
-
+		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
+		myTaxiAgent.move(10, 10);
 	}
 
 	@Override
