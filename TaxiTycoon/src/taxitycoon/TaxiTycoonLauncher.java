@@ -14,7 +14,7 @@ import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.RandomCartesianAdder;
+import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.continuous.WrapAroundBorders;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
@@ -40,7 +40,6 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	
 	/* SaJas Stuff */
 	private ContainerController mainContainer;
-	private final boolean JADE_GUI = true;
 
 	public TaxiTycoonLauncher() {
 
@@ -74,7 +73,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		/* Create continuous space object */
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		space = spaceFactory.createContinuousSpace("space", context,
-				new RandomCartesianAdder<Object>(),
+				new SimpleCartesianAdder<Object>(),
 				new WrapAroundBorders(), mapSizeX, mapSizeY);
 
 		/* Create grid */
@@ -97,14 +96,15 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			
 			/* Create taxis */
 			for (int i = 0; i < taxisCount; i++) {
-				mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(space, grid, 1, 1)).start();
+				mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(space, grid, 1 + i*3, 1)).start();
 			}
 			/* Create passengers */
 			for (int i = 0; i < passengerCount; i++) {
-				mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(space, grid, 1, 1)).start();
+				mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(space, grid, 1 + i*3, 4)).start();
 			}
 			
 		} catch (StaleProxyException e) {
+			System.err.println("Connection with Jade lost.");
 			e.printStackTrace();
 		}
 	}

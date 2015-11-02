@@ -17,12 +17,16 @@ public class PassengerAgent extends Agent {
 		
 		this.posX = posX;
 		this.posY = posY;
-		
 	}
 
 	@Override
 	protected void setup(){
 		System.out.println(getLocalName() + " setup()");
+		
+		/* Move to specified position */
+		space.moveTo(this, this.posX, this.posY);
+
+		/* Add initial behavior */
 		addBehaviour(new taxitycoon.behaviours.passenger.Waiting());
 	}
 	

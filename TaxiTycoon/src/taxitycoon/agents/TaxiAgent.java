@@ -24,6 +24,12 @@ public class TaxiAgent extends Agent {
 	@Override
 	protected void setup(){
 		System.out.println(getLocalName() + " setup()");
+		
+		/* Move to specified position */
+		space.moveTo(this, this.posX, this.posY);
+		
+		/* Add initial behavior */
+		addBehaviour(new taxitycoon.behaviours.taxi.Waiting());
 	}
 	
 	@Override
