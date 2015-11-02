@@ -21,6 +21,8 @@ import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 import sajas.core.Runtime;
 import sajas.wrapper.ContainerController;
+import taxitycoon.agents.PassengerAgent;
+import taxitycoon.agents.TaxiAgent;
 import sajas.sim.repasts.RepastSLauncher;
 
 public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilder<Object> {

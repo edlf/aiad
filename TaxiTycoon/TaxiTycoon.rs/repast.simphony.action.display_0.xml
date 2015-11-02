@@ -3,21 +3,21 @@
   <type>2D</type>
   <styles>
     <entry>
-      <string>taxitycoon.PassengerAgent</string>
+      <string>taxitycoon.agents.PassengerAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>taxitycoon.TaxiAgent</string>
+      <string>taxitycoon.agents.TaxiAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>taxitycoon.PassengerAgent</string>
+      <string>taxitycoon.agents.PassengerAgent</string>
       <string>taxitycoon.PassengerAgent.style_0.xml</string>
     </entry>
     <entry>
-      <string>taxitycoon.TaxiAgent</string>
+      <string>taxitycoon.agents.TaxiAgent</string>
       <string>taxitycoon.TaxiAgent.style_0.xml</string>
     </entry>
   </editedStyles>
@@ -38,11 +38,11 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>taxitycoon.PassengerAgent</string>
+      <string>taxitycoon.agents.PassengerAgent</string>
       <int>0</int>
     </entry>
     <entry>
-      <string>taxitycoon.TaxiAgent</string>
+      <string>taxitycoon.agents.TaxiAgent</string>
       <int>1</int>
     </entry>
   </layerOrder>

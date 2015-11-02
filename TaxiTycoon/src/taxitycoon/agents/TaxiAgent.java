@@ -1,4 +1,4 @@
-package taxitycoon;
+package taxitycoon.agents;
 
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
@@ -21,4 +21,13 @@ public class TaxiAgent extends Agent {
 		
 	}
 	
+	@Override
+	protected void setup(){
+		System.out.println(getLocalName() + " setup()");
+	}
+	
+	@Override
+	protected void takeDown(){
+		System.out.println(getLocalName() + " takeDown()");
+	}
 }

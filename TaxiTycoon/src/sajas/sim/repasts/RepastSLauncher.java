@@ -112,7 +112,7 @@ public abstract class RepastSLauncher implements ContextBuilder<Object>, AgentSc
 		RunEnvironment.getInstance().endRun();		
 	}
 	
-	public Context<Object> getContext(){
+	protected Context<Object> getContext(){
 		return mainContext;
 	}
 
