@@ -23,6 +23,7 @@ public class PassengerAgent extends Agent {
 	@Override
 	protected void setup(){
 		System.out.println(getLocalName() + " setup()");
+		addBehaviour(new taxitycoon.behaviours.passenger.Waiting());
 	}
 	
 	@Override

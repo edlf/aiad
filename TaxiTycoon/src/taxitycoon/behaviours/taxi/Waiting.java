@@ -1,8 +1,13 @@
-package taxitycoon.behaviours;
+package taxitycoon.behaviours.taxi;
 
 import sajas.core.behaviours.Behaviour;
 
-public class PassengerWaitBehaviour extends Behaviour {
+public class Waiting extends Behaviour {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2163115385831517999L;
 
 	@Override
 	public void action() {
