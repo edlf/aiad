@@ -1,5 +1,7 @@
 package taxitycoon.agents;
 
+import org.javatuples.Pair;
+
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
@@ -8,12 +10,12 @@ import repast.simphony.space.grid.Grid;
  **/
 public class PassengerAgent extends SimAgent {
 	
-	public PassengerAgent(ContinuousSpace<Object> space, Grid<Object> grid, double posX, double posY) {
+	public PassengerAgent(ContinuousSpace<Object> space, Grid<Object> grid, Pair<Double, Double> initialPos) {
 		this.space = space;
 		this.grid = grid;
 		
-		this.posX = posX;
-		this.posY = posY;
+		this.startPosition = initialPos;
+		this.currentPosition = initialPos;
 	}
 
 	@Override

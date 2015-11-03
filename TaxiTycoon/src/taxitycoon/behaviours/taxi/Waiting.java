@@ -1,9 +1,11 @@
 package taxitycoon.behaviours.taxi;
 
-import sajas.core.behaviours.Behaviour;
+import org.javatuples.*;
+
+import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 
-public class Waiting extends Behaviour {
+public class Waiting extends CyclicBehaviour {
 
 	/**
 	 * 
@@ -14,13 +16,7 @@ public class Waiting extends Behaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
-		myTaxiAgent.move(myTaxiAgent.getPosX() + 0.1, myTaxiAgent.getPosY() + 0.1);
-	}
-
-	@Override
-	public boolean done() {
-		// TODO Auto-generated method stub
-		return false;
+		myTaxiAgent.relativeMove(new Pair<Double, Double>(0.1, 0.1));
 	}
 
 }

@@ -27,8 +27,7 @@ import sajas.sim.repasts.RepastSLauncher;
 
 public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilder<Object> {
 	/* Variables */
-	private int mapSizeX = 100, mapSizeY = 100;
-	private int taxisCount = 5, passengerCount = 20;
+	private MapLoader mapLoader;
 		
 	/* Repast Simphony */
 	private final String contextID = "TaxiTycoon";
@@ -42,7 +41,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private ContainerController mainContainer;
 
 	public TaxiTycoonLauncher() {
-
+		mapLoader = new MapLoader("map.whatever");
 	}
 
 	@Override
@@ -54,18 +53,8 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	protected void launchJADE() {
 		context = getContext();
 		createRepresentation();
-		
-		Runtime runtime = Runtime.instance();
-
-/*        if (JADE_GUI) {
-            List<String> params = new ArrayList<String>();
-            params.add("-gui");
-            profile = new BootProfileImpl(params.toArray(new String[params.size()]));
-        } else {
-            profile = new ProfileImpl();
-        }
-*/        
-		mainContainer = runtime.createMainContainer(null);
+  
+		mainContainer = Runtime.instance().createMainContainer(null);
 		launchAgents();
 	}
 	
@@ -74,14 +63,14 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		space = spaceFactory.createContinuousSpace("space", context,
 				new SimpleCartesianAdder<Object>(),
-				new WrapAroundBorders(), mapSizeX, mapSizeY);
+				new WrapAroundBorders(), mapLoader.getMapSizeX(), mapLoader.getMapSizeY());
 
 		/* Create grid */
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		
 		grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new repast.simphony.space.grid.WrapAroundBorders(),
-				new SimpleGridAdder<Object>(), true, mapSizeX, mapSizeY));
+				new SimpleGridAdder<Object>(), true, mapLoader.getMapSizeX(), mapLoader.getMapSizeY()));
 	}
 	
 	private void launchAgents(){
@@ -95,12 +84,12 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			//resultsCollectorAID = resultsCollector.getAID();	
 			
 			/* Create taxis */
-			for (int i = 0; i < taxisCount; i++) {
-				mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(space, grid, 1 + i*3, 1)).start();
+			for (int i = 0; i < mapLoader.getTaxisCount(); i++) {
+				mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(space, grid, mapLoader.getTaxiPosition(i))).start();
 			}
 			/* Create passengers */
-			for (int i = 0; i < passengerCount; i++) {
-				mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(space, grid, 1 + i*3, 4)).start();
+			for (int i = 0; i < mapLoader.getPassengerCount(); i++) {
+				mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(space, grid, mapLoader.getPassengerPosition(i))).start();
 			}
 			
 		} catch (StaleProxyException e) {
