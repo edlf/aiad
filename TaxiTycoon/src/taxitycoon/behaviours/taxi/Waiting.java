@@ -14,7 +14,7 @@ public class Waiting extends Behaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
-		myTaxiAgent.move(10, 10);
+		myTaxiAgent.move(myTaxiAgent.getPosX() + 0.1, myTaxiAgent.getPosY() + 0.1);
 	}
 
 	@Override
