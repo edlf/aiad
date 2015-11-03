@@ -50,7 +50,7 @@ public class MapLoader {
 	}
 	
 	public Pair<Double, Double> getTaxiPosition(int taxiNumber){
-		if (taxiNumber > getTaxisCount()) {
+		if (taxiNumber > getTaxisCount() || taxiNumber < 0) {
 			return null;
 		} else {
 			return taxiLocations.get(taxiNumber);
@@ -58,7 +58,7 @@ public class MapLoader {
 	}
 	
 	public Pair<Double, Double> getPassengerPosition(int passengerNumber){
-		if (passengerNumber > getPassengerCount()) {
+		if (passengerNumber > getPassengerCount() || passengerNumber < 0) {
 			return null;
 		} else {
 			return passengerLocations.get(passengerNumber);
