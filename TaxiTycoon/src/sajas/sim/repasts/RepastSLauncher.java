@@ -44,7 +44,7 @@ import sajas.wrapper.PlatformController;
  */
 public abstract class RepastSLauncher implements ContextBuilder<Object>, AgentScheduler {
 	
-	private Context<Object> mainContext;
+	protected Context<Object> mainContext;
 	private AgentAction agentAction;
 	
 	/**
@@ -111,9 +111,4 @@ public abstract class RepastSLauncher implements ContextBuilder<Object>, AgentSc
 	public void stopSimulation() {
 		RunEnvironment.getInstance().endRun();		
 	}
-	
-	protected Context<Object> getContext(){
-		return mainContext;
-	}
-
 }

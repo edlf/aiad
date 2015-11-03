@@ -1,13 +1,6 @@
 package taxitycoon;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jade.core.Profile;
-import jade.core.ProfileImpl;
-import jade.BootProfileImpl;
 import jade.wrapper.StaleProxyException;
-import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.grid.GridFactory;
@@ -20,18 +13,17 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 import sajas.core.Runtime;
+import sajas.sim.repasts.RepastSLauncher;
 import sajas.wrapper.ContainerController;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiAgent;
-import sajas.sim.repasts.RepastSLauncher;
 
 public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilder<Object> {
 	/* Variables */
 	private MapLoader mapLoader;
 		
-	/* Repast Simphony */
+	/* Repast */
 	private final String contextID = "TaxiTycoon";
-	private Context<Object> context;
 	
 	/* Graphical representation */
 	private ContinuousSpace<Object> space;
@@ -51,7 +43,6 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 
 	@Override
 	protected void launchJADE() {
-		context = getContext();
 		createRepresentation();
   
 		mainContainer = Runtime.instance().createMainContainer(null);
@@ -61,14 +52,14 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private void createRepresentation(){
 		/* Create continuous space object */
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
-		space = spaceFactory.createContinuousSpace("space", context,
+		space = spaceFactory.createContinuousSpace("space", mainContext,
 				new SimpleCartesianAdder<Object>(),
 				new WrapAroundBorders(), mapLoader.getMapSizeX(), mapLoader.getMapSizeY());
 
 		/* Create grid */
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		
-		grid = gridFactory.createGrid("grid", context,
+		grid = gridFactory.createGrid("grid", mainContext,
 				new GridBuilderParameters<Object>(new repast.simphony.space.grid.WrapAroundBorders(),
 				new SimpleGridAdder<Object>(), true, mapLoader.getMapSizeX(), mapLoader.getMapSizeY()));
 	}
