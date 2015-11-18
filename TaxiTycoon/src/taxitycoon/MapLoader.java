@@ -8,6 +8,8 @@ public class MapLoader {
 
 	private ArrayList<Pair<Double, Double>> taxiLocations;
 	private ArrayList<Pair<Double, Double>> passengerLocations;
+	private ArrayList<Pair<Double, Double>> taxiPickupLocations;
+	private ArrayList<Pair<Double, Double>> taxiRefuelLocations;
 	
 	MapLoader(String fileName){
 		mapSize = new Pair<Integer, Integer>(100, 100);
