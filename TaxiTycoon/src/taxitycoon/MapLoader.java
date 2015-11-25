@@ -6,16 +6,13 @@ import org.javatuples.*;
 public class MapLoader {
 	private Pair<Integer, Integer> mapSize;
 
-	private ArrayList<Pair<Double, Double>> taxiLocations;
-	private ArrayList<Pair<Double, Double>> passengerLocations;
-	private ArrayList<Pair<Double, Double>> taxiPickupLocations;
-	private ArrayList<Pair<Double, Double>> taxiRefuelLocations;
+	private ArrayList<Pair<Double, Double>> taxiLocations = new ArrayList<>();
+	private ArrayList<Pair<Double, Double>> passengerLocations = new ArrayList<>();
+	private ArrayList<Pair<Double, Double>> taxiPickupLocations = new ArrayList<>();
+	private ArrayList<Pair<Double, Double>> taxiRefuelLocations = new ArrayList<>();
 	
 	MapLoader(String fileName){
 		mapSize = new Pair<Integer, Integer>(100, 100);
-		
-		taxiLocations = new ArrayList<>();
-		passengerLocations = new ArrayList<>();
 		
 		/* TODO: Hard coded locations */
 		taxiLocations.add(new Pair<Double, Double>(10.0,10.0));
@@ -29,6 +26,10 @@ public class MapLoader {
 		passengerLocations.add(new Pair<Double, Double>(50.0,10.0));
 		passengerLocations.add(new Pair<Double, Double>(80.0,80.0));
 		passengerLocations.add(new Pair<Double, Double>(60.0,30.0));
+		
+		taxiPickupLocations.add(new Pair<Double, Double>(50.0, 50.0));
+		
+		taxiRefuelLocations.add(new Pair<Double, Double>(60.0, 50.0));
 	}
 	
 	public Pair<Integer, Integer> getMapSize(){
