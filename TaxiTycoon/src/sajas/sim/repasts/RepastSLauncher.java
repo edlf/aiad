@@ -53,6 +53,7 @@ public abstract class RepastSLauncher implements ContextBuilder<Object>, AgentSc
 	 */
 	public abstract String getName();
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Context build(Context<Object> context) {
 		// store context for adding agents at runtime

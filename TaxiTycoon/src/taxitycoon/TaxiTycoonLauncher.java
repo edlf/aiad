@@ -8,7 +8,7 @@ import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
-import repast.simphony.space.continuous.WrapAroundBorders;
+import repast.simphony.space.continuous.StrictBorders;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
@@ -54,7 +54,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		space = spaceFactory.createContinuousSpace("space", mainContext,
 				new SimpleCartesianAdder<Object>(),
-				new WrapAroundBorders(), mapLoader.getMapSizeX(), mapLoader.getMapSizeY());
+				new StrictBorders(), mapLoader.getMapSizeX(), mapLoader.getMapSizeY());
 
 		/* Create grid */
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
@@ -66,26 +66,17 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	
 	private void launchAgents(){
 		try {
-						
-			//AID resultsCollectorAID = null;
-
-			// create results collector
-			//ResultsCollector resultsCollector = new ResultsCollector(N_CONSUMERS + N_CONSUMERS_FILTERING_PROVIDERS);
-			//mainContainer.acceptNewAgent("ResultsCollector", resultsCollector).start();
-			//resultsCollectorAID = resultsCollector.getAID();	
-			
 			/* Create taxis */
 			for (int i = 0; i < mapLoader.getTaxisCount(); i++) {
-				mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(space, grid, mapLoader.getTaxiPosition(i))).start();
+				mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(space, grid, mapLoader.getTaxiPosition(i), mapLoader.getMapSize())).start();
 			}
 			/* Create passengers */
 			for (int i = 0; i < mapLoader.getPassengerCount(); i++) {
-				mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(space, grid, mapLoader.getPassengerPosition(i))).start();
+				mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(space, grid, mapLoader.getPassengerPosition(i), mapLoader.getMapSize())).start();
 			}
 			
 		} catch (StaleProxyException e) {
 			System.err.println("Connection with Jade lost.");
-			e.printStackTrace();
 		}
 	}
 }

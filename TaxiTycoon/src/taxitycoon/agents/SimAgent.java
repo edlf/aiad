@@ -17,9 +17,14 @@ public abstract class SimAgent extends Agent {
 	
 	protected Pair<Double,Double> currentPosition;
 	protected Pair<Double,Double> startPosition;
+	protected Pair<Integer, Integer> mapSize;
 	
 	/* Direct map position methods */
 	public boolean move(Pair<Double,Double> newPosition){
+		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() > mapSize.getValue0() || newPosition.getValue1() > mapSize.getValue1()){
+			return false;
+		}
+		
 		if (space.moveTo(this, newPosition.getValue0(), newPosition.getValue1())){
 			currentPosition = newPosition;
 			return true;
