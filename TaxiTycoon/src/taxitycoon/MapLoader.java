@@ -1,13 +1,10 @@
 package taxitycoon;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Scanner;
 
 import org.javatuples.*;
 
@@ -20,33 +17,33 @@ public class MapLoader {
 	private ArrayList<Pair<Integer, Integer>> _roadLocations = new ArrayList<>();
 	
 	MapLoader(String fileName){
-			System.out.println("Attempting to load " + fileName);
+			System.out.println("Loading " + fileName);
 	        
 	        int mapX = 0, mapY = 0;
 	        
-	        BufferedReader br = null;
+	        BufferedReader bufferedReader = null;
 	    	String line = "";
-	    	String cvsSplitBy = ",";
 
 	    	try {
-	    		br = new BufferedReader(new FileReader(fileName));
-	    		while ((line = br.readLine()) != null) {
-	    		    // use comma as separator
-	    			String[] lineContent = line.split(cvsSplitBy);
+	    		bufferedReader = new BufferedReader(new FileReader(fileName));
+	    		while ((line = bufferedReader.readLine()) != null) {
+	    			String[] lineContent = line.split(",");
 	    			mapX = lineContent.length;
 	    			
 	    			for (int i = 0; i < mapX; i++){
 	    				if (lineContent[i].equals("T")) {
-	    					System.out.println("Taxi at " + i + "," + mapY);
+	    					//System.out.println("Taxi at " + i + "," + mapY);
 	    					_taxiLocations.add(new Pair<Integer, Integer>(i,mapY));
 	    				} else if (lineContent[i].equals("P")) {
-	    					System.out.println("Passenger at " + i + "," + mapY);
+	    					//System.out.println("Passenger at " + i + "," + mapY);
 	    					_passengerLocations.add(new Pair<Integer, Integer>(i,mapY));
 	    				} else if (lineContent[i].equals("R")) {
-	    					System.out.println("Refuel at " + i + "," + mapY);
+	    					//System.out.println("Refuel at " + i + "," + mapY);
 	    					_taxiRefuelLocations.add(new Pair<Integer, Integer>(i,mapY));
 	    				} else if (lineContent[i].equals("_")) {
 	    					_roadLocations.add(new Pair<Integer, Integer>(i, mapY));
+	    				} else if (lineContent[i].equals("X")) {
+	    					// Wall
 	    				}
 	    			}
 	    			
@@ -62,16 +59,19 @@ public class MapLoader {
 	    		System.out.println("Using hard coded map.");
 	    		_loadHardcodedMap();
 	    	} finally {
-	    		if (br != null) {
+	    		if (bufferedReader != null) {
 	    			try {
-	    				br.close();
+	    				bufferedReader.close();
 	    			} catch (IOException e) {
-	    				e.printStackTrace();
+	    	    		System.out.println("IO Exception while reading " + fileName + ".");
+	    	    		System.out.println("Using hard coded map.");
+	    	    		_loadHardcodedMap();
 	    			}
 	    		}
 	    	}
 	        
 	        _mapSize = new Pair<Integer, Integer>(mapX, mapY);
+	        System.out.println("Map loaded");
 
 	}
 	

@@ -19,5 +19,6 @@ out/
 APDescription.txt
 MTPs-Main-Container.txt
 TaxiTycoon/debug.log*
+TaxiTycoon/velocity.log*
 *.log
 TAXI_MANAGEMENT.iml
