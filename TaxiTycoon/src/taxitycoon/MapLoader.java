@@ -108,6 +108,11 @@ public class MapLoader {
 	
 	private void _loadHardcodedMap(){
 		System.out.println("Using hard coded map.");
+		_taxiLocations = new ArrayList<>();
+		_passengerLocations = new ArrayList<>();
+		_taxiPickupLocations = new ArrayList<>();
+		_taxiRefuelLocations = new ArrayList<>();
+		_roadLocations = new ArrayList<>();
 		_mapSize = new Pair<Integer, Integer>(30, 30);
 		
 		_taxiLocations.add(new Pair<Integer, Integer>(1,1));
