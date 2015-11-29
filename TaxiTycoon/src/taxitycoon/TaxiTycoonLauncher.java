@@ -1,5 +1,9 @@
 package taxitycoon;
 
+import java.util.ArrayList;
+
+import org.javatuples.Pair;
+
 import jade.wrapper.StaleProxyException;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
@@ -50,7 +54,17 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 				new SimpleGridAdder<Object>(), true, _mapLoader.getMapSizeX(), _mapLoader.getMapSizeY()));
 		
 		/* Fill map with non walkable tiles */
+		for (int i=0; i < _mapLoader.getMapSizeX(); i++){
+			for (int j=0; j < _mapLoader.getMapSizeX(); j++){
+				_grid.getAdder().add(_grid, new Grass(new Pair<Integer, Integer>(i,j)));
+			}
+		}
 		
+		/* Fill with roads */
+		ArrayList<Pair<Integer, Integer>> roads = _mapLoader.getRoadPositions();
+		for (Pair<Integer, Integer> road : roads){
+			_grid.getAdder().add(_grid, new Road(road));
+		}
 	}
 	
 	private void launchAgents(){
