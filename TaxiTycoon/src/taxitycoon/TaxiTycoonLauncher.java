@@ -90,12 +90,17 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private void launchAgents(){
 		try {
 			/* Create taxis */
-			for (int i = 0; i < _mapLoader.getTaxisCount(); i++) {
-				_mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(_grid, _mapLoader.getTaxiPosition(i), _mapLoader.getMapSize())).start();
+			int i = 0;
+			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getTaxiLocations()){
+				_mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(_grid, taxiLocation, _mapLoader.getMapSize())).start();
+				i++;
 			}
+			
 			/* Create passengers */
-			for (int i = 0; i < _mapLoader.getPassengerCount(); i++) {
-				_mainContainer.acceptNewAgent("Passenger[" + i+ "]", new PassengerAgent(_grid, _mapLoader.getPassengerPosition(i), _mapLoader.getMapSize())).start();
+			int j = 0;
+			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getPassengerLocations()){
+				_mainContainer.acceptNewAgent("Passenger[" + j + "]", new PassengerAgent(_grid, taxiLocation, _mapLoader.getMapSize())).start();
+				j++;
 			}
 			
 		} catch (StaleProxyException e) {

@@ -148,20 +148,20 @@ public class MapLoader {
 		return _passengerLocations.size();
 	}
 	
-	public Pair<Integer, Integer> getTaxiPosition(int taxiNumber){
-		if (taxiNumber > getTaxisCount() || taxiNumber < 0) {
-			return null;
-		} else {
-			return _taxiLocations.get(taxiNumber);
-		}
+	public int getRefuelStationCount(){
+		return _taxiRefuelLocations.size();
 	}
 	
-	public Pair<Integer, Integer> getPassengerPosition(int passengerNumber){
-		if (passengerNumber > getPassengerCount() || passengerNumber < 0) {
-			return null;
-		} else {
-			return _passengerLocations.get(passengerNumber);
-		}
+	public int getTaxiStopCount(){
+		return _taxiPickupLocations.size();
+	}
+	
+	public ArrayList<Pair<Integer, Integer>> getTaxiLocations(){
+		return _taxiLocations;
+	}
+	
+	public ArrayList<Pair<Integer, Integer>> getPassengerLocations(){
+		return _passengerLocations;
 	}
 	
 	public ArrayList<Pair<Integer, Integer>> getRoadPositions(){
