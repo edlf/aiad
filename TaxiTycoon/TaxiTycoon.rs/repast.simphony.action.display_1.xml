@@ -3,22 +3,22 @@
   <type>2D</type>
   <styles>
     <entry>
-      <string>taxitycoon.agents.PassengerAgent</string>
+      <string>taxitycoon.agents.TaxiAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>taxitycoon.agents.TaxiAgent</string>
+      <string>taxitycoon.agents.PassengerAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>taxitycoon.agents.PassengerAgent</string>
-      <string>taxitycoon.PassengerAgent.style_0.xml</string>
-    </entry>
-    <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
       <string>taxitycoon.TaxiAgent.style_0.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.agents.PassengerAgent</string>
+      <string>taxitycoon.PassengerAgent.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -31,19 +31,19 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>0</hashCode>
+    <hashCode>-1808045512</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>Grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>taxitycoon.agents.PassengerAgent</string>
-      <int>0</int>
-    </entry>
-    <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
       <int>1</int>
+    </entry>
+    <entry>
+      <string>taxitycoon.agents.PassengerAgent</string>
+      <int>0</int>
     </entry>
   </layerOrder>
   <projections>
@@ -66,16 +66,16 @@
             <string>repast.simphony.visualization.grid.GridDecorator</string>
             <map>
               <entry>
+                <string>COLOR</string>
+                <int>-16777216</int>
+              </entry>
+              <entry>
                 <string>UNIT_SIZE</string>
-                <float>10.0</float>
+                <float>15.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>
-                <boolean>false</boolean>
-              </entry>
-              <entry>
-                <string>COLOR</string>
-                <int>-16777216</int>
+                <boolean>true</boolean>
               </entry>
             </map>
           </entry>

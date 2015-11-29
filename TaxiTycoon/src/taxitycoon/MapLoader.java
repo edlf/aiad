@@ -12,24 +12,20 @@ public class MapLoader {
 	private ArrayList<Pair<Integer, Integer>> taxiRefuelLocations = new ArrayList<>();
 	
 	MapLoader(String fileName){
-		mapSize = new Pair<Integer, Integer>(100, 100);
+		mapSize = new Pair<Integer, Integer>(30, 30);
 		
 		/* TODO: Hard coded locations */
-		taxiLocations.add(new Pair<Integer, Integer>(10,10));
-		taxiLocations.add(new Pair<Integer, Integer>(90,90));
+		taxiLocations.add(new Pair<Integer, Integer>(1,1));
+		taxiLocations.add(new Pair<Integer, Integer>(29,29));
 		
-		passengerLocations.add(new Pair<Integer, Integer>(1,1));
-		passengerLocations.add(new Pair<Integer, Integer>(1,4));
-		passengerLocations.add(new Pair<Integer, Integer>(1,8));
-		passengerLocations.add(new Pair<Integer, Integer>(10,20));
-		passengerLocations.add(new Pair<Integer, Integer>(10,40));
-		passengerLocations.add(new Pair<Integer, Integer>(50,10));
-		passengerLocations.add(new Pair<Integer, Integer>(80,80));
-		passengerLocations.add(new Pair<Integer, Integer>(60,30));
+		passengerLocations.add(new Pair<Integer, Integer>(4,1));
+		passengerLocations.add(new Pair<Integer, Integer>(4,4));
+		passengerLocations.add(new Pair<Integer, Integer>(4,8));
+		passengerLocations.add(new Pair<Integer, Integer>(4,20));
 		
-		taxiPickupLocations.add(new Pair<Integer, Integer>(50, 50));
+		taxiPickupLocations.add(new Pair<Integer, Integer>(15, 15));
 		
-		taxiRefuelLocations.add(new Pair<Integer, Integer>(60, 50));
+		taxiRefuelLocations.add(new Pair<Integer, Integer>(15, 20));
 	}
 	
 	public Pair<Integer, Integer> getMapSize(){

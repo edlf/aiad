@@ -48,6 +48,9 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		_grid = gridFactory.createGrid("Grid", mainContext,
 				new GridBuilderParameters<Object>(new repast.simphony.space.grid.StrictBorders(),
 				new SimpleGridAdder<Object>(), true, _mapLoader.getMapSizeX(), _mapLoader.getMapSizeY()));
+		
+		/* Fill map with non walkable tiles */
+		
 	}
 	
 	private void launchAgents(){

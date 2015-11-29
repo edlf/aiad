@@ -3,7 +3,6 @@ package taxitycoon.agents;
 import org.javatuples.Pair;
 
 import jade.domain.FIPAException;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 import sajas.core.Agent;
 import sajas.domain.DFService;
@@ -12,7 +11,6 @@ import sajas.domain.DFService;
  * Shared agent logic
  **/
 public abstract class SimAgent extends Agent {
-	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	
 	protected Pair<Integer, Integer> currentPosition;
@@ -21,7 +19,8 @@ public abstract class SimAgent extends Agent {
 	
 	/* Direct map position methods */
 	public boolean move(Pair<Integer, Integer> newPosition){
-		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() > mapSize.getValue0() || newPosition.getValue1() > mapSize.getValue1()){
+		// System.out.println(getLocalName() + " attempting to move to: " + newPosition.getValue0() + "," + newPosition.getValue1());
+		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= mapSize.getValue0() || newPosition.getValue1() >= mapSize.getValue1()){
 			return false;
 		}
 		

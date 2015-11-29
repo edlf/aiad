@@ -1,8 +1,6 @@
 package taxitycoon.agents;
 
 import org.javatuples.Pair;
-
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
 /**
