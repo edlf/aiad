@@ -11,11 +11,11 @@ public class TaxiAgent extends SimAgent {
 	private int numberOfPassengers = 0;
 	
 	public TaxiAgent(Grid<Object> grid, Pair<Integer, Integer> initialPos, Pair<Integer, Integer> mapSize) {
-		this.grid = grid;
-		this.mapSize = mapSize;
+		this._grid = grid;
+		this._mapSize = mapSize;
 		
-		this.startPosition = initialPos;
-		this.currentPosition = initialPos;
+		this._startPosition = initialPos;
+		this._currentPosition = initialPos;
 	}
 	
 	@Override

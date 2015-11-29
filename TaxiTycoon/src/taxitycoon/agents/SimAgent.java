@@ -11,21 +11,20 @@ import sajas.domain.DFService;
  * Shared agent logic
  **/
 public abstract class SimAgent extends Agent {
-	protected Grid<Object> grid;
-	
-	protected Pair<Integer, Integer> currentPosition;
-	protected Pair<Integer, Integer> startPosition;
-	protected Pair<Integer, Integer> mapSize;
+	protected Grid<Object> _grid;
+	protected Pair<Integer, Integer> _currentPosition;
+	protected Pair<Integer, Integer> _startPosition;
+	protected Pair<Integer, Integer> _mapSize;
 	
 	/* Direct map position methods */
 	public boolean move(Pair<Integer, Integer> newPosition){
 		// System.out.println(getLocalName() + " attempting to move to: " + newPosition.getValue0() + "," + newPosition.getValue1());
-		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= mapSize.getValue0() || newPosition.getValue1() >= mapSize.getValue1()){
+		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
 			return false;
 		}
 		
-		if (grid.moveTo(this, newPosition.getValue0(), newPosition.getValue1())){
-			currentPosition = newPosition;
+		if (_grid.moveTo(this, newPosition.getValue0(), newPosition.getValue1())){
+			_currentPosition = newPosition;
 			return true;
 		} else {
 			return false;
@@ -34,20 +33,20 @@ public abstract class SimAgent extends Agent {
 	
 	/* Getters for position */
 	public Pair<Integer, Integer> getPosition(){
-		return currentPosition;
+		return _currentPosition;
 	}
 	
 	public int getPosX(){
-		return currentPosition.getValue0();
+		return _currentPosition.getValue0();
 	}
 	
 	public int getPosY(){
-		return currentPosition.getValue1();
+		return _currentPosition.getValue1();
 	}
 	
 	/* Relative move */
 	public boolean relativeMove(Pair<Integer,Integer> delta){
-		return move(new Pair<Integer, Integer>(currentPosition.getValue0() + delta.getValue0(), currentPosition.getValue1() + delta.getValue1()));
+		return move(new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1()));
 	}
 	
 	/* Setup and takedown methods */
@@ -56,7 +55,7 @@ public abstract class SimAgent extends Agent {
 		System.out.println(getLocalName() + " setup()");
 		
 		/* Move to initial position */
-		move(startPosition);
+		move(_startPosition);
 		
 		addInitialBehaviour();
 	}
@@ -67,7 +66,7 @@ public abstract class SimAgent extends Agent {
 		try {
 			DFService.deregister(this);
 		} catch (FIPAException e) {
-			e.printStackTrace();
+			System.out.println(getLocalName() + " error no takeDown()");
 		}
 	}
 	

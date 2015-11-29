@@ -25,7 +25,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private ContainerController _mainContainer;
 
 	public TaxiTycoonLauncher() {
-		_mapLoader = new MapLoader("map.whatever");
+		_mapLoader = new MapLoader("map.csv");
 	}
 
 	@Override

@@ -9,11 +9,11 @@ import repast.simphony.space.grid.Grid;
 public class PassengerAgent extends SimAgent {
 	
 	public PassengerAgent(Grid<Object> grid, Pair<Integer, Integer> initialPos, Pair<Integer, Integer> mapSize) {
-		this.grid = grid;
-		this.mapSize = mapSize;
+		this._grid = grid;
+		this._mapSize = mapSize;
 		
-		this.startPosition = initialPos;
-		this.currentPosition = initialPos;
+		this._startPosition = initialPos;
+		this._currentPosition = initialPos;
 	}
 
 	@Override
