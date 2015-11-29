@@ -40,7 +40,6 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	@Override
 	protected void launchJADE() {
 		_createRepresentation();
-  
 		_mainContainer = Runtime.instance().createMainContainer(null);
 		launchAgents();
 	}
@@ -53,17 +52,23 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 				new GridBuilderParameters<Object>(new repast.simphony.space.grid.StrictBorders(),
 				new SimpleGridAdder<Object>(), true, _mapLoader.getMapSizeX(), _mapLoader.getMapSizeY()));
 		
-		/* Fill map with non walkable tiles */
+		/* Fill map with grass */
 		for (int i=0; i < _mapLoader.getMapSizeX(); i++){
 			for (int j=0; j < _mapLoader.getMapSizeX(); j++){
-				_grid.getAdder().add(_grid, new Grass(new Pair<Integer, Integer>(i,j)));
+				Grass grass = new Grass(new Pair<Integer, Integer>(i,j));
+				_grid.getAdder().add(_grid, grass);
+				mainContext.add(grass);
+				_grid.moveTo(grass, grass.getX(), grass.getY());
 			}
 		}
 		
 		/* Fill with roads */
 		ArrayList<Pair<Integer, Integer>> roads = _mapLoader.getRoadPositions();
-		for (Pair<Integer, Integer> road : roads){
-			_grid.getAdder().add(_grid, new Road(road));
+		for (Pair<Integer, Integer> roadPos : roads){
+			Road road = new Road(roadPos);
+			_grid.getAdder().add(_grid, road);
+			mainContext.add(road);
+			_grid.moveTo(road, road.getX(), road.getY());
 		}
 	}
 	

@@ -5,7 +5,6 @@
   <sizeMin>8</sizeMin>
   <sizeScale>1</sizeScale>
   <label></label>
-  <labelMethod>getLocalName</labelMethod>
   <labelPosition>bottom</labelPosition>
   <labelPrecision>3</labelPrecision>
   <labelOffset>5.0</labelOffset>
