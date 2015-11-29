@@ -11,13 +11,14 @@ public class Waiting extends Behaviour {
 
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		// Try to enter taxi
 
+		
+		
 	}
 
 	@Override
 	public boolean done() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

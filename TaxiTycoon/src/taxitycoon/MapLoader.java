@@ -6,30 +6,30 @@ import org.javatuples.*;
 public class MapLoader {
 	private Pair<Integer, Integer> mapSize;
 
-	private ArrayList<Pair<Double, Double>> taxiLocations = new ArrayList<>();
-	private ArrayList<Pair<Double, Double>> passengerLocations = new ArrayList<>();
-	private ArrayList<Pair<Double, Double>> taxiPickupLocations = new ArrayList<>();
-	private ArrayList<Pair<Double, Double>> taxiRefuelLocations = new ArrayList<>();
+	private ArrayList<Pair<Integer, Integer>> taxiLocations = new ArrayList<>();
+	private ArrayList<Pair<Integer, Integer>> passengerLocations = new ArrayList<>();
+	private ArrayList<Pair<Integer, Integer>> taxiPickupLocations = new ArrayList<>();
+	private ArrayList<Pair<Integer, Integer>> taxiRefuelLocations = new ArrayList<>();
 	
 	MapLoader(String fileName){
 		mapSize = new Pair<Integer, Integer>(100, 100);
 		
 		/* TODO: Hard coded locations */
-		taxiLocations.add(new Pair<Double, Double>(10.0,10.0));
-		taxiLocations.add(new Pair<Double, Double>(90.0,90.0));
+		taxiLocations.add(new Pair<Integer, Integer>(10,10));
+		taxiLocations.add(new Pair<Integer, Integer>(90,90));
 		
-		passengerLocations.add(new Pair<Double, Double>(1.0,1.0));
-		passengerLocations.add(new Pair<Double, Double>(1.0,4.0));
-		passengerLocations.add(new Pair<Double, Double>(1.0,8.0));
-		passengerLocations.add(new Pair<Double, Double>(10.0,20.0));
-		passengerLocations.add(new Pair<Double, Double>(10.0,40.0));
-		passengerLocations.add(new Pair<Double, Double>(50.0,10.0));
-		passengerLocations.add(new Pair<Double, Double>(80.0,80.0));
-		passengerLocations.add(new Pair<Double, Double>(60.0,30.0));
+		passengerLocations.add(new Pair<Integer, Integer>(1,1));
+		passengerLocations.add(new Pair<Integer, Integer>(1,4));
+		passengerLocations.add(new Pair<Integer, Integer>(1,8));
+		passengerLocations.add(new Pair<Integer, Integer>(10,20));
+		passengerLocations.add(new Pair<Integer, Integer>(10,40));
+		passengerLocations.add(new Pair<Integer, Integer>(50,10));
+		passengerLocations.add(new Pair<Integer, Integer>(80,80));
+		passengerLocations.add(new Pair<Integer, Integer>(60,30));
 		
-		taxiPickupLocations.add(new Pair<Double, Double>(50.0, 50.0));
+		taxiPickupLocations.add(new Pair<Integer, Integer>(50, 50));
 		
-		taxiRefuelLocations.add(new Pair<Double, Double>(60.0, 50.0));
+		taxiRefuelLocations.add(new Pair<Integer, Integer>(60, 50));
 	}
 	
 	public Pair<Integer, Integer> getMapSize(){
@@ -52,7 +52,7 @@ public class MapLoader {
 		return passengerLocations.size();
 	}
 	
-	public Pair<Double, Double> getTaxiPosition(int taxiNumber){
+	public Pair<Integer, Integer> getTaxiPosition(int taxiNumber){
 		if (taxiNumber > getTaxisCount() || taxiNumber < 0) {
 			return null;
 		} else {
@@ -60,7 +60,7 @@ public class MapLoader {
 		}
 	}
 	
-	public Pair<Double, Double> getPassengerPosition(int passengerNumber){
+	public Pair<Integer, Integer> getPassengerPosition(int passengerNumber){
 		if (passengerNumber > getPassengerCount() || passengerNumber < 0) {
 			return null;
 		} else {

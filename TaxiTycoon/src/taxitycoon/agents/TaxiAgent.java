@@ -12,8 +12,7 @@ public class TaxiAgent extends SimAgent {
 	private int maximumCapacity;
 	private int numberOfPassengers = 0;
 	
-	public TaxiAgent(ContinuousSpace<Object> space, Grid<Object> grid, Pair<Double, Double> initialPos, Pair<Integer, Integer> mapSize) {
-		this.space = space;
+	public TaxiAgent(Grid<Object> grid, Pair<Integer, Integer> initialPos, Pair<Integer, Integer> mapSize) {
 		this.grid = grid;
 		this.mapSize = mapSize;
 		

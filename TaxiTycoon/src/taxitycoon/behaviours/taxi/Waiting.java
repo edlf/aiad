@@ -16,7 +16,7 @@ public class Waiting extends CyclicBehaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
-		myTaxiAgent.relativeMove(new Pair<Double, Double>(0.1, 0.1));
+		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(1, 1));
 	}
 
 }

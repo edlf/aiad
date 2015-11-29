@@ -10,8 +10,7 @@ import repast.simphony.space.grid.Grid;
  **/
 public class PassengerAgent extends SimAgent {
 	
-	public PassengerAgent(ContinuousSpace<Object> space, Grid<Object> grid, Pair<Double, Double> initialPos, Pair<Integer, Integer> mapSize) {
-		this.space = space;
+	public PassengerAgent(Grid<Object> grid, Pair<Integer, Integer> initialPos, Pair<Integer, Integer> mapSize) {
 		this.grid = grid;
 		this.mapSize = mapSize;
 		

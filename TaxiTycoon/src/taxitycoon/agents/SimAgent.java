@@ -15,17 +15,17 @@ public abstract class SimAgent extends Agent {
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	
-	protected Pair<Double,Double> currentPosition;
-	protected Pair<Double,Double> startPosition;
+	protected Pair<Integer, Integer> currentPosition;
+	protected Pair<Integer, Integer> startPosition;
 	protected Pair<Integer, Integer> mapSize;
 	
 	/* Direct map position methods */
-	public boolean move(Pair<Double,Double> newPosition){
+	public boolean move(Pair<Integer, Integer> newPosition){
 		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() > mapSize.getValue0() || newPosition.getValue1() > mapSize.getValue1()){
 			return false;
 		}
 		
-		if (space.moveTo(this, newPosition.getValue0(), newPosition.getValue1())){
+		if (grid.moveTo(this, newPosition.getValue0(), newPosition.getValue1())){
 			currentPosition = newPosition;
 			return true;
 		} else {
@@ -34,21 +34,21 @@ public abstract class SimAgent extends Agent {
 	}
 	
 	/* Getters for position */
-	public Pair<Double, Double> getPosition(){
+	public Pair<Integer, Integer> getPosition(){
 		return currentPosition;
 	}
 	
-	public double getPosX(){
+	public int getPosX(){
 		return currentPosition.getValue0();
 	}
 	
-	public double getPosY(){
+	public int getPosY(){
 		return currentPosition.getValue1();
 	}
 	
 	/* Relative move */
-	public boolean relativeMove(Pair<Double,Double> delta){
-		return move(new Pair<Double, Double>(currentPosition.getValue0() + delta.getValue0(), currentPosition.getValue1() + delta.getValue1()));
+	public boolean relativeMove(Pair<Integer,Integer> delta){
+		return move(new Pair<Integer, Integer>(currentPosition.getValue0() + delta.getValue0(), currentPosition.getValue1() + delta.getValue1()));
 	}
 	
 	/* Setup and takedown methods */
