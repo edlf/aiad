@@ -8,4 +8,12 @@ public class Grass {
 	Grass(Pair<Integer, Integer> pos){
 		_pos = pos;
 	}
+	
+	int getX(){
+		return _pos.getValue0();
+	}
+	
+	int getY(){
+		return _pos.getValue1();
+	}
 }
