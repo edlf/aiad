@@ -36,9 +36,20 @@ public class MapLoader {
 	    			mapX = lineContent.length;
 	    			
 	    			for (int i = 0; i < mapX; i++){
-	    				System.out.print(lineContent[i]);
+	    				if (lineContent[i].equals("T")) {
+	    					System.out.println("Taxi at " + i + "," + mapY);
+	    					_taxiLocations.add(new Pair<Integer, Integer>(i,mapY));
+	    				} else if (lineContent[i].equals("P")) {
+	    					System.out.println("Passenger at " + i + "," + mapY);
+	    					_passengerLocations.add(new Pair<Integer, Integer>(i,mapY));
+	    				} else if (lineContent[i].equals("R")) {
+	    					System.out.println("Refuel at " + i + "," + mapY);
+	    					_taxiRefuelLocations.add(new Pair<Integer, Integer>(i,mapY));
+	    				} else if (lineContent[i].equals("_")) {
+	    					_roadLocations.add(new Pair<Integer, Integer>(i, mapY));
+	    				}
 	    			}
-	    			System.out.println("");
+	    			
 	    			mapY++;
 	    		}
 
