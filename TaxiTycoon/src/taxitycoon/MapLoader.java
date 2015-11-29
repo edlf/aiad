@@ -1,7 +1,10 @@
 package taxitycoon;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Scanner;
@@ -17,78 +20,66 @@ public class MapLoader {
 	private ArrayList<Pair<Integer, Integer>> _roadLocations = new ArrayList<>();
 	
 	MapLoader(String fileName){
-		try {
 			System.out.println("Attempting to load " + fileName);
-			
-			Scanner scanner = new Scanner(new File(fileName));
-	        scanner.useDelimiter(",");
 	        
-	        int readChars = 0, linePos = 0;
 	        int mapX = 0, mapY = 0;
 	        
-	        while (scanner.hasNext()){
-	        	String currentString = scanner.next();
-	        	
-	        	if (currentString.equals("30") ||
-	        		currentString.equals("15") ||
-	        		currentString.equals("T") ||
-	        		currentString.equals("P") ||
-	        		currentString.equals("_")) {
-	        		
-	        		switch (readChars) {
-					case 0:
-						mapX = Integer.parseInt(currentString);
-						System.out.println("Read X (" + mapX + ")");
-						readChars++;
-						break;
-						
-					case 1:
-						mapY = Integer.parseInt(currentString);
-						System.out.println("Read Y (" + mapY + ")");
-						readChars++;
-						break;
+	        BufferedReader br = null;
+	    	String line = "";
+	    	String cvsSplitBy = ",";
 
-					default:
-						if (linePos < mapX) {
-							System.out.print(currentString);
-							linePos++;
-							
-						} else {
-							System.out.println("");
-							linePos = 0;
-						}
-						
-						readChars++;
-						break;
-					}
-	        	}
-	        }
+	    	try {
+	    		br = new BufferedReader(new FileReader(fileName));
+	    		while ((line = br.readLine()) != null) {
+	    		    // use comma as separator
+	    			String[] lineContent = line.split(cvsSplitBy);
+	    			mapX = lineContent.length;
+	    			
+	    			for (int i = 0; i < mapX; i++){
+	    				System.out.print(lineContent[i]);
+	    			}
+	    			System.out.println("");
+	    			mapY++;
+	    		}
+
+	    	} catch (FileNotFoundException e) {
+	    		System.out.println(fileName + " not found.");
+	    		System.out.println("Using hard coded map.");
+	    		_loadHardcodedMap();
+	    	} catch (IOException e) {
+	    		System.out.println("IO Exception while reading " + fileName + ".");
+	    		System.out.println("Using hard coded map.");
+	    		_loadHardcodedMap();
+	    	} finally {
+	    		if (br != null) {
+	    			try {
+	    				br.close();
+	    			} catch (IOException e) {
+	    				e.printStackTrace();
+	    			}
+	    		}
+	    	}
 	        
 	        _mapSize = new Pair<Integer, Integer>(mapX, mapY);
-	        
-	        scanner.close();
-	        
-	        
-		} catch (FileNotFoundException e) {
-			System.out.println(fileName + " not found.");
-			System.out.println("Using hard coded map.");
-			
-			_mapSize = new Pair<Integer, Integer>(30, 30);
-			
-			_taxiLocations.add(new Pair<Integer, Integer>(1,1));
-			_taxiLocations.add(new Pair<Integer, Integer>(29,29));
-			
-			_passengerLocations.add(new Pair<Integer, Integer>(4,1));
-			_passengerLocations.add(new Pair<Integer, Integer>(4,4));
-			_passengerLocations.add(new Pair<Integer, Integer>(4,8));
-			_passengerLocations.add(new Pair<Integer, Integer>(4,20));
-			
-			_taxiPickupLocations.add(new Pair<Integer, Integer>(15, 15));
-			
-			_taxiRefuelLocations.add(new Pair<Integer, Integer>(15, 20));
-		}
+
 	}
 	
+	private void _loadHardcodedMap(){
+		_mapSize = new Pair<Integer, Integer>(30, 30);
+		
+		_taxiLocations.add(new Pair<Integer, Integer>(1,1));
+		_taxiLocations.add(new Pair<Integer, Integer>(29,29));
+		
+		_passengerLocations.add(new Pair<Integer, Integer>(4,1));
+		_passengerLocations.add(new Pair<Integer, Integer>(4,4));
+		_passengerLocations.add(new Pair<Integer, Integer>(4,8));
+		_passengerLocations.add(new Pair<Integer, Integer>(4,20));
+		
+		_taxiPickupLocations.add(new Pair<Integer, Integer>(15, 15));
+		
+		_taxiRefuelLocations.add(new Pair<Integer, Integer>(15, 20));
+	}
+		
 	public Pair<Integer, Integer> getMapSize(){
 		return _mapSize;
 	}
