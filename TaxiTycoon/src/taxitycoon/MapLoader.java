@@ -17,7 +17,7 @@ public class MapLoader {
 	private ArrayList<Pair<Integer, Integer>> _roadLocations = new ArrayList<>();
 	
 	MapLoader(String fileName){
-			System.out.println("Loading " + fileName);
+			System.out.println("Loading [" + fileName + "].");
 	        
 	        int mapX = 0, mapY = 0;
 	        
@@ -34,6 +34,8 @@ public class MapLoader {
 	    				if (lineContent[i].equals("T")) {
 	    					//System.out.println("Taxi at " + i + "," + mapY);
 	    					_taxiLocations.add(new Pair<Integer, Integer>(i,mapY));
+	    					//System.out.println("Road at " + i + "," + mapY);
+	    					_roadLocations.add(new Pair<Integer, Integer>(i,mapY));
 	    				} else if (lineContent[i].equals("P")) {
 	    					//System.out.println("Passenger at " + i + "," + mapY);
 	    					_passengerLocations.add(new Pair<Integer, Integer>(i,mapY));
@@ -41,9 +43,13 @@ public class MapLoader {
 	    					//System.out.println("Refuel at " + i + "," + mapY);
 	    					_taxiRefuelLocations.add(new Pair<Integer, Integer>(i,mapY));
 	    				} else if (lineContent[i].equals("_")) {
+	    					//System.out.println("Road at " + i + "," + mapY);
 	    					_roadLocations.add(new Pair<Integer, Integer>(i, mapY));
+	    				} else if (lineContent[i].equals("C")) {
+	    					//System.out.println("Pickup at " + i + "," + mapY);
+	    					_taxiPickupLocations.add(new Pair<Integer, Integer>(i, mapY));
 	    				} else if (lineContent[i].equals("X")) {
-	    					// Wall
+	    					//System.out.println("Grass at " + i + "," + mapY);
 	    				}
 	    			}
 	    			
@@ -51,31 +57,57 @@ public class MapLoader {
 	    		}
 
 	    	} catch (FileNotFoundException e) {
-	    		System.out.println(fileName + " not found.");
-	    		System.out.println("Using hard coded map.");
+	    		System.out.println("File: [" + fileName + "] not found.");
 	    		_loadHardcodedMap();
+	    		return;
 	    	} catch (IOException e) {
-	    		System.out.println("IO Exception while reading " + fileName + ".");
-	    		System.out.println("Using hard coded map.");
+	    		System.out.println("IO Exception while reading [" + fileName + "].");
 	    		_loadHardcodedMap();
+	    		return;
 	    	} finally {
 	    		if (bufferedReader != null) {
 	    			try {
 	    				bufferedReader.close();
 	    			} catch (IOException e) {
-	    	    		System.out.println("IO Exception while reading " + fileName + ".");
-	    	    		System.out.println("Using hard coded map.");
+	    	    		System.out.println("IO Exception while reading [" + fileName + "].");
 	    	    		_loadHardcodedMap();
+	    	    		return;
 	    			}
 	    		}
 	    	}
 	        
-	        _mapSize = new Pair<Integer, Integer>(mapX, mapY);
-	        System.out.println("Map loaded");
-
+	    	boolean sanityChecksPass = true;
+	    	
+	    	if (_taxiLocations.size() == 0) {
+	    		System.out.println("Map was sucessfuly loaded, but it is missing taxis.");
+	    		sanityChecksPass = false;
+	    	}
+	    	
+	    	if (_passengerLocations.size() == 0) {
+	    		System.out.println("Map was sucessfuly loaded, but it is missing passengers.");
+	    		sanityChecksPass = false;
+	    	}
+	    	
+	    	if (_taxiRefuelLocations.size() == 0) {
+	    		System.out.println("Map was sucessfuly loaded, but it is missing taxi refuel stations.");
+	    		sanityChecksPass = false;
+	    	}
+	    	
+	    	if (_taxiPickupLocations.size() == 0) {
+	    		System.out.println("Map was sucessfuly loaded, but it is missing taxi stops.");
+	    		sanityChecksPass = false;
+	    	}
+	    	
+	    	if (sanityChecksPass) {
+		    	_mapSize = new Pair<Integer, Integer>(mapX, mapY);
+			    System.out.println("Map sucessfuly loaded.");
+	    	} else {
+	    		_loadHardcodedMap();
+	    	}
 	}
 	
 	private void _loadHardcodedMap(){
+		System.out.println("Using hard coded map.");
 		_mapSize = new Pair<Integer, Integer>(30, 30);
 		
 		_taxiLocations.add(new Pair<Integer, Integer>(1,1));
