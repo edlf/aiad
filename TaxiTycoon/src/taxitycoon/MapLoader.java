@@ -167,4 +167,12 @@ public class MapLoader {
 	public ArrayList<Pair<Integer, Integer>> getRoadPositions(){
 		return _roadLocations;
 	}
+	
+	public ArrayList<Pair<Integer, Integer>> getRefuelPositions(){
+		return _taxiRefuelLocations;
+	}
+	
+	public ArrayList<Pair<Integer, Integer>> getTaxiStops(){
+		return _taxiPickupLocations;
+	}
 }

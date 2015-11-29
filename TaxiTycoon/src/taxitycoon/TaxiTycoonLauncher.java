@@ -62,13 +62,28 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			}
 		}
 		
-		/* Fill with roads */
-		ArrayList<Pair<Integer, Integer>> roads = _mapLoader.getRoadPositions();
-		for (Pair<Integer, Integer> roadPos : roads){
+		/* Draw roads */
+		for (Pair<Integer, Integer> roadPos : _mapLoader.getRoadPositions()){
 			Road road = new Road(roadPos);
 			_grid.getAdder().add(_grid, road);
 			mainContext.add(road);
 			_grid.moveTo(road, road.getX(), road.getY());
+		}
+		
+		/* Draw refuel stations */
+		for (Pair<Integer, Integer> refuelPos : _mapLoader.getRefuelPositions()){
+			RefuelStation refuelStation  = new RefuelStation(refuelPos);
+			_grid.getAdder().add(_grid, refuelStation);
+			mainContext.add(refuelStation);
+			_grid.moveTo(refuelStation, refuelStation.getX(), refuelStation.getY());
+		}
+		
+		/* Draw taxi stations */
+		for (Pair<Integer, Integer> taxiStopPos : _mapLoader.getTaxiStops()){
+			TaxiStop taxiStop  = new TaxiStop(taxiStopPos);
+			_grid.getAdder().add(_grid, taxiStop);
+			mainContext.add(taxiStop);
+			_grid.moveTo(taxiStop, taxiStop.getX(), taxiStop.getY());
 		}
 	}
 	

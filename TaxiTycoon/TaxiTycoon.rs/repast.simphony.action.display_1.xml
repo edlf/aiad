@@ -18,6 +18,14 @@
       <string>taxitycoon.Grass</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
+    <entry>
+      <string>taxitycoon.TaxiStop</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.RefuelStation</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
   </styles>
   <editedStyles>
     <entry>
@@ -35,6 +43,14 @@
     <entry>
       <string>taxitycoon.Grass</string>
       <string>taxitycoon.Grass.style.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.TaxiStop</string>
+      <string>taxitycoon.TaxiStop.style.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.RefuelStation</string>
+      <string>taxitycoon.Refuel.style.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -55,10 +71,18 @@
   <layerOrder>
     <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
-      <int>3</int>
+      <int>5</int>
     </entry>
     <entry>
       <string>taxitycoon.agents.PassengerAgent</string>
+      <int>4</int>
+    </entry>
+    <entry>
+      <string>taxitycoon.agents.TaxiStop</string>
+      <int>3</int>
+    </entry>
+    <entry>
+      <string>taxitycoon.agents.RefuelStation</string>
       <int>2</int>
     </entry>
     <entry>
