@@ -31,10 +31,10 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1853548752</hashCode>
+    <hashCode>0</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>space</layoutProjection>
+  <layoutProjection>Grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
@@ -48,9 +48,9 @@
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>space</id>
+      <id>Grid</id>
       <attributes/>
-      <type>continuous space</type>
+      <type>grid</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
@@ -58,29 +58,29 @@
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>space</string>
-      <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
+      <string>Grid</string>
+      <repast.simphony.visualization.grid.GridProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
           <entry>
-            <string>repast.simphony.visualization.continuous.ContinuousDecorator</string>
+            <string>repast.simphony.visualization.grid.GridDecorator</string>
             <map>
+              <entry>
+                <string>UNIT_SIZE</string>
+                <float>10.0</float>
+              </entry>
+              <entry>
+                <string>SHOW</string>
+                <boolean>false</boolean>
+              </entry>
               <entry>
                 <string>COLOR</string>
                 <int>-16777216</int>
               </entry>
-              <entry>
-                <string>UNIT_SIZE</string>
-                <float>15.0</float>
-              </entry>
-              <entry>
-                <string>SHOW</string>
-                <boolean>true</boolean>
-              </entry>
             </map>
           </entry>
         </props>
-      </repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
+      </repast.simphony.visualization.grid.GridProjectionDescriptor>
     </entry>
   </projectionDescriptors>
   <props/>
