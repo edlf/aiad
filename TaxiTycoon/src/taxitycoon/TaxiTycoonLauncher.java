@@ -1,7 +1,5 @@
 package taxitycoon;
 
-import java.util.ArrayList;
-
 import org.javatuples.Pair;
 
 import jade.wrapper.StaleProxyException;
@@ -16,6 +14,10 @@ import sajas.sim.repasts.RepastSLauncher;
 import sajas.wrapper.ContainerController;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiAgent;
+import taxitycoon.staticobjects.Grass;
+import taxitycoon.staticobjects.RefuelStation;
+import taxitycoon.staticobjects.Road;
+import taxitycoon.staticobjects.TaxiStop;
 
 public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilder<Object> {
 	/* Variables */

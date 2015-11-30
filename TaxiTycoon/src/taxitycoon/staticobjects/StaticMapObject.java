@@ -1,15 +1,15 @@
-package taxitycoon;
+package taxitycoon.staticobjects;
 
 import org.javatuples.Pair;
 
 public abstract class StaticMapObject {
 	protected Pair<Integer, Integer> _pos;
 
-	int getX(){
+	public int getX(){
 		return _pos.getValue0();
 	}
 	
-	int getY(){
+	public int getY(){
 		return _pos.getValue1();
 	}
 }

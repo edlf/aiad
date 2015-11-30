@@ -3,6 +3,22 @@
   <type>2D</type>
   <styles>
     <entry>
+      <string>taxitycoon.staticobjects.Grass</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.Road</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.RefuelStation</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.TaxiStop</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
@@ -10,24 +26,24 @@
       <string>taxitycoon.agents.PassengerAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
-    <entry>
-      <string>taxitycoon.Road</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.Grass</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.TaxiStop</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.RefuelStation</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
   </styles>
   <editedStyles>
+    <entry>
+      <string>taxitycoon.staticobjects.Grass</string>
+      <string>taxitycoon.Grass.style.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.Road</string>
+      <string>taxitycoon.Road.style.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.RefuelStation</string>
+      <string>taxitycoon.Refuel.style.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.TaxiStop</string>
+      <string>taxitycoon.TaxiStop.style.xml</string>
+    </entry>
     <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
       <string>taxitycoon.TaxiAgent.style_0.xml</string>
@@ -35,22 +51,6 @@
     <entry>
       <string>taxitycoon.agents.PassengerAgent</string>
       <string>taxitycoon.PassengerAgent.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.Road</string>
-      <string>taxitycoon.Road.style.xml</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.Grass</string>
-      <string>taxitycoon.Grass.style.xml</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.TaxiStop</string>
-      <string>taxitycoon.TaxiStop.style.xml</string>
-    </entry>
-    <entry>
-      <string>taxitycoon.RefuelStation</string>
-      <string>taxitycoon.Refuel.style.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -70,28 +70,28 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
+      <string>taxitycoon.staticobjects.Grass</string>
+      <int>0</int>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.RefuelStation</string>
+      <int>2</int>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.Road</string>
+      <int>1</int>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.TaxiStop</string>
+      <int>3</int>
+    </entry>
+    <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
       <int>5</int>
     </entry>
     <entry>
       <string>taxitycoon.agents.PassengerAgent</string>
       <int>4</int>
-    </entry>
-    <entry>
-      <string>taxitycoon.TaxiStop</string>
-      <int>3</int>
-    </entry>
-    <entry>
-      <string>taxitycoon.RefuelStation</string>
-      <int>2</int>
-    </entry>
-    <entry>
-      <string>taxitycoon.Road</string>
-      <int>1</int>
-    </entry>
-    <entry>
-      <string>taxitycoon.Grass</string>
-      <int>0</int>
     </entry>
   </layerOrder>
   <projections>
