@@ -13,6 +13,7 @@ import sajas.core.Runtime;
 import sajas.sim.repasts.RepastSLauncher;
 import sajas.wrapper.ContainerController;
 import taxitycoon.agents.PassengerAgent;
+import taxitycoon.agents.SimAgent;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.staticobjects.Grass;
 import taxitycoon.staticobjects.RefuelStation;
@@ -87,6 +88,12 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			mainContext.add(taxiStop);
 			_grid.moveTo(taxiStop, taxiStop.getX(), taxiStop.getY());
 		}
+		
+		/* Set SimAgent static vars */
+		SimAgent.setupMap(_grid, _mapLoader.getMapSize());
+		
+		/* Create taxi agents map */
+		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops());
 	}
 	
 	private void launchAgents(){
@@ -94,14 +101,14 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			/* Create taxis */
 			int i = 0;
 			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getTaxiLocations()){
-				_mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(_grid, taxiLocation, _mapLoader.getMapSize())).start();
+				_mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(taxiLocation)).start();
 				i++;
 			}
 			
 			/* Create passengers */
 			int j = 0;
 			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getPassengerLocations()){
-				_mainContainer.acceptNewAgent("Passenger[" + j + "]", new PassengerAgent(_grid, taxiLocation, _mapLoader.getMapSize())).start();
+				_mainContainer.acceptNewAgent("Passenger[" + j + "]", new PassengerAgent(taxiLocation)).start();
 				j++;
 			}
 			

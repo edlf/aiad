@@ -1,7 +1,8 @@
 package taxitycoon.agents;
 
+import java.util.ArrayList;
+
 import org.javatuples.Pair;
-import repast.simphony.space.grid.Grid;
 
 /**
  * Taxi agent
@@ -9,11 +10,21 @@ import repast.simphony.space.grid.Grid;
 public class TaxiAgent extends SimAgent {
 	private int maximumCapacity = 4;
 	private int numberOfPassengers = 0;
+
+	static protected boolean taxiMapCalculated = false;
 	
-	public TaxiAgent(Grid<Object> grid, Pair<Integer, Integer> initialPos, Pair<Integer, Integer> mapSize) {
-		this._grid = grid;
-		this._mapSize = mapSize;
+	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads, ArrayList<Pair<Integer, Integer>> stops){
+		if (taxiMapCalculated) {
+			System.out.println("BUG: Taxi map already calculated.");
+			return;
+		}
+
+		/* Calc map */
 		
+		taxiMapCalculated = true;
+	}
+	
+	public TaxiAgent(Pair<Integer, Integer> initialPos) {
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
 		

@@ -12,11 +12,25 @@ import sajas.core.behaviours.Behaviour;
  * Shared agent logic
  **/
 public abstract class SimAgent extends Agent {
-	protected Grid<Object> _grid;
+	protected static Grid<Object> _grid;
+	protected static Pair<Integer, Integer> _mapSize;
+	protected static boolean baseMapSetupDone = false;
+	
 	protected Pair<Integer, Integer> _currentPosition;
 	protected Pair<Integer, Integer> _startPosition;
-	protected Pair<Integer, Integer> _mapSize;
 	protected Behaviour _currentBehaviour = null;
+	
+	/* Static sets */
+	static public void setupMap(Grid<Object> grid, Pair<Integer, Integer> mapSize){
+		if (baseMapSetupDone) {
+			System.out.println("BUG: Sim Agent map already calculated.");
+			return;
+		}
+		
+		_grid = grid;
+		_mapSize = mapSize;
+		baseMapSetupDone = true;
+	}
 	
 	/* Direct map position methods */
 	public boolean move(Pair<Integer, Integer> newPosition){
