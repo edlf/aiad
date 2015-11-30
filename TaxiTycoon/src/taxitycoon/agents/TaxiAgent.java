@@ -57,6 +57,23 @@ public class TaxiAgent extends SimAgent {
 		this._currentBehaviour = new taxitycoon.behaviours.taxi.Waiting();
 	}
 	
+	public boolean relativeMove(Pair<Integer,Integer> delta){
+		Pair<Integer, Integer> newPosition = new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1());
+		
+		/* Check if its out of fonds */
+		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
+			return false;
+		}
+		
+		/* Check if it is road */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapRoad){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+		
+		/* Nope */
+		return false;
+	}
+	
 	public void move(Pair<Integer, Integer> newPosition){
 		
 	}

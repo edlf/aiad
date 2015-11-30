@@ -51,6 +51,11 @@ public class PassengerAgent extends SimAgent {
 		this._currentBehaviour = new taxitycoon.behaviours.passenger.Waiting();
 	}
 
+	public boolean relativeMove(Pair<Integer,Integer> delta){
+		
+		return _move(new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1()));
+	}
+	
 	@Override
 	protected void _addInitialBehaviour() {
 		replaceBehaviour(_currentBehaviour);

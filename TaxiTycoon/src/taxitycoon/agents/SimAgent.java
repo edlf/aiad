@@ -46,8 +46,8 @@ public abstract class SimAgent extends Agent {
 	}
 	
 	/* Direct map position methods */
-	private boolean _move(Pair<Integer, Integer> newPosition){
-		// System.out.println(getLocalName() + " attempting to move to: " + newPosition.getValue0() + "," + newPosition.getValue1());
+	protected boolean _move(Pair<Integer, Integer> newPosition){
+		/* Check if it is out of bonds */
 		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
 			return false;
 		}
@@ -74,9 +74,7 @@ public abstract class SimAgent extends Agent {
 	}
 	
 	/* Relative move */
-	public boolean relativeMove(Pair<Integer,Integer> delta){
-		return _move(new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1()));
-	}
+	abstract public boolean relativeMove(Pair<Integer,Integer> delta);
 	
 	/* Setup and takedown methods */
 	@Override

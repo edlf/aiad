@@ -15,7 +15,7 @@ public class Waiting extends CyclicBehaviour {
 	@Override
 	public void action() {
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
-		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(1, 1));
+		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(0,1));
 	}
 
 }
