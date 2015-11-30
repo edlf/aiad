@@ -15,7 +15,7 @@ public class PassengerAgent extends SimAgent {
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
 		
-		replaceBehaviour(new taxitycoon.behaviours.passenger.Waiting());
+		this._currentBehaviour = new taxitycoon.behaviours.passenger.Waiting();
 	}
 
 	@Override

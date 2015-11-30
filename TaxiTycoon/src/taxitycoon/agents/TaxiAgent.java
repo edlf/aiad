@@ -17,7 +17,7 @@ public class TaxiAgent extends SimAgent {
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
 		
-		replaceBehaviour(new taxitycoon.behaviours.taxi.Waiting());
+		this._currentBehaviour = new taxitycoon.behaviours.taxi.Waiting();
 	}
 	
 	@Override
