@@ -33,7 +33,7 @@ public abstract class SimAgent extends Agent {
 	}
 	
 	/* Direct map position methods */
-	public boolean move(Pair<Integer, Integer> newPosition){
+	private boolean move(Pair<Integer, Integer> newPosition){
 		// System.out.println(getLocalName() + " attempting to move to: " + newPosition.getValue0() + "," + newPosition.getValue1());
 		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
 			return false;

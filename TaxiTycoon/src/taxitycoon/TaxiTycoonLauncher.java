@@ -93,7 +93,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		SimAgent.setupMap(_grid, _mapLoader.getMapSize());
 		
 		/* Create taxi agents map */
-		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops());
+		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops(), _mapLoader.getRefuelPositions());
 	}
 	
 	private void launchAgents(){
