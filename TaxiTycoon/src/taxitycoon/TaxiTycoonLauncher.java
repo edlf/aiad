@@ -89,11 +89,12 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			_grid.moveTo(taxiStop, taxiStop.getX(), taxiStop.getY());
 		}
 		
-		/* Set SimAgent static vars */
+		/* Store grid and map size on all moving agents */
 		SimAgent.setupMap(_grid, _mapLoader.getMapSize());
 		
-		/* Create taxi agents map */
+		/* Create static map for each moving agent type */
 		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops(), _mapLoader.getRefuelPositions());
+		PassengerAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops());
 	}
 	
 	private void launchAgents(){

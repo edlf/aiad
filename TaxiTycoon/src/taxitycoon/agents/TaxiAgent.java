@@ -9,56 +9,47 @@ import org.javatuples.Pair;
  **/
 public class TaxiAgent extends SimAgent {
 	/* Common variables to all taxi agents */
-	static private boolean taxiMapCalculated = false;
-	static private char[][] map = null; /* col x line */
-	static final private char mapEmpty = ' ';
-	static final private char mapRoad = '_';
-	static final private char mapStop = 'S';
-	static final private char mapRefuel = 'R';
+	static private boolean _taxiMapCalculated = false;
+	static private char[][] _map = null; /* col x line */
 	
 	/* Individual variables */
-	private int maximumCapacity = 4;
-	private int numberOfPassengers = 0;
+	private int _maximumCapacity = 4;
+	private int _numberOfPassengers = 0;
 
+	/* Static methods */
 	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads, ArrayList<Pair<Integer, Integer>> stops, ArrayList<Pair<Integer, Integer>> refuelStations){
-		if (taxiMapCalculated) {
+		if (_taxiMapCalculated) {
 			System.out.println("BUG: Taxi map already calculated.");
 			return;
 		}
 
 		/* Create map and fill */
-		map = new char[_mapSize.getValue0()][_mapSize.getValue1()];
+		_map = new char[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				map[i][j] = mapEmpty;
+				_map[i][j] = _mapEmpty;
 			}
 		}
 		
 		/* Fill roads */
 		for (Pair<Integer, Integer> road : roads){
-			map[road.getValue0()][road.getValue1()] = mapRoad;
+			_map[road.getValue0()][road.getValue1()] = _mapRoad;
 		}
 		
 		/* Fill stops */
 		for(Pair<Integer, Integer> stop : stops){
-			map[stop.getValue0()][stop.getValue1()] = mapStop;
+			_map[stop.getValue0()][stop.getValue1()] = _mapStop;
 		}
 		
 		/* Fill refuel stations */
 		for(Pair<Integer, Integer> refuelStation : refuelStations){
-			map[refuelStation.getValue0()][refuelStation.getValue1()] = mapRefuel;
+			_map[refuelStation.getValue0()][refuelStation.getValue1()] = _mapRefuel;
 		}
 		
-		for (int j = 0; j < _mapSize.getValue1(); j++){
-			for (int i = 0; i < _mapSize.getValue0(); i++){
-				System.out.print(map[i][j]);
-			}
-			System.out.println("");
-		}
-		
-		taxiMapCalculated = true;
+		_taxiMapCalculated = true;
 	}
 	
+	/* Non static methods */
 	public TaxiAgent(Pair<Integer, Integer> initialPos) {
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
@@ -71,12 +62,12 @@ public class TaxiAgent extends SimAgent {
 	}
 	
 	@Override
-	void addInitialBehaviour(){
+	protected void _addInitialBehaviour(){
 		replaceBehaviour(_currentBehaviour);
 	}
 	
 	public boolean isTaxiFull(){
-		return (numberOfPassengers == maximumCapacity);
+		return (_numberOfPassengers == _maximumCapacity);
 	}
 
 }

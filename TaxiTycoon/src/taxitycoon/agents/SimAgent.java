@@ -12,28 +12,41 @@ import sajas.core.behaviours.Behaviour;
  * Shared agent logic
  **/
 public abstract class SimAgent extends Agent {
+	/* Repast */
 	protected static Grid<Object> _grid;
-	protected static Pair<Integer, Integer> _mapSize;
-	protected static boolean baseMapSetupDone = false;
 	
+	/* Common Map */
+	protected static Pair<Integer, Integer> _mapSize;
+	protected static boolean _baseMapSetupDone = false;
+	
+	/* Map Types */
+	protected static final char _mapEmpty = ' ';
+	protected static final char _mapRoad = '_';
+	protected static final char _mapGrass = 'G';
+	protected static final char _mapStop = 'S';
+	protected static final char _mapRefuel = 'R';
+	
+	/* Position */
 	protected Pair<Integer, Integer> _currentPosition;
 	protected Pair<Integer, Integer> _startPosition;
+	
+	/* Behaviour */
 	protected Behaviour _currentBehaviour = null;
 	
 	/* Static sets */
 	static public void setupMap(Grid<Object> grid, Pair<Integer, Integer> mapSize){
-		if (baseMapSetupDone) {
+		if (_baseMapSetupDone) {
 			System.out.println("BUG: Sim Agent map already calculated.");
 			return;
 		}
 		
 		_grid = grid;
 		_mapSize = mapSize;
-		baseMapSetupDone = true;
+		_baseMapSetupDone = true;
 	}
 	
 	/* Direct map position methods */
-	private boolean move(Pair<Integer, Integer> newPosition){
+	private boolean _move(Pair<Integer, Integer> newPosition){
 		// System.out.println(getLocalName() + " attempting to move to: " + newPosition.getValue0() + "," + newPosition.getValue1());
 		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
 			return false;
@@ -62,7 +75,7 @@ public abstract class SimAgent extends Agent {
 	
 	/* Relative move */
 	public boolean relativeMove(Pair<Integer,Integer> delta){
-		return move(new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1()));
+		return _move(new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1()));
 	}
 	
 	/* Setup and takedown methods */
@@ -71,9 +84,9 @@ public abstract class SimAgent extends Agent {
 		System.out.println(getLocalName() + " setup()");
 		
 		/* Move to initial position */
-		move(_startPosition);
+		_move(_startPosition);
 		
-		addInitialBehaviour();
+		_addInitialBehaviour();
 	}
 	
 	@Override
@@ -87,7 +100,7 @@ public abstract class SimAgent extends Agent {
 	}
 	
 	/* Add behaviour abstract method */
-	abstract void addInitialBehaviour();
+	abstract protected void _addInitialBehaviour();
 	
 	/* Behaviour replacement method */
 	void replaceBehaviour(Behaviour newBehaviour){
