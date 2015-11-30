@@ -78,19 +78,19 @@
       <int>4</int>
     </entry>
     <entry>
-      <string>taxitycoon.agents.TaxiStop</string>
+      <string>taxitycoon.TaxiStop</string>
       <int>3</int>
     </entry>
     <entry>
-      <string>taxitycoon.agents.RefuelStation</string>
+      <string>taxitycoon.RefuelStation</string>
       <int>2</int>
     </entry>
     <entry>
-      <string>taxitycoon.agents.Road</string>
+      <string>taxitycoon.Road</string>
       <int>1</int>
     </entry>
     <entry>
-      <string>taxitycoon.agents.Grass</string>
+      <string>taxitycoon.Grass</string>
       <int>0</int>
     </entry>
   </layerOrder>
