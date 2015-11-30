@@ -27,7 +27,7 @@ public class TaxiAgent extends SimAgent {
 		_map = new char[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				_map[i][j] = _mapEmpty;
+				_map[i][j] = _mapGrass;
 			}
 		}
 		
@@ -60,7 +60,7 @@ public class TaxiAgent extends SimAgent {
 	public boolean relativeMove(Pair<Integer,Integer> delta){
 		Pair<Integer, Integer> newPosition = new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1());
 		
-		/* Check if its out of fonds */
+		/* Check if its out of bonds */
 		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
 			return false;
 		}
@@ -70,12 +70,18 @@ public class TaxiAgent extends SimAgent {
 			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
 		}
 		
+		/* Check if it is stop */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapStop){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+		
+		/* Check if it is refuel station */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapRefuel){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+		
 		/* Nope */
 		return false;
-	}
-	
-	public void move(Pair<Integer, Integer> newPosition){
-		
 	}
 	
 	@Override
@@ -83,8 +89,20 @@ public class TaxiAgent extends SimAgent {
 		replaceBehaviour(_currentBehaviour);
 	}
 	
+	/* Taxi status queries */
 	public boolean isTaxiFull(){
 		return (_numberOfPassengers == _maximumCapacity);
 	}
+	
+	public boolean isOnRoad(){
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapRoad);
+	}
 
+	public boolean isOnRefuelStation(){
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapRefuel);
+	}
+	
+	public boolean isOnStop(){
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+	}
 }

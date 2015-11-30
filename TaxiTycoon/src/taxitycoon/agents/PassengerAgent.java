@@ -8,6 +8,7 @@ import org.javatuples.Pair;
  * Passenger agent
  **/
 public class PassengerAgent extends SimAgent {
+	
 	/* Common variables to all passenger agents */
 	private static boolean _passengerMapCalculated = false;
 	private static char[][] _map = null; /* col x line */
@@ -26,7 +27,7 @@ public class PassengerAgent extends SimAgent {
 		_map = new char[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				_map[i][j] = _mapEmpty;
+				_map[i][j] = _mapGrass;
 			}
 		}
 		
@@ -45,15 +46,44 @@ public class PassengerAgent extends SimAgent {
 	
 	/* Non static methods */
 	public PassengerAgent(Pair<Integer, Integer> initialPos) {
-		this._startPosition = initialPos;
-		this._currentPosition = initialPos;
+		_startPosition = initialPos;
+		_currentPosition = initialPos;
 		
-		this._currentBehaviour = new taxitycoon.behaviours.passenger.Waiting();
+		_currentBehaviour = new taxitycoon.behaviours.passenger.Waiting();
+		_destination = new Pair<Integer, Integer>(30, 30);
+		
 	}
 
 	public boolean relativeMove(Pair<Integer,Integer> delta){
+		Pair<Integer, Integer> newPosition = new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1());
 		
-		return _move(new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1()));
+		/* Check if its out of bonds */
+		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
+			return false;
+		}
+		
+		/* Check if it is road */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapRoad){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+		
+		/* Check if it is stop */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapStop){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+		
+		/* Check if it is refuel station */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapRefuel){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+
+		/* Check if it is grass */
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapGrass){
+			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
+		}
+		
+		/* Nope */
+		return false;
 	}
 	
 	@Override
@@ -73,9 +103,17 @@ public class PassengerAgent extends SimAgent {
 		return _destination;
 	}
 	
+	/* Passenger status queries */
 	public boolean isOnGrass(){
-		
-		return false;
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapGrass);
+	}
+	
+	public boolean isOnStop(){
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+	}
+	
+	public boolean hasReachedDestination(){
+		return (_currentPosition.equals(_destination));
 	}
 
 }

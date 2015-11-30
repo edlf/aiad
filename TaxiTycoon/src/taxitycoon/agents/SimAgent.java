@@ -20,7 +20,6 @@ public abstract class SimAgent extends Agent {
 	protected static boolean _baseMapSetupDone = false;
 	
 	/* Map Types */
-	protected static final char _mapEmpty = ' ';
 	protected static final char _mapRoad = '_';
 	protected static final char _mapGrass = 'G';
 	protected static final char _mapStop = 'S';
@@ -93,7 +92,7 @@ public abstract class SimAgent extends Agent {
 		try {
 			DFService.deregister(this);
 		} catch (FIPAException e) {
-			System.out.println(getLocalName() + " error no takeDown()");
+			System.out.println(getLocalName() + " error in takeDown()");
 		}
 	}
 	
@@ -106,7 +105,7 @@ public abstract class SimAgent extends Agent {
 			removeBehaviour(_currentBehaviour);
 		}
 		
-		this._currentBehaviour = newBehaviour;
-		addBehaviour(this._currentBehaviour);
+		_currentBehaviour = newBehaviour;
+		addBehaviour(_currentBehaviour);
 	}
 }
