@@ -16,11 +16,13 @@ public class TaxiAgent extends SimAgent {
 		
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
+		
+		replaceBehaviour(new taxitycoon.behaviours.taxi.Waiting());
 	}
 	
 	@Override
 	void addInitialBehaviour(){
-		addBehaviour(new taxitycoon.behaviours.taxi.Waiting());
+		replaceBehaviour(_currentBehaviour);
 	}
 	
 	public boolean isTaxiFull(){

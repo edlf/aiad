@@ -14,11 +14,22 @@ public class PassengerAgent extends SimAgent {
 		
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
+		
+		replaceBehaviour(new taxitycoon.behaviours.passenger.Waiting());
 	}
 
 	@Override
 	void addInitialBehaviour() {
-		addBehaviour(new taxitycoon.behaviours.passenger.Waiting());
+		replaceBehaviour(_currentBehaviour);
+	}
+	
+	void changeToWalkingToNearestStopBehaviour(){
+		replaceBehaviour(new taxitycoon.behaviours.passenger.WalkingToNearestStop());
+	}
+	
+	public boolean isOnGrass(){
+		
+		return false;
 	}
 
 }

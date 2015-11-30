@@ -6,6 +6,7 @@ import jade.domain.FIPAException;
 import repast.simphony.space.grid.Grid;
 import sajas.core.Agent;
 import sajas.domain.DFService;
+import sajas.core.behaviours.Behaviour;
 
 /**
  * Shared agent logic
@@ -15,6 +16,7 @@ public abstract class SimAgent extends Agent {
 	protected Pair<Integer, Integer> _currentPosition;
 	protected Pair<Integer, Integer> _startPosition;
 	protected Pair<Integer, Integer> _mapSize;
+	protected Behaviour _currentBehaviour = null;
 	
 	/* Direct map position methods */
 	public boolean move(Pair<Integer, Integer> newPosition){
@@ -72,4 +74,14 @@ public abstract class SimAgent extends Agent {
 	
 	/* Add behaviour abstract method */
 	abstract void addInitialBehaviour();
+	
+	/* Behaviour replacement method */
+	void replaceBehaviour(Behaviour newBehaviour){
+		if (_currentBehaviour != null) {
+			removeBehaviour(_currentBehaviour);
+		}
+		
+		this._currentBehaviour = newBehaviour;
+		addBehaviour(this._currentBehaviour);
+	}
 }

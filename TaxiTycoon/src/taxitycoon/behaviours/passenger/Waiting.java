@@ -1,6 +1,7 @@
 package taxitycoon.behaviours.passenger;
 
 import sajas.core.behaviours.Behaviour;
+import taxitycoon.agents.PassengerAgent;
 
 public class Waiting extends Behaviour {
 
@@ -11,6 +12,12 @@ public class Waiting extends Behaviour {
 
 	@Override
 	public void action() {
+		PassengerAgent myPassengerAgent = (PassengerAgent) myAgent;
+		// If on grass
+		
+		/* Go to stop */
+		
+		
 		// Try to enter taxi
 
 		

@@ -2,7 +2,7 @@ package taxitycoon.behaviours.passenger;
 
 import sajas.core.behaviours.Behaviour;
 
-public class Walking extends Behaviour {
+public class WalkingToNearestStop extends Behaviour {
 
 	/**
 	 * 
@@ -11,7 +11,7 @@ public class Walking extends Behaviour {
 
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		// If on stop, change behaviour to waiting
 
 	}
 

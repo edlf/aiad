@@ -14,7 +14,6 @@ public class Waiting extends CyclicBehaviour {
 
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
 		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(1, 1));
 	}
