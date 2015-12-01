@@ -16,6 +16,7 @@ public class PassengerAgent extends SimAgent {
 	
 	/* Individual variables */
 	private Pair<Integer, Integer> _destination;
+	private boolean _inTaxi = false;
 	
 	/* Static methods */
 	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads, ArrayList<Pair<Integer, Integer>> stops){
@@ -52,7 +53,7 @@ public class PassengerAgent extends SimAgent {
 		_currentPosition = initialPos;
 		
 		_currentBehaviour = new taxitycoon.behaviours.passenger.WalkingToNearestStop();
-		_destination = new Pair<Integer, Integer>(30, 30);
+		_destination = new Pair<Integer, Integer>(29, 29);
 		
 	}
 
@@ -132,6 +133,10 @@ public class PassengerAgent extends SimAgent {
 	
 	public boolean isOnStop(){
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+	}
+	
+	public boolean isOnTaxi(){
+		return _inTaxi;
 	}
 	
 	public boolean hasReachedDestination(){

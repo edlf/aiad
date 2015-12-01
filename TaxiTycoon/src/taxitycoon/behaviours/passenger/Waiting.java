@@ -1,7 +1,5 @@
 package taxitycoon.behaviours.passenger;
 
-import org.javatuples.Pair;
-
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 
@@ -15,21 +13,22 @@ public class Waiting extends Behaviour {
 
 	@Override
 	public void action() {
-		PassengerAgent myPassengerAgent = (PassengerAgent) myAgent;
-
+		PassengerAgent passengerAgent = (PassengerAgent) myAgent;
+		
 		/* Check if we have reached the destination */
-		if (myPassengerAgent.hasReachedDestination()){
+		if (passengerAgent.hasReachedDestination()){
 			hasArrivedDestination = true;
+			
+			/*  */ 
 			return;
 		}
 		
+		/* Check if we have a taxi available */
 
 		
-		/* Go to stop */
+		/* Send a message to taxi central asking for taxis */
 		
 		
-		// Try to enter taxi
-
 	}
 
 	@Override
