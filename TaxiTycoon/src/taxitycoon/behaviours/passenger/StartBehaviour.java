@@ -6,7 +6,7 @@ import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.SimAgent;
 
-public class WalkingToNearestStop extends Behaviour {
+public class StartBehaviour extends Behaviour {
 
 	/**
 	 * 
@@ -45,7 +45,6 @@ public class WalkingToNearestStop extends Behaviour {
 			
 			/* Check if we should walk or take a cab */
 			if (costToNearestStop > costToDestination){
-				System.out.println("going to destination directly: " + passengerAgent.getDestination().toString());
 				destination = passengerAgent.getDestination();
 			} else {
 				destination = nearestStop;

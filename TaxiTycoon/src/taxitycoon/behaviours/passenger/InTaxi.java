@@ -17,7 +17,7 @@ public class InTaxi extends Behaviour {
 		
 		/* Should never happen. In case it does go to the initial behaviour */
 		if(!passengerAgent.isOnTaxi()){
-			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.WalkingToNearestStop());
+			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.StartBehaviour());
 			return;
 		}
 		

@@ -52,7 +52,7 @@ public class PassengerAgent extends SimAgent {
 		_startPosition = initialPos;
 		_currentPosition = initialPos;
 		
-		_currentBehaviour = new taxitycoon.behaviours.passenger.WalkingToNearestStop();
+		_currentBehaviour = new taxitycoon.behaviours.passenger.StartBehaviour();
 		_destination = new Pair<Integer, Integer>(29, 29);
 		
 	}
@@ -95,7 +95,7 @@ public class PassengerAgent extends SimAgent {
 	}
 	
 	void changeToWalkingToNearestStopBehaviour(){
-		replaceBehaviour(new taxitycoon.behaviours.passenger.WalkingToNearestStop());
+		replaceBehaviour(new taxitycoon.behaviours.passenger.StartBehaviour());
 	}
 	
 	public void setDestination(Pair<Integer, Integer> destination){
