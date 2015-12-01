@@ -16,6 +16,7 @@ public class Waiting extends Behaviour {
 	public void action() {
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
 		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(0,1));
+
 	}
 
 	@Override

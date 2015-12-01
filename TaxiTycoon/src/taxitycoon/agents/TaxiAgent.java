@@ -11,10 +11,16 @@ public class TaxiAgent extends SimAgent {
 	/* Common variables to all taxi agents */
 	static private boolean _taxiMapCalculated = false;
 	static private char[][] _map = null; /* col x line */
+	static final private int _gasMax = 600;
 	
 	/* Individual variables */
 	private int _maximumCapacity = 4;
 	private int _numberOfPassengers = 0;
+	
+	private int _gas = _gasMax;
+	private int _totalGasSpent = 0;
+	private int _numberOfRefuels = 0;
+	private int _totalGasRefuelAmount = 0;
 
 	/* Static methods */
 	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads, ArrayList<Pair<Integer, Integer>> stops, ArrayList<Pair<Integer, Integer>> refuelStations){
@@ -65,18 +71,26 @@ public class TaxiAgent extends SimAgent {
 			return false;
 		}
 		
+		/* Check if we have gas */
+		if (_gas <= 0) {
+			return false;
+		}
+		
 		/* Check if it is road */
 		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapRoad){
+			gasReduce();
 			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
 		}
 		
 		/* Check if it is stop */
 		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapStop){
+			gasReduce();
 			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
 		}
 		
 		/* Check if it is refuel station */
 		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapRefuel){
+			gasRefuel();
 			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
 		}
 		
@@ -106,9 +120,43 @@ public class TaxiAgent extends SimAgent {
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
 	}
 	
+	public int getGasInTank(){
+		return _gas;
+	}
+	
+	public int getTotalGasSpent(){
+		return _totalGasSpent;
+	}
+	
+	public int getTotalGasRefuelAmount(){
+		return _totalGasRefuelAmount;
+	}
+	
+	public int getNumberOfRefuels(){
+		return _numberOfRefuels;
+	}
+	
+	/* Fuel costs */
+	private void gasRefuel(){
+		_numberOfRefuels++;
+		_totalGasRefuelAmount += _gasMax - _gas;
+		_gas = _gasMax;
+	}
+	
+	private void gasReduce(){
+		if (_gas > 0){
+			_gas--;
+			_totalGasSpent++;
+		} else {
+			System.out.println("BUG: Attempting to reduce gas when there is none");
+		}
+	}
+	
 	/* Travel costs */
 	public int getCostToPoint(Pair<Integer, Integer> point){
 		// TODO: Check if possible to get to point
 		return SimAgent.getCostBetweenTwoPoints(_currentPosition, point);
 	}
+	
+	
 }
