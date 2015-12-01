@@ -100,12 +100,16 @@ public abstract class SimAgent extends Agent {
 	abstract protected void _addInitialBehaviour();
 	
 	/* Behaviour replacement method */
-	void replaceBehaviour(Behaviour newBehaviour){
+	public void replaceBehaviour(Behaviour newBehaviour){
 		if (_currentBehaviour != null) {
 			removeBehaviour(_currentBehaviour);
 		}
 		
 		_currentBehaviour = newBehaviour;
 		addBehaviour(_currentBehaviour);
+	}
+
+	public static int getCostBetweenTwoPoints(Pair<Integer, Integer> pointA, Pair<Integer, Integer> pointB){
+		return Math.abs(pointA.getValue0() - pointB.getValue0()) + Math.abs(pointA.getValue1() - pointB.getValue1());
 	}
 }

@@ -103,12 +103,18 @@ public class PassengerAgent extends SimAgent {
 	
 	public Pair<Integer, Integer> getNearestStop(){
 		Pair<Integer, Integer> nearestStop = null;
+		int currentBest = 0;
 		
 		for(Pair<Integer, Integer> stop : _Stops){
 			if (nearestStop == null) {
 				nearestStop = stop;
+				currentBest = SimAgent.getCostBetweenTwoPoints(_currentPosition, stop);
 			} else {
-				
+				int cost = SimAgent.getCostBetweenTwoPoints(_currentPosition, stop);
+				if (cost < currentBest) {
+					nearestStop = stop;
+					currentBest = cost;
+				}
 			}
 		}
 		

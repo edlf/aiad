@@ -12,6 +12,7 @@ public class WalkingToNearestStop extends Behaviour {
 	 */
 	private static final long serialVersionUID = 6833600371259913934L;
 	private boolean isOnStop = false;
+	private Pair<Integer, Integer> nearestStop = null;
 	private int tic = 0;
 
 	@Override
@@ -21,6 +22,13 @@ public class WalkingToNearestStop extends Behaviour {
 		/* If on stop, change behaviour to waiting */
 		if(myPassengerAgent.isOnStop()){
 			isOnStop = true;
+			myPassengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.Waiting());
+			return;
+		}
+		
+		/* Get nearest stop */
+		if(nearestStop == null){
+			nearestStop = myPassengerAgent.getNearestStop();
 		}
 		
 		/* Walk to destination (every 10 tics) */
