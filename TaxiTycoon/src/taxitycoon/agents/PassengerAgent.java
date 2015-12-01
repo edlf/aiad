@@ -12,6 +12,7 @@ public class PassengerAgent extends SimAgent {
 	/* Common variables to all passenger agents */
 	private static boolean _passengerMapCalculated = false;
 	private static char[][] _map = null; /* col x line */
+	private static ArrayList<Pair<Integer, Integer>> _Stops;
 	
 	/* Individual variables */
 	private Pair<Integer, Integer> _destination;
@@ -37,6 +38,7 @@ public class PassengerAgent extends SimAgent {
 		}
 		
 		/* Fill stops */
+		_Stops = stops;
 		for(Pair<Integer, Integer> stop : stops){
 			_map[stop.getValue0()][stop.getValue1()] = _mapStop;
 		}
@@ -49,7 +51,7 @@ public class PassengerAgent extends SimAgent {
 		_startPosition = initialPos;
 		_currentPosition = initialPos;
 		
-		_currentBehaviour = new taxitycoon.behaviours.passenger.Waiting();
+		_currentBehaviour = new taxitycoon.behaviours.passenger.WalkingToNearestStop();
 		_destination = new Pair<Integer, Integer>(30, 30);
 		
 	}
@@ -99,6 +101,20 @@ public class PassengerAgent extends SimAgent {
 		_destination = destination;
 	}
 	
+	public Pair<Integer, Integer> getNearestStop(){
+		Pair<Integer, Integer> nearestStop = null;
+		
+		for(Pair<Integer, Integer> stop : _Stops){
+			if (nearestStop == null) {
+				nearestStop = stop;
+			} else {
+				
+			}
+		}
+		
+		return nearestStop;		
+	}
+	
 	public Pair<Integer, Integer> getDestination(){
 		return _destination;
 	}
@@ -115,5 +131,4 @@ public class PassengerAgent extends SimAgent {
 	public boolean hasReachedDestination(){
 		return (_currentPosition.equals(_destination));
 	}
-
 }

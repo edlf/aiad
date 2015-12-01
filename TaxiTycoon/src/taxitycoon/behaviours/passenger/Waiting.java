@@ -23,10 +23,7 @@ public class Waiting extends Behaviour {
 			return;
 		}
 		
-		// If on grass
-		if (myPassengerAgent.isOnGrass()){
-			myPassengerAgent.relativeMove(new Pair<Integer, Integer>(0,1));
-		}
+
 		
 		/* Go to stop */
 		
