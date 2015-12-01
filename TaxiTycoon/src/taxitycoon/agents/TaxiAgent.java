@@ -19,9 +19,14 @@ public class TaxiAgent extends SimAgent {
 	private int _numberOfPassengers = 0;
 	
 	private int _gas = _gasMax;
-	private int _totalGasSpent = 0;
+	private long _totalGasSpent = 0;
 	private int _numberOfRefuels = 0;
-	private int _totalGasRefuelAmount = 0;
+	private long _totalGasRefuelAmount = 0;
+	
+	private long _ticksRefueling = 0;
+	private long _ticksPickingPassenger = 0;
+	private long _ticksInTransit = 0;
+	private long _ticksWaiting = 0;
 
 	/* Static methods */
 	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads, ArrayList<Pair<Integer, Integer>> stops, ArrayList<Pair<Integer, Integer>> refuelStations){
@@ -108,6 +113,26 @@ public class TaxiAgent extends SimAgent {
 		_totalTicks++;
 	}
 	
+	public void increaseWaitingTick(){
+		increaseTick();
+		_ticksWaiting++;
+	}
+	
+	public void increaseRefuelingTick(){
+		increaseTick();
+		_ticksRefueling++;
+	}
+	
+	public void increasePickingPassengerTick(){
+		increaseTick();
+		_ticksPickingPassenger++;
+	}
+	
+	public void increaseInTransitTick(){
+		increaseTick();
+		_ticksInTransit++;
+	}
+	
 	/* Taxi status queries */
 	public boolean isTaxiFull(){
 		return (_numberOfPassengers == _maximumCapacity);
@@ -129,11 +154,11 @@ public class TaxiAgent extends SimAgent {
 		return _gas;
 	}
 	
-	public int getTotalGasSpent(){
+	public long getTotalGasSpent(){
 		return _totalGasSpent;
 	}
 	
-	public int getTotalGasRefuelAmount(){
+	public long getTotalGasRefuelAmount(){
 		return _totalGasRefuelAmount;
 	}
 	
@@ -143,6 +168,22 @@ public class TaxiAgent extends SimAgent {
 	
 	public boolean isGasOnReserve(){
 		return (_gas <= _gasReserve);
+	}
+	
+	public long getWaitingTicks(){
+		return _ticksWaiting;
+	}
+	
+	public long getRefuelingTicks(){
+		return _ticksRefueling;
+	}
+	
+	public long getPickingPassengerTicks(){
+		return _ticksPickingPassenger;
+	}
+	
+	public long getInTransitTicks(){
+		return _ticksInTransit;
 	}
 	
 	/* Fuel costs */

@@ -19,6 +19,8 @@ public class InTransit extends Behaviour {
 			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.NoGas());
 			return;
 		}
+		
+		taxiAgent.increaseInTransitTick();
 
 	}
 

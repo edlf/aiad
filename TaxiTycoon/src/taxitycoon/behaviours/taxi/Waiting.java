@@ -22,6 +22,8 @@ public class Waiting extends Behaviour {
 			return;
 		}
 		
+		taxiAgent.increaseWaitingTick();
+		
 		/* Check if we are on reserve */
 		if(taxiAgent.isGasOnReserve()){
 			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.Refueling());

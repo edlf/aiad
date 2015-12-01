@@ -20,6 +20,8 @@ public class Refueling extends Behaviour {
 			return;
 		}
 		
+		taxiAgent.increaseRefuelingTick();
+		
 		/* Check if we are on a refueling station */
 		if(taxiAgent.isOnRefuelStation()){
 			taxiAgent.gasRefuel();
