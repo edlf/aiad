@@ -24,6 +24,8 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	/* Variables */
 	private MapLoader _mapLoader;
 	private final String _contextID = "TaxiTycoon";
+	private int currentTaxiID = 0;
+	private int currentPassengerID = 0;
 	
 	/* Graphical representation */
 	private Grid<Object> _grid;
@@ -100,21 +102,27 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private void launchAgents(){
 		try {
 			/* Create taxis */
-			int i = 0;
 			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getTaxiLocations()){
-				_mainContainer.acceptNewAgent("Taxi[" + i + "]", new TaxiAgent(taxiLocation)).start();
-				i++;
+				addTaxiAgent(taxiLocation);
 			}
 			
 			/* Create passengers */
-			int j = 0;
-			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getPassengerLocations()){
-				_mainContainer.acceptNewAgent("Passenger[" + j + "]", new PassengerAgent(taxiLocation)).start();
-				j++;
+			for (Pair<Integer, Integer> passengerLocation : _mapLoader.getPassengerLocations()){
+				addPassengerAgent(passengerLocation);
 			}
 			
 		} catch (StaleProxyException e) {
 			System.err.println("Connection with Jade lost.");
 		}
+	}
+	
+	private void addTaxiAgent(Pair<Integer, Integer> taxiLocation) throws StaleProxyException {
+		_mainContainer.acceptNewAgent("Taxi[" + currentTaxiID + "]", new TaxiAgent(taxiLocation)).start();
+		currentTaxiID++;
+	}
+	
+	private void addPassengerAgent(Pair<Integer, Integer> passengerLocation) throws StaleProxyException {
+		_mainContainer.acceptNewAgent("Passenger[" + currentPassengerID + "]", new PassengerAgent(passengerLocation)).start();
+		currentPassengerID++;
 	}
 }

@@ -1,6 +1,7 @@
 package taxitycoon.behaviours.passenger;
 
 import sajas.core.behaviours.Behaviour;
+import taxitycoon.agents.PassengerAgent;
 
 public class TravelComplete extends Behaviour {
 
@@ -11,6 +12,7 @@ public class TravelComplete extends Behaviour {
 
 	@Override
 	public void action() {
+		((PassengerAgent) myAgent).doDelete();
 	}
 
 	@Override
