@@ -23,6 +23,8 @@ public class Waiting extends Behaviour {
 			return;
 		}
 		
+		passengerAgent.increaseWaitingTick();
+		
 		/* Check if we have a taxi available */
 
 		

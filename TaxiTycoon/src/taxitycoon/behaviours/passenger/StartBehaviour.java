@@ -28,10 +28,11 @@ public class StartBehaviour extends Behaviour {
 		/* If on stop, change behaviour to waiting */
 		if(passengerAgent.isOnStop()){
 			behaviourDone = true;
+			passengerAgent.increaseWaitingTick();
 			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.Waiting());
 			return;
 		}
-					
+		
 		/* Check were we are going */
 		if(destination == null){
 			/* Get nearest stop */
@@ -71,6 +72,7 @@ public class StartBehaviour extends Behaviour {
 				}
 			}
 		}
+		passengerAgent.increaseWalkingTick();
 	}
 
 	@Override

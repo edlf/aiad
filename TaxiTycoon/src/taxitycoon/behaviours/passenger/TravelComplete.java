@@ -12,6 +12,7 @@ public class TravelComplete extends Behaviour {
 
 	@Override
 	public void action() {
+		((PassengerAgent) myAgent).printStats();
 		((PassengerAgent) myAgent).doDelete();
 	}
 

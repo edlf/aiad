@@ -21,6 +21,8 @@ public class InTaxi extends Behaviour {
 			return;
 		}
 		
+		passengerAgent.increaseInTaxiTick();
+		
 		/* Check if we are currently inside a taxi and not on the destination*/
 		if (passengerAgent.isOnTaxi() && !passengerAgent.hasReachedDestination()){
 			return;

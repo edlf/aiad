@@ -17,6 +17,9 @@ public class PassengerAgent extends SimAgent {
 	/* Individual variables */
 	private Pair<Integer, Integer> _destination;
 	private boolean _inTaxi = false;
+	private long _ticksWalking = 0;
+	private long _ticksInTaxi = 0;
+	private long _ticksWaiting = 0;
 	
 	/* Static methods */
 	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads, ArrayList<Pair<Integer, Integer>> stops){
@@ -94,6 +97,25 @@ public class PassengerAgent extends SimAgent {
 		replaceBehaviour(_currentBehaviour);
 	}
 	
+	protected void increaseTick(){
+		_totalTicks++;
+	}
+	
+	public void increaseWaitingTick(){
+		increaseTick();
+		_ticksWaiting++;
+	}
+	
+	public void increaseWalkingTick(){
+		increaseTick();
+		_ticksWalking++;
+	}
+	
+	public void increaseInTaxiTick(){
+		increaseTick();
+		_ticksInTaxi++;
+	}
+	
 	void changeToWalkingToNearestStopBehaviour(){
 		replaceBehaviour(new taxitycoon.behaviours.passenger.StartBehaviour());
 	}
@@ -141,6 +163,23 @@ public class PassengerAgent extends SimAgent {
 	
 	public boolean hasReachedDestination(){
 		return (_currentPosition.equals(_destination));
+	}
+	
+	public long getTicksWaiting(){
+		return _ticksWaiting;
+	}
+	
+	public long getTicksWalking(){
+		return _ticksWalking;
+	}
+	
+	public long getTicksInTaxi(){
+		return _ticksInTaxi;
+	}
+	
+	public void printStats(){
+		System.out.println(getLocalName() + " spent ticks: " + getTotalTicks());
+		System.out.println(getLocalName() + " walking: " + getTicksWalking() + " waiting: " + getTicksWaiting() + " in taxi: " + getTicksInTaxi());
 	}
 	
 	/* Travel costs */

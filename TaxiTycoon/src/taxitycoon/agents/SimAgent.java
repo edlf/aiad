@@ -32,6 +32,8 @@ public abstract class SimAgent extends Agent {
 	/* Behaviour */
 	protected Behaviour _currentBehaviour = null;
 	
+	protected long _totalTicks = 0;
+	
 	/* Static sets */
 	static public void setupMap(Grid<Object> grid, Pair<Integer, Integer> mapSize){
 		if (_baseMapSetupDone) {
@@ -110,9 +112,17 @@ public abstract class SimAgent extends Agent {
 		System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 
+	/* Cost methods */
 	public static int getCostBetweenTwoPoints(Pair<Integer, Integer> pointA, Pair<Integer, Integer> pointB){
 		return Math.abs(pointA.getValue0() - pointB.getValue0()) + Math.abs(pointA.getValue1() - pointB.getValue1());
 	}
 	
 	abstract public int getCostToPoint(Pair<Integer, Integer> point);
+	
+	/* Ticks */
+	public long getTotalTicks(){
+		return _totalTicks;
+	}
+	
+	abstract protected void increaseTick();
 }

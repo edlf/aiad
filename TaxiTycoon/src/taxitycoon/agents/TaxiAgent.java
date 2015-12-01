@@ -104,6 +104,10 @@ public class TaxiAgent extends SimAgent {
 		replaceBehaviour(_currentBehaviour);
 	}
 	
+	protected void increaseTick(){
+		_totalTicks++;
+	}
+	
 	/* Taxi status queries */
 	public boolean isTaxiFull(){
 		return (_numberOfPassengers == _maximumCapacity);
