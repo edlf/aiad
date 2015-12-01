@@ -2,10 +2,10 @@ package taxitycoon.behaviours.taxi;
 
 import org.javatuples.*;
 
-import sajas.core.behaviours.CyclicBehaviour;
+import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 
-public class Waiting extends CyclicBehaviour {
+public class Waiting extends Behaviour {
 
 	/**
 	 * 
@@ -16,6 +16,11 @@ public class Waiting extends CyclicBehaviour {
 	public void action() {
 		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
 		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(0,1));
+	}
+
+	@Override
+	public boolean done() {
+		return false;
 	}
 
 }
