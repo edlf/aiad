@@ -75,30 +75,8 @@ public class MapLoader {
 	    			}
 	    		}
 	    	}
-	        
-	    	boolean sanityChecksPass = true;
-	    	
-	    	if (_taxiLocations.size() == 0) {
-	    		System.out.println("Map was sucessfuly loaded, but it is missing taxis.");
-	    		sanityChecksPass = false;
-	    	}
-	    	
-	    	if (_passengerLocations.size() == 0) {
-	    		System.out.println("Map was sucessfuly loaded, but it is missing passengers.");
-	    		sanityChecksPass = false;
-	    	}
-	    	
-	    	if (_taxiRefuelLocations.size() == 0) {
-	    		System.out.println("Map was sucessfuly loaded, but it is missing taxi refuel stations.");
-	    		sanityChecksPass = false;
-	    	}
-	    	
-	    	if (_taxiPickupLocations.size() == 0) {
-	    		System.out.println("Map was sucessfuly loaded, but it is missing taxi stops.");
-	    		sanityChecksPass = false;
-	    	}
-	    	
-	    	if (sanityChecksPass) {
+	        	    	
+	    	if (_sanityChecks()) {
 		    	_mapSize = new Pair<Integer, Integer>(mapX, mapY);
 			    System.out.println("Map sucessfuly loaded.");
 	    	} else {
@@ -106,26 +84,63 @@ public class MapLoader {
 	    	}
 	}
 	
-	private void _loadHardcodedMap(){
-		System.out.println("Using hard coded map.");
+	private boolean _sanityChecks(){
+    	if (_taxiLocations.size() == 0) {
+    		System.out.println("Map is missing taxis.");
+    		return false;
+    	}
+    	
+    	if (_passengerLocations.size() == 0) {
+    		System.out.println("Map is missing passengers.");
+    		return false;
+    	}
+    	
+    	if (_taxiRefuelLocations.size() == 0) {
+    		System.out.println("Map is missing taxi refuel stations.");
+    		return false;
+    	}
+    	
+    	if (_taxiPickupLocations.size() == 0) {
+    		System.out.println("Map is missing taxi stops.");
+    		return false;
+    	}
+    	
+    	return true;
+	}
+	
+	private void _cleanUpArrays(){
 		_taxiLocations = new ArrayList<>();
 		_passengerLocations = new ArrayList<>();
 		_taxiPickupLocations = new ArrayList<>();
 		_taxiRefuelLocations = new ArrayList<>();
 		_roadLocations = new ArrayList<>();
-		_mapSize = new Pair<Integer, Integer>(30, 30);
+	}
+	
+	private void _loadHardcodedMap(){
+		System.out.println("Using hard coded map.");
+		_cleanUpArrays();
+		_mapSize = new Pair<Integer, Integer>(5, 5);
 		
-		_taxiLocations.add(new Pair<Integer, Integer>(1,1));
-		_taxiLocations.add(new Pair<Integer, Integer>(29,29));
+		_taxiLocations.add(new Pair<Integer, Integer>(1,1));		
+		_passengerLocations.add(new Pair<Integer, Integer>(3,3));
+
+		_roadLocations.add(new Pair<Integer, Integer>(1,1));
+		_roadLocations.add(new Pair<Integer, Integer>(2,1));
+		_roadLocations.add(new Pair<Integer, Integer>(3,1));
 		
-		_passengerLocations.add(new Pair<Integer, Integer>(4,1));
-		_passengerLocations.add(new Pair<Integer, Integer>(4,4));
-		_passengerLocations.add(new Pair<Integer, Integer>(4,8));
-		_passengerLocations.add(new Pair<Integer, Integer>(4,20));
+		_roadLocations.add(new Pair<Integer, Integer>(1,2));
+		_roadLocations.add(new Pair<Integer, Integer>(3,2));
 		
-		_taxiPickupLocations.add(new Pair<Integer, Integer>(15, 15));
+		_roadLocations.add(new Pair<Integer, Integer>(1,3));
+		_roadLocations.add(new Pair<Integer, Integer>(2,3));
+		_roadLocations.add(new Pair<Integer, Integer>(3,3));
 		
-		_taxiRefuelLocations.add(new Pair<Integer, Integer>(15, 20));
+		_taxiPickupLocations.add(new Pair<Integer, Integer>(1, 4));
+		_taxiRefuelLocations.add(new Pair<Integer, Integer>(3, 0));
+		
+		if(!_sanityChecks()){
+			System.out.println("Hardcoded map error.");
+		}
 	}
 		
 	public Pair<Integer, Integer> getMapSize(){
