@@ -107,6 +107,7 @@ public abstract class SimAgent extends Agent {
 		
 		_currentBehaviour = newBehaviour;
 		addBehaviour(_currentBehaviour);
+		System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 
 	public static int getCostBetweenTwoPoints(Pair<Integer, Integer> pointA, Pair<Integer, Integer> pointB){

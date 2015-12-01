@@ -29,7 +29,6 @@ public class WalkingToNearestStop extends Behaviour {
 		/* Get nearest stop */
 		if(nearestStop == null){
 			nearestStop = myPassengerAgent.getNearestStop();
-			System.out.println("Nearest stop = " + nearestStop.toString());
 		}
 		
 		/* Walk to destination (every 10 tics) */
