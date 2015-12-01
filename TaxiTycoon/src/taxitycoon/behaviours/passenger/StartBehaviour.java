@@ -1,10 +1,8 @@
 package taxitycoon.behaviours.passenger;
 
 import org.javatuples.Pair;
-
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
-import taxitycoon.agents.SimAgent;
 
 public class StartBehaviour extends Behaviour {
 
@@ -39,9 +37,9 @@ public class StartBehaviour extends Behaviour {
 			/* Get nearest stop */
 			Pair<Integer, Integer> nearestStop = passengerAgent.getNearestStop();
 			
-			/* Get destination cost */
-			int costToDestination = SimAgent.getCostBetweenTwoPoints(passengerAgent.getPosition(), passengerAgent.getDestination());
-			int costToNearestStop = SimAgent.getCostBetweenTwoPoints(passengerAgent.getPosition(), nearestStop);
+			/* Get nearest stop and destination cost */
+			int costToDestination = passengerAgent.getCostToDestination();
+			int costToNearestStop = passengerAgent.getCostToPoint(nearestStop);
 			
 			/* Check if we should walk or take a cab */
 			if (costToNearestStop > costToDestination){

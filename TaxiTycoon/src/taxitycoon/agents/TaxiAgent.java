@@ -105,4 +105,10 @@ public class TaxiAgent extends SimAgent {
 	public boolean isOnStop(){
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
 	}
+	
+	/* Travel costs */
+	public int getCostToPoint(Pair<Integer, Integer> point){
+		// TODO: Check if possible to get to point
+		return SimAgent.getCostBetweenTwoPoints(_currentPosition, point);
+	}
 }

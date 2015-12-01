@@ -113,4 +113,6 @@ public abstract class SimAgent extends Agent {
 	public static int getCostBetweenTwoPoints(Pair<Integer, Integer> pointA, Pair<Integer, Integer> pointB){
 		return Math.abs(pointA.getValue0() - pointB.getValue0()) + Math.abs(pointA.getValue1() - pointB.getValue1());
 	}
+	
+	abstract public int getCostToPoint(Pair<Integer, Integer> point);
 }

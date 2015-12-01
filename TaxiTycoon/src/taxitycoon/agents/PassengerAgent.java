@@ -142,4 +142,13 @@ public class PassengerAgent extends SimAgent {
 	public boolean hasReachedDestination(){
 		return (_currentPosition.equals(_destination));
 	}
+	
+	/* Travel costs */
+	public int getCostToPoint(Pair<Integer, Integer> point){
+		return SimAgent.getCostBetweenTwoPoints(_currentPosition, point);
+	}
+	
+	public int getCostToDestination(){
+		return getCostToPoint(_destination);
+	}
 }
