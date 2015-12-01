@@ -12,6 +12,7 @@ public class TaxiAgent extends SimAgent {
 	static private boolean _taxiMapCalculated = false;
 	static private char[][] _map = null; /* col x line */
 	static final private int _gasMax = 600;
+	static final private int _gasReserve = 60;
 	
 	/* Individual variables */
 	private int _maximumCapacity = 4;
@@ -136,8 +137,12 @@ public class TaxiAgent extends SimAgent {
 		return _numberOfRefuels;
 	}
 	
+	public boolean isGasOnReserve(){
+		return (_gas <= _gasReserve);
+	}
+	
 	/* Fuel costs */
-	private void gasRefuel(){
+	public void gasRefuel(){
 		_numberOfRefuels++;
 		_totalGasRefuelAmount += _gasMax - _gas;
 		_gas = _gasMax;

@@ -3,23 +3,18 @@ package taxitycoon.behaviours.taxi;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 
-public class InTransit extends Behaviour {
+public class NoGas extends Behaviour {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6454337518008277717L;
+	private static final long serialVersionUID = 149533442279510777L;
 
 	@Override
 	public void action() {
 		TaxiAgent taxiAgent = (TaxiAgent) myAgent;
-		
-		/* Check if we ran out of gas */
-		if(taxiAgent.getGasInTank() == 0){
-			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.NoGas());
-			return;
-		}
 
+		System.out.println(taxiAgent.getClass().getSimpleName() + " ran out of gas.");
 	}
 
 	@Override

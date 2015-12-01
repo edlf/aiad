@@ -14,8 +14,21 @@ public class Waiting extends Behaviour {
 
 	@Override
 	public void action() {
-		TaxiAgent myTaxiAgent = (TaxiAgent) myAgent;
-		myTaxiAgent.relativeMove(new Pair<Integer, Integer>(0,1));
+		TaxiAgent taxiAgent = (TaxiAgent) myAgent;
+		
+		/* Check if we ran out of gas */
+		if(taxiAgent.getGasInTank() == 0){
+			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.NoGas());
+			return;
+		}
+		
+		/* Check if we are on reserve */
+		if(taxiAgent.isGasOnReserve()){
+			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.Refueling());
+			return;
+		}
+		
+		taxiAgent.relativeMove(new Pair<Integer, Integer>(0,1));
 
 	}
 
