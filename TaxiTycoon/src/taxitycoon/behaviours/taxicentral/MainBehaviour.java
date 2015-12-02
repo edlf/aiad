@@ -1,6 +1,8 @@
 package taxitycoon.behaviours.taxicentral;
 
+import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.Behaviour;
+import taxitycoon.agents.TaxiCentral;
 
 public class MainBehaviour extends Behaviour {
 
@@ -11,13 +13,18 @@ public class MainBehaviour extends Behaviour {
 
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		TaxiCentral taxiCentral = (TaxiCentral) myAgent;
+		
+		/* Get message from queue */
+		ACLMessage msg = taxiCentral.receive();
+		if (msg != null) {
+			// Process the message
+		}
 
 	}
 
 	@Override
 	public boolean done() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
