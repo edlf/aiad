@@ -171,11 +171,11 @@ public class MapLoader {
 		return _taxiStopLocations.size();
 	}
 	
-	public ArrayList<Pair<Integer, Integer>> getTaxiLocations(){
+	public ArrayList<Pair<Integer, Integer>> getTaxiPositions(){
 		return _taxiLocations;
 	}
 	
-	public ArrayList<Pair<Integer, Integer>> getPassengerLocations(){
+	public ArrayList<Pair<Integer, Integer>> getPassengerPositions(){
 		return _passengerLocations;
 	}
 	
@@ -187,7 +187,7 @@ public class MapLoader {
 		return _taxiRefuelLocations;
 	}
 	
-	public ArrayList<Pair<Integer, Integer>> getTaxiStops(){
+	public ArrayList<Pair<Integer, Integer>> getTaxiStopPositions(){
 		return _taxiStopLocations;
 	}
 }

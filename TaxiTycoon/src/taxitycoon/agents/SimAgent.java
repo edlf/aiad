@@ -1,11 +1,14 @@
 package taxitycoon.agents;
 
+import java.util.ArrayList;
+
 import org.javatuples.Pair;
 
 import jade.domain.FIPAException;
 import repast.simphony.space.grid.Grid;
 import sajas.core.Agent;
 import sajas.domain.DFService;
+import taxitycoon.staticobjects.TaxiStop;
 import sajas.core.behaviours.Behaviour;
 
 /**
@@ -18,6 +21,7 @@ public abstract class SimAgent extends Agent {
 	/* Common Map */
 	protected static Pair<Integer, Integer> _mapSize;
 	protected static boolean _baseMapSetupDone = false;
+	protected static ArrayList<TaxiStop> _taxiStops = new ArrayList<>();
 	
 	/* Map Types */
 	protected static final char _mapRoad = '_';
@@ -35,7 +39,7 @@ public abstract class SimAgent extends Agent {
 	protected long _totalTicks = 0;
 	
 	/* Static sets */
-	static public void setupMap(Grid<Object> grid, Pair<Integer, Integer> mapSize){
+	static public void setupMap(Grid<Object> grid, Pair<Integer, Integer> mapSize, ArrayList<TaxiStop> taxiStops){
 		if (_baseMapSetupDone) {
 			System.out.println("BUG: Sim Agent map already calculated.");
 			return;
@@ -43,6 +47,7 @@ public abstract class SimAgent extends Agent {
 		
 		_grid = grid;
 		_mapSize = mapSize;
+		_taxiStops = taxiStops;
 		_baseMapSetupDone = true;
 	}
 	

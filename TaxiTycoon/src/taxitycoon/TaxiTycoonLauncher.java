@@ -29,7 +29,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private final String _contextID = "TaxiTycoon";
 	private int currentTaxiID = 0;
 	private int currentPassengerID = 0;
-	private ArrayList<TaxiStop> taxiStops = new ArrayList<>();
+	private ArrayList<TaxiStop> _taxiStops = new ArrayList<>();
 	
 	/* Graphical representation */
 	private Grid<Object> _grid;
@@ -88,20 +88,20 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		}
 		
 		/* Draw taxi stops */
-		for (Pair<Integer, Integer> taxiStopPos : _mapLoader.getTaxiStops()){
+		for (Pair<Integer, Integer> taxiStopPos : _mapLoader.getTaxiStopPositions()){
 			TaxiStop taxiStop  = new TaxiStop(taxiStopPos);
 			_grid.getAdder().add(_grid, taxiStop);
-			taxiStops.add(taxiStop);
+			_taxiStops.add(taxiStop);
 			mainContext.add(taxiStop);
 			_grid.moveTo(taxiStop, taxiStop.getX(), taxiStop.getY());
 		}
 		
 		/* Store grid and map size on all moving agents */
-		SimAgent.setupMap(_grid, _mapLoader.getMapSize());
+		SimAgent.setupMap(_grid, _mapLoader.getMapSize(), _taxiStops);
 		
 		/* Create static map for each moving agent type */
-		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops(), _mapLoader.getRefuelPositions());
-		PassengerAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStops());
+		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStopPositions(), _mapLoader.getRefuelPositions());
+		PassengerAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStopPositions());
 	}
 	
 	private void launchAgents(){
@@ -110,12 +110,12 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			addTaxiCentralAgent();
 			
 			/* Create taxis */
-			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getTaxiLocations()){
+			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getTaxiPositions()){
 				addTaxiAgent(taxiLocation);
 			}
 			
 			/* Create passengers */
-			for (Pair<Integer, Integer> passengerLocation : _mapLoader.getPassengerLocations()){
+			for (Pair<Integer, Integer> passengerLocation : _mapLoader.getPassengerPositions()){
 				addPassengerAgent(passengerLocation);
 			}
 			

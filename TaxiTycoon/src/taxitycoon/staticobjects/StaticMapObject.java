@@ -12,4 +12,8 @@ public abstract class StaticMapObject {
 	public int getY(){
 		return _pos.getValue1();
 	}
+	
+	public Pair<Integer, Integer> getPosition(){
+		return _pos;
+	}
 }
