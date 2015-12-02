@@ -27,6 +27,12 @@ public class Walking extends Behaviour {
 			return;
 		}
 		
+		/* If on taxi stop */
+		if(passengerAgent.hasReachedDestination()){
+			passengerAgent.replaceBehaviour(new TravelComplete());
+			return;
+		}
+		
 		/* Walk to destination (every 8 tics) */
 		tic++;
 		if (tic % 8 == 0){

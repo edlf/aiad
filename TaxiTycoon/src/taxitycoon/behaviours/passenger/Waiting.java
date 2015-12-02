@@ -16,8 +16,9 @@ public class Waiting extends Behaviour {
 	public void action() {
 		PassengerAgent passengerAgent = (PassengerAgent) myAgent;
 		
-		/* Check if we have reached the destination */
+		/* Should not happen, check if we have reached the destination */
 		if (passengerAgent.hasReachedDestination()){
+			System.out.println("BUG: PassengerAgent reached destination with waiting behaviour");
 			passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
@@ -25,7 +26,7 @@ public class Waiting extends Behaviour {
 		/* Check if we have a taxi available */
 		if(passengerAgent.isOnStop()){
 			
-			/* Get on what taxi stop were on and add ourself to the queue */
+			/* Get in what taxi stop were on and add ourself to the passenger queue */
 			for (TaxiStop taxiStop : passengerAgent.getTaxiStopsArray()){
 				if (taxiStop.getPosition().equals(passengerAgent.getPosition())){
 					
@@ -34,12 +35,14 @@ public class Waiting extends Behaviour {
 						
 						/* Send request to taxi at head of queue */
 						AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(taxiStop.getTaxiAtHeadOfQueue());
-						askTaxiForTravelMessage.sendMessage();	
+						askTaxiForTravelMessage.sendMessage();
 					}
 					
 					break;
 				}
 			}
+		} else {
+			System.out.println("BUG: PassengerAgent with waiting behaviour and not on a stop or destination");
 		}
 		
 		/* Send a message to taxi central asking for taxis */

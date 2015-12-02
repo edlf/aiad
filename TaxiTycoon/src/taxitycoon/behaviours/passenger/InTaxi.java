@@ -15,7 +15,7 @@ public class InTaxi extends Behaviour {
 	public void action() {
 		PassengerAgent passengerAgent = (PassengerAgent) myAgent;
 		
-		/* Should never happen. In case it does go to the initial behaviour */
+		/* Should never happen (unless taxi is out of gas). In case it does go to the initial behaviour */
 		if(!passengerAgent.isOnTaxi()){
 			passengerAgent.replaceBehaviour(new StartBehaviour());
 			return;
