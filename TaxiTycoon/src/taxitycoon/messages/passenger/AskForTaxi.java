@@ -2,6 +2,7 @@ package taxitycoon.messages.passenger;
 
 import jade.lang.acl.ACLMessage;
 import sajas.core.AID;
+import taxitycoon.agents.TaxiCentral;
 
 public class AskForTaxi extends ACLMessage {
 
@@ -13,7 +14,7 @@ public class AskForTaxi extends ACLMessage {
 	public AskForTaxi(){
 		super(ACLMessage.INFORM);
 		
-		addReceiver(new AID("Peter", AID.ISLOCALNAME));
+		addReceiver(new AID(TaxiCentral.class.getSimpleName(), AID.ISLOCALNAME));
 		setLanguage("English");
 		setOntology("Weather-forecast-ontology");
 		setContent("Today it’s raining"); 
