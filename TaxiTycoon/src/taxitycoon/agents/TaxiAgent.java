@@ -3,6 +3,7 @@ package taxitycoon.agents;
 import java.util.ArrayList;
 
 import org.javatuples.Pair;
+import taxitycoon.behaviours.taxi.*;
 
 /**
  * Taxi agent
@@ -66,7 +67,7 @@ public class TaxiAgent extends SimAgent {
 		this._startPosition = initialPos;
 		this._currentPosition = initialPos;
 		
-		this._currentBehaviour = new taxitycoon.behaviours.taxi.Waiting();
+		this._currentBehaviour = null;
 	}
 	
 	public boolean relativeMove(Pair<Integer,Integer> delta){
@@ -106,7 +107,7 @@ public class TaxiAgent extends SimAgent {
 	
 	@Override
 	protected void _addInitialBehaviour(){
-		replaceBehaviour(_currentBehaviour);
+		replaceBehaviour(new Waiting());
 	}
 	
 	protected void increaseTick(){

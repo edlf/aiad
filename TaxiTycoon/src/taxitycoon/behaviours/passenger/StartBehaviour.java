@@ -21,7 +21,7 @@ public class StartBehaviour extends Behaviour {
 		/* If on destination */
 		if(passengerAgent.hasReachedDestination()){
 			behaviourDone = true;
-			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.TravelComplete());
+			passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
 		
@@ -29,7 +29,7 @@ public class StartBehaviour extends Behaviour {
 		if(passengerAgent.isOnStop()){
 			behaviourDone = true;
 			passengerAgent.increaseWaitingTick();
-			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.Waiting());
+			passengerAgent.replaceBehaviour(new Waiting());
 			return;
 		}
 		

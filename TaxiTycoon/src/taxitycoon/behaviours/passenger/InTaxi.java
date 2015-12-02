@@ -17,7 +17,7 @@ public class InTaxi extends Behaviour {
 		
 		/* Should never happen. In case it does go to the initial behaviour */
 		if(!passengerAgent.isOnTaxi()){
-			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.StartBehaviour());
+			passengerAgent.replaceBehaviour(new StartBehaviour());
 			return;
 		}
 		
@@ -35,7 +35,7 @@ public class InTaxi extends Behaviour {
 			/* Inform taxi that we exited the taxi */ 
 			
 			/* Change behaviour to travel complete */
-			passengerAgent.replaceBehaviour(new taxitycoon.behaviours.passenger.TravelComplete());
+			passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
 

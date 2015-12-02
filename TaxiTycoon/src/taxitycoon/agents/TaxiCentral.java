@@ -2,9 +2,12 @@ package taxitycoon.agents;
 
 import jade.domain.FIPAException;
 import sajas.core.Agent;
+import sajas.core.behaviours.Behaviour;
 import sajas.domain.DFService;
+import taxitycoon.behaviours.taxicentral.*;
 
 public class TaxiCentral extends Agent {
+	private Behaviour _currentBehaviour =  null;
 
 	/* Setup and takedown methods */
 	@Override
@@ -25,6 +28,17 @@ public class TaxiCentral extends Agent {
 	}
 	
 	private void _addBehaviour(){
+		replaceBehaviour(new MainBehaviour());
+	}
+	
+	/* Behaviour replacement method */
+	public void replaceBehaviour(Behaviour newBehaviour){
+		if (_currentBehaviour != null) {
+			removeBehaviour(_currentBehaviour);
+		}
 		
+		_currentBehaviour = newBehaviour;
+		addBehaviour(_currentBehaviour);
+		System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 }

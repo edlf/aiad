@@ -18,7 +18,7 @@ public class Waiting extends Behaviour {
 		
 		/* Check if we ran out of gas */
 		if(taxiAgent.getGasInTank() == 0){
-			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.NoGas());
+			taxiAgent.replaceBehaviour(new NoGas());
 			return;
 		}
 		
@@ -26,7 +26,7 @@ public class Waiting extends Behaviour {
 		
 		/* Check if we are on reserve */
 		if(taxiAgent.isGasOnReserve()){
-			taxiAgent.replaceBehaviour(new taxitycoon.behaviours.taxi.Refueling());
+			taxiAgent.replaceBehaviour(new Refueling());
 			return;
 		}
 		
