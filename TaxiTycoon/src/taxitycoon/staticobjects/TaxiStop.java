@@ -26,6 +26,18 @@ public class TaxiStop extends StaticMapObject {
 		}
 	}
 	
+	public boolean isMyTurn(TaxiAgent taxiAgent){
+		return (taxisInQueue.poll() == taxiAgent);
+	}
+	
+	public TaxiAgent getTaxiAtHeadOfQueue(){
+		return taxisInQueue.poll();
+	}
+	
+	public boolean hasTaxiAvailable(){
+		return !taxisInQueue.isEmpty();
+	}
+	
 	public void addPassengerToQueue(PassengerAgent passengerAgent){
 		System.out.println("TaxiStop at " + _pos.toString() + " new passenger in queue");
 		passengersInQueue.add(passengerAgent);
@@ -36,5 +48,9 @@ public class TaxiStop extends StaticMapObject {
 			System.out.println("TaxiStop at " + _pos.toString() + " passenger has left the queue");
 			passengersInQueue.remove(passengerAgent);
 		}
+	}
+	
+	public boolean isMyTurn(PassengerAgent passengerAgent){
+		return (passengersInQueue.poll() == passengerAgent);
 	}
 }

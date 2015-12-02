@@ -13,4 +13,7 @@ public class ReplyWithDestination extends ACLMessage {
 		super(ACLMessage.CONFIRM);
 	}
 
+	public void sendMessage(){
+		
+	}
 }
