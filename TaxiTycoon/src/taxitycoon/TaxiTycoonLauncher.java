@@ -1,5 +1,7 @@
 package taxitycoon;
 
+import java.util.ArrayList;
+
 import org.javatuples.Pair;
 
 import jade.wrapper.StaleProxyException;
@@ -27,6 +29,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private final String _contextID = "TaxiTycoon";
 	private int currentTaxiID = 0;
 	private int currentPassengerID = 0;
+	private ArrayList<TaxiStop> taxiStops = new ArrayList<>();
 	
 	/* Graphical representation */
 	private Grid<Object> _grid;
@@ -88,6 +91,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		for (Pair<Integer, Integer> taxiStopPos : _mapLoader.getTaxiStops()){
 			TaxiStop taxiStop  = new TaxiStop(taxiStopPos);
 			_grid.getAdder().add(_grid, taxiStop);
+			taxiStops.add(taxiStop);
 			mainContext.add(taxiStop);
 			_grid.moveTo(taxiStop, taxiStop.getX(), taxiStop.getY());
 		}
