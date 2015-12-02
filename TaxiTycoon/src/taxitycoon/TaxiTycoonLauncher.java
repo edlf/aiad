@@ -15,6 +15,7 @@ import sajas.wrapper.ContainerController;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.SimAgent;
 import taxitycoon.agents.TaxiAgent;
+import taxitycoon.agents.TaxiCentral;
 import taxitycoon.staticobjects.Grass;
 import taxitycoon.staticobjects.RefuelStation;
 import taxitycoon.staticobjects.Road;
@@ -101,6 +102,9 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	
 	private void launchAgents(){
 		try {
+			/* Create taxi central */
+			addTaxiCentralAgent();
+			
 			/* Create taxis */
 			for (Pair<Integer, Integer> taxiLocation : _mapLoader.getTaxiLocations()){
 				addTaxiAgent(taxiLocation);
@@ -124,5 +128,9 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private void addPassengerAgent(Pair<Integer, Integer> passengerLocation) throws StaleProxyException {
 		_mainContainer.acceptNewAgent("Passenger[" + currentPassengerID + "]", new PassengerAgent(passengerLocation)).start();
 		currentPassengerID++;
+	}
+	
+	private void addTaxiCentralAgent() throws StaleProxyException {
+		_mainContainer.acceptNewAgent("TaxiCentral", new TaxiCentral()).start();
 	}
 }
