@@ -83,7 +83,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 			_grid.moveTo(refuelStation, refuelStation.getX(), refuelStation.getY());
 		}
 		
-		/* Draw taxi stations */
+		/* Draw taxi stops */
 		for (Pair<Integer, Integer> taxiStopPos : _mapLoader.getTaxiStops()){
 			TaxiStop taxiStop  = new TaxiStop(taxiStopPos);
 			_grid.getAdder().add(_grid, taxiStop);
