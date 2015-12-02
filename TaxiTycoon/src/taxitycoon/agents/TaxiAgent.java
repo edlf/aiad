@@ -64,12 +64,11 @@ public class TaxiAgent extends SimAgent {
 			for (int j = 0; j < _mapSize.getValue1(); j++){
 				if(_checkPositionForIntersection(i, j)){
 					_intersectionPositions.add(new Pair<Integer, Integer>(i, j));
-					System.out.print("[" + i + "," + j + "]");
 				}
 			}
 		}
 		
-		System.out.println("DEBUG: Found " + _intersectionPositions.size() + " intersections.");
+		System.out.println("Found " + _intersectionPositions.size() + " intersections.");
 		
 		_taxiMapCalculated = true;
 	}
@@ -101,24 +100,24 @@ public class TaxiAgent extends SimAgent {
 		
 		/* Right bar */
 		if(i == (_mapSize.getValue0() - 1)) {
-			return (_map[i][j-1] == _mapRoad && _map[i][j-1] == _mapRoad && _map[i-1][j] == _mapRoad); // -|
+			return (_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i-1][j] == _mapRoad); // -|
 		}
 		
 		/* Top bar */
 		if(j == 0) {
-			return (_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad && _map[i][j+1] == _mapRoad); // T
+			return (_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j+1] == _mapRoad); // T
 		}
 		
 		/* Down bar */
 		if(j == (_mapSize.getValue1() - 1)) {
-			return (_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad && _map[i][j-1] == _mapRoad); // inverted T
+			return (_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j-1] == _mapRoad); // inverted T
 		}
 		
 		/* Rest of the map */
-		return ((_map[i][j-1]   == _mapRoad && _map[i][j+1]   == _mapRoad && _map[i+1][j] == _mapRoad) || //
-				(_map[i][j-1]   == _mapRoad && _map[i][j-1]   == _mapRoad && _map[i-1][j] == _mapRoad) || //
-				(_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad && _map[i][j+1] == _mapRoad) || // regular T
-				(_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad && _map[i][j+1] == _mapRoad));  // upside T
+		return ((_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i+1][j] == _mapRoad) || //
+				(_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i-1][j] == _mapRoad) || //
+				(_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j+1] == _mapRoad) || // regular T
+				(_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j-1] == _mapRoad));  // upside T
 	}
 	
 	/* Non static methods */
