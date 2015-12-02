@@ -29,6 +29,7 @@ public class Waiting extends Behaviour {
 		
 		/* Check if we have a taxi available */
 		if(passengerAgent.isOnStop()){
+			
 			/* Get on what taxi stop were on and add ourself to the queue */
 			for (TaxiStop taxiStop : passengerAgent.getTaxiStopsArray()){
 				if (taxiStop.getPosition().equals(passengerAgent.getPosition())){
@@ -44,11 +45,6 @@ public class Waiting extends Behaviour {
 					break;
 				}
 			}
-			
-			// passengerAgent.getTaxiStopsArray()passengerAgent;
-			passengerAgent.increaseWaitingTick();
-			passengerAgent.replaceBehaviour(new Waiting());
-			return;
 		}
 		
 		/* Send a message to taxi central asking for taxis */
