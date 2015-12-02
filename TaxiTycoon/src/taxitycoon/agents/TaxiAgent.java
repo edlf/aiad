@@ -12,18 +12,18 @@ public class TaxiAgent extends SimAgent {
 	/* Common variables to all taxi agents */
 	static private boolean _taxiMapCalculated = false;
 	static private char[][] _map = null; /* col x line */
+	static private ArrayList<Pair<Integer, Integer>> _intersectionPositions = new ArrayList<>();
 	static final private int _gasMax = 600;
 	static final private int _gasReserve = 60;
 	
 	/* Individual variables */
 	private int _maximumCapacity = 4;
 	private int _numberOfPassengers = 0;
-	
 	private int _gas = _gasMax;
-	private long _totalGasSpent = 0;
 	private int _numberOfRefuels = 0;
-	private long _totalGasRefuelAmount = 0;
 	
+	private long _totalGasSpent = 0;
+	private long _totalGasRefuelAmount = 0;
 	private long _ticksRefueling = 0;
 	private long _ticksPickingPassenger = 0;
 	private long _ticksInTransit = 0;
@@ -59,7 +59,22 @@ public class TaxiAgent extends SimAgent {
 			_map[refuelStation.getValue0()][refuelStation.getValue1()] = _mapRefuel;
 		}
 		
+		/* Check for intersections */
+		for (int i = 0; i < _mapSize.getValue0(); i++){
+			for (int j = 0; j < _mapSize.getValue1(); j++){
+				if(checkPositionForIntersection(i, j)){
+					_intersectionPositions.add(new Pair<Integer, Integer>(i, j));
+				}
+			}
+		}
+		
+		System.out.println("DEBUG: Found " + _intersectionPositions.size() + " intersections.");
+		
 		_taxiMapCalculated = true;
+	}
+	
+	private static boolean checkPositionForIntersection(int i, int j) {
+		return false;
 	}
 	
 	/* Non static methods */

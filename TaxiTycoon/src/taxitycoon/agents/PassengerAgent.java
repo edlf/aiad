@@ -13,7 +13,7 @@ public class PassengerAgent extends SimAgent {
 	/* Common variables to all passenger agents */
 	private static boolean _passengerMapCalculated = false;
 	private static char[][] _map = null; /* col x line */
-	private static ArrayList<Pair<Integer, Integer>> _Stops;
+	private static ArrayList<Pair<Integer, Integer>> _stopsPositions;
 	
 	/* Individual variables */
 	private Pair<Integer, Integer> _destination;
@@ -43,7 +43,7 @@ public class PassengerAgent extends SimAgent {
 		}
 		
 		/* Fill stops */
-		_Stops = stops;
+		_stopsPositions = stops;
 		for(Pair<Integer, Integer> stop : stops){
 			_map[stop.getValue0()][stop.getValue1()] = _mapStop;
 		}
@@ -129,7 +129,7 @@ public class PassengerAgent extends SimAgent {
 		Pair<Integer, Integer> nearestStop = null;
 		int currentBest = 0;
 		
-		for(Pair<Integer, Integer> stop : _Stops){
+		for(Pair<Integer, Integer> stop : _stopsPositions){
 			if (nearestStop == null) {
 				nearestStop = stop;
 				currentBest = SimAgent.getCostBetweenTwoPoints(_currentPosition, stop);
