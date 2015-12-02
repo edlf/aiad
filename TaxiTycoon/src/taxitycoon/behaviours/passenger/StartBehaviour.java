@@ -4,6 +4,12 @@ import org.javatuples.Pair;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 
+/**
+ * Initial passenger agent behaviour
+ * 
+ * Does initial checks, and changes to appropriate behaviours.
+ */
+
 public class StartBehaviour extends Behaviour {
 	private static final long serialVersionUID = 6833600371259913934L;
 

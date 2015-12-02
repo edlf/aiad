@@ -3,11 +3,13 @@ package taxitycoon.behaviours.passenger;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 
-public class InTaxi extends Behaviour {
+/**
+ * Passenger agent behaviour while in taxi
+ * 
+ * 
+ */
 
-	/**
-	 * 
-	 */
+public class InTaxi extends Behaviour {
 	private static final long serialVersionUID = 5109545139429133391L;
 	private boolean hasArrivedDestination = false;
 

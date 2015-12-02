@@ -5,10 +5,17 @@ import org.javatuples.Pair;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 
+/**
+ * Walking behaviour
+ * 
+ * Receives destination as a constructor parameter.
+ * Destination can be either the taxi stop or the agent final destination.
+ * 
+ * Reaching the final destination changes the behaviour to the TravelComplete
+ * Behaviour. If it reaches a Taxi Stop it changes to the Waiting behaviour.
+ */
+
 public class Walking extends Behaviour {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7548278065214083296L;
 	private int tic = 0;
 	private Pair<Integer, Integer> _destination;

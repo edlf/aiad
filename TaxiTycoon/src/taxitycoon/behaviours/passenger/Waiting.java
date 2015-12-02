@@ -5,11 +5,13 @@ import taxitycoon.agents.PassengerAgent;
 import taxitycoon.staticobjects.TaxiStop;
 import taxitycoon.messages.passenger.*;
 
-public class Waiting extends Behaviour {
+/**
+ * Waiting behaviour 
+ * 
+ * 
+ */
 
-	/**
-	 * 
-	 */
+public class Waiting extends Behaviour {
 	private static final long serialVersionUID = 5553375322108245921L;
 
 	@Override
@@ -18,7 +20,7 @@ public class Waiting extends Behaviour {
 		
 		/* Should not happen, check if we have reached the destination */
 		if (passengerAgent.hasReachedDestination()){
-			System.out.println("BUG: PassengerAgent reached destination with waiting behaviour");
+			System.out.println("BUG: PassengerAgent reached destination while on waiting behaviour");
 			passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
