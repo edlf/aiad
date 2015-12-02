@@ -11,5 +11,7 @@ public class TaxiRequest extends ACLMessage {
 
 	public TaxiRequest(){
 		super(ACLMessage.REQUEST);
+		
+		
 	}
 }
