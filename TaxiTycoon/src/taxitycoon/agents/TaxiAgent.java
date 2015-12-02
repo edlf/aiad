@@ -73,8 +73,49 @@ public class TaxiAgent extends SimAgent {
 		_taxiMapCalculated = true;
 	}
 	
+	/* Check if position has more than 2 connections */
 	private static boolean checkPositionForIntersection(int i, int j) {
-		return false;
+		/* Check that we are within bonds */
+		if (i < 0 || j < 0 || i >= _mapSize.getValue0() || j >= _mapSize.getValue1()){
+			return false;
+		}
+		
+		/* Map corners are never intersections */
+		if ((i == 0 && j == 0) || (i == 0 && j == (_mapSize.getValue1() - 1)) ||
+			(i == (_mapSize.getValue0() - 1) && j == 0) || (i == (_mapSize.getValue0() - 1)) && j == (_mapSize.getValue1() - 1)){
+			return false;
+		}
+		
+		/* Check if it is road */
+		if (_map[i][j] != _mapRoad){
+			return false;
+		}
+		
+		/* Top bar */
+		if(i == 0) {
+			return (_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad &&_map[1+1][j] == _mapRoad );
+		}
+		
+		/* Bottom bar */
+		if(i == (_mapSize.getValue0() - 1)) {
+			return (_map[i][j-1] == _mapRoad && _map[i][j-1] == _mapRoad &&_map[1-1][j] == _mapRoad);
+		}
+		
+		/* Left bar */
+		if(j == 0) {
+			return (_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad &&_map[1][j+1] == _mapRoad);
+		}
+		
+		/* Right bar */
+		if(j == (_mapSize.getValue1() - 1)) {
+			return (_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad &&_map[1][j-1] == _mapRoad);
+		}
+		
+		/* Rest of the map */
+		return ((_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad &&_map[1+1][j] == _mapRoad) ||
+				(_map[i][j-1] == _mapRoad && _map[i][j-1] == _mapRoad &&_map[1-1][j] == _mapRoad) ||
+				(_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad &&_map[1][j+1] == _mapRoad) ||
+				(_map[i - 1][j] == _mapRoad && _map[i + 1][j] == _mapRoad &&_map[1][j-1] == _mapRoad));
 	}
 	
 	/* Non static methods */
