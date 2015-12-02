@@ -12,78 +12,50 @@ public class StartBehaviour extends Behaviour {
 	 */
 	private static final long serialVersionUID = 6833600371259913934L;
 	private boolean behaviourDone = false;
-	private Pair<Integer, Integer> destination = null;
-	private int tic = 0;
 
 	@Override
 	public void action() {
 		PassengerAgent passengerAgent = (PassengerAgent) myAgent;
-		
-		/* If on destination */
-		if(passengerAgent.hasReachedDestination()){
+
+		/* If on destination (do nothing) */
+		if (passengerAgent.hasReachedDestination()) {
 			behaviourDone = true;
 			passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
-		
+
 		/* If on stop, change behaviour to waiting */
-		if(passengerAgent.isOnStop()){
+		if (passengerAgent.isOnStop()) {
 			behaviourDone = true;
-			
+
 			/* Get on what taxi stop were on and add ourself to the queue */
-			for (TaxiStop taxiStop : passengerAgent.getTaxiStopsArray()){
-				if (taxiStop.getPosition().equals(passengerAgent.getPosition())){
+			for (TaxiStop taxiStop : passengerAgent.getTaxiStopsArray()) {
+				if (taxiStop.getPosition().equals(passengerAgent.getPosition())) {
 					taxiStop.addPassengerToQueue(passengerAgent);
 					break;
 				}
 			}
-			
-			// passengerAgent.getTaxiStopsArray()passengerAgent;
+
 			passengerAgent.increaseWaitingTick();
 			passengerAgent.replaceBehaviour(new Waiting());
 			return;
 		}
-		
-		/* Check were we are going */
-		if(destination == null){
-			/* Get nearest stop */
-			Pair<Integer, Integer> nearestStop = passengerAgent.getNearestStop();
-			
-			/* Get nearest stop and destination cost */
-			int costToDestination = passengerAgent.getCostToDestination();
-			int costToNearestStop = passengerAgent.getCostToPoint(nearestStop);
-			
-			/* Check if we should walk or take a cab */
-			if (costToNearestStop > costToDestination){
-				destination = passengerAgent.getDestination();
-			} else {
-				destination = nearestStop;
-			}
+
+		/* Looks like we are walking, check were we are going */
+
+		/* Get nearest stop */
+		Pair<Integer, Integer> nearestStop = passengerAgent.getNearestStop();
+
+		/* Get nearest stop and destination cost */
+		int costToDestination = passengerAgent.getCostToDestination();
+		int costToNearestStop = passengerAgent.getCostToPoint(nearestStop);
+
+		/* Check if we should walk or take a cab */
+		if (costToNearestStop > costToDestination) {
+			passengerAgent.replaceBehaviour(new Walking(passengerAgent.getDestination()));
+		} else {
+			passengerAgent.replaceBehaviour(new Walking(nearestStop));
 		}
-		
-		/* Walk to destination (every 8 tics) */
-		tic++;
-		if (tic % 8 == 0){
-			tic = 0;
-			
-			int deltaX = passengerAgent.getPosX() - destination.getValue0();
-			int deltaY = passengerAgent.getPosY() - destination.getValue1();
-			
-			if (deltaX != 0){
-				if (deltaX < 0){
-					passengerAgent.relativeMove(new Pair<Integer, Integer>(+1,0));
-				} else {
-					passengerAgent.relativeMove(new Pair<Integer, Integer>(-1,0));
-				}
-			} else if (deltaY != 0){
-				if (deltaY < 0){
-					passengerAgent.relativeMove(new Pair<Integer, Integer>(0,+1));
-				} else {
-					passengerAgent.relativeMove(new Pair<Integer, Integer>(0,-1));
-				}
-			}
-		}
-		passengerAgent.increaseWalkingTick();
 	}
 
 	@Override

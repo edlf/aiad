@@ -11,7 +11,6 @@ public class Waiting extends Behaviour {
 	 * 
 	 */
 	private static final long serialVersionUID = 5553375322108245921L;
-	private boolean hasArrivedDestination = false;
 
 	@Override
 	public void action() {
@@ -19,13 +18,9 @@ public class Waiting extends Behaviour {
 		
 		/* Check if we have reached the destination */
 		if (passengerAgent.hasReachedDestination()){
-			hasArrivedDestination = true;
-			
-			/*  */ 
+			passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
-		
-		passengerAgent.increaseWaitingTick();
 		
 		/* Check if we have a taxi available */
 		if(passengerAgent.isOnStop()){
@@ -49,12 +44,12 @@ public class Waiting extends Behaviour {
 		
 		/* Send a message to taxi central asking for taxis */
 		
-		
+		/* Guess we are still waiting */
+		passengerAgent.increaseWaitingTick();
 	}
 
 	@Override
 	public boolean done() {
-		return hasArrivedDestination;
+		return false;
 	}
-
 }
