@@ -3,6 +3,7 @@ package taxitycoon.behaviours.passenger;
 import org.javatuples.Pair;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
+import taxitycoon.staticobjects.TaxiStop;
 
 public class StartBehaviour extends Behaviour {
 
@@ -28,6 +29,16 @@ public class StartBehaviour extends Behaviour {
 		/* If on stop, change behaviour to waiting */
 		if(passengerAgent.isOnStop()){
 			behaviourDone = true;
+			
+			/* Get on what taxi stop were on and add ourself to the queue */
+			for (TaxiStop taxiStop : passengerAgent.getTaxiStopsArray()){
+				if (taxiStop.getPosition().equals(passengerAgent.getPosition())){
+					taxiStop.addPassengerToQueue(passengerAgent);
+					break;
+				}
+			}
+			
+			// passengerAgent.getTaxiStopsArray()passengerAgent;
 			passengerAgent.increaseWaitingTick();
 			passengerAgent.replaceBehaviour(new Waiting());
 			return;

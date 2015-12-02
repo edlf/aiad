@@ -79,6 +79,10 @@ public abstract class SimAgent extends Agent {
 		return _currentPosition.getValue1();
 	}
 	
+	public ArrayList<TaxiStop> getTaxiStopsArray(){
+		return _taxiStops;
+	}
+	
 	/* Relative move */
 	abstract public boolean relativeMove(Pair<Integer,Integer> delta);
 	
