@@ -63,10 +63,29 @@ public class TaxiAgent extends SimAgent {
 		/* Check for intersections and dead ends */
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				if(_checkPositionForIntersection(i, j)){
-					_intersectionPositions.add(new Pair<Integer, Integer>(i, j));
-				} else if(_checkPositionForDeadEnd(i, j)){
+				switch (_getPositionConnections(i, j)) {
+				case 0:
+					System.out.println("Lost point found! [" + i + "," + j+ "]");
+					break;
+					
+				case 1:
 					_deadEndPositions.add(new Pair<Integer, Integer>(i, j));
+					break;
+					
+				case 2:
+					
+					break;
+					
+				case 3:
+					_intersectionPositions.add(new Pair<Integer, Integer>(i, j));
+					break;
+					
+				case 4:
+					_intersectionPositions.add(new Pair<Integer, Integer>(i, j));
+					break;
+
+				default:
+					break;
 				}
 			}
 		}
@@ -77,62 +96,16 @@ public class TaxiAgent extends SimAgent {
 		_taxiMapCalculated = true;
 	}
 	
-	/* Check if position has more than 2 connections */
-	private static boolean _checkPositionForIntersection(int i, int j) {
+	/* Get position connections */
+	private static int _getPositionConnections(int i, int j){
 		/* Check that we are within bonds */
 		if (i < 0 || j < 0 || i >= _mapSize.getValue0() || j >= _mapSize.getValue1()){
-			return false;
-		}
-		
-		/* Map corners are never intersections */
-		if ((i == 0 && j == 0) ||
-			(i == 0 && j == (_mapSize.getValue1() - 1)) ||
-			(i == (_mapSize.getValue0() - 1) && j == 0) ||
-			(i == (_mapSize.getValue0() - 1)) && j == (_mapSize.getValue1() - 1)){
-			return false;
+			return -1;
 		}
 		
 		/* Check if it is road */
 		if (_map[i][j] != _mapRoad){
-			return false;
-		}
-		
-		/* Left bar */
-		if(i == 0) {
-			return (_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i+1][j] == _mapRoad); // |-
-		}
-		
-		/* Right bar */
-		if(i == (_mapSize.getValue0() - 1)) {
-			return (_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i-1][j] == _mapRoad); // -|
-		}
-		
-		/* Top bar */
-		if(j == 0) {
-			return (_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j+1] == _mapRoad); // T
-		}
-		
-		/* Down bar */
-		if(j == (_mapSize.getValue1() - 1)) {
-			return (_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j-1] == _mapRoad); // inverted T
-		}
-		
-		/* Rest of the map */
-		return ((_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i+1][j] == _mapRoad) || //
-				(_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i-1][j] == _mapRoad) || //
-				(_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j+1] == _mapRoad) || // regular T
-				(_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j-1] == _mapRoad));  // upside T
-	}
-	
-	private static boolean _checkPositionForDeadEnd(int i, int j){
-		/* Check that we are within bonds */
-		if (i < 0 || j < 0 || i >= _mapSize.getValue0() || j >= _mapSize.getValue1()){
-			return false;
-		}
-		
-		/* Check if it is road */
-		if (_map[i][j] != _mapRoad){
-			return false;
+			return -1;
 		}
 		
 		int numberOfConnections = 0;
@@ -148,7 +121,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 			
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 
 		if(i == (_mapSize.getValue0() - 1) && j == 0){
@@ -161,7 +134,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 		
 		if(i == 0 && j == (_mapSize.getValue1() - 1)){
@@ -174,7 +147,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 			
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 			
 		if	((i == (_mapSize.getValue0() - 1)) && j == (_mapSize.getValue1() - 1)){
@@ -187,7 +160,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 		
 		/* Left bar */
@@ -205,7 +178,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 			
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 		
 		/* Right bar */
@@ -223,7 +196,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 			
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 		
 		/* Top bar */
@@ -241,7 +214,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 			
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 		
 		/* Down bar */
@@ -259,7 +232,7 @@ public class TaxiAgent extends SimAgent {
 				numberOfConnections++;
 			}
 			
-			return (numberOfConnections == 1);
+			return numberOfConnections;
 		}
 		
 		/* Regular points */
@@ -280,7 +253,7 @@ public class TaxiAgent extends SimAgent {
 			numberOfConnections++;
 		}
 		
-		return (numberOfConnections == 1);
+		return numberOfConnections;
 	}
 	
 	private static boolean _checkPositionForRoadUp(int i, int j){
