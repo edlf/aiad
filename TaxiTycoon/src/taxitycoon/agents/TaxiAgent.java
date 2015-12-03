@@ -357,6 +357,10 @@ public class TaxiAgent extends SimAgent {
 	public boolean isOnRoad(){
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapRoad);
 	}
+	
+	public boolean isOnRoad(Pair<Integer, Integer> point){
+		return (_map[point.getValue0()][point.getValue1()] == _mapRoad);
+	}
 
 	public boolean isOnRefuelStation(){
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapRefuel);
@@ -432,7 +436,13 @@ public class TaxiAgent extends SimAgent {
 	public ArrayList<Pair<Integer, Integer>> getShortestPathTo(Pair<Integer, Integer> destination) {
 		ArrayList<Pair<Integer, Integer>> path = new ArrayList<>();
 		
+		/* Check if the destination is within bonds */
 		if (!_isPointWithinBonds(destination)){
+			return path;
+		}
+		
+		/* Check if we are on road and the destination is also on road */
+		if(!isOnRoad() || !isOnRoad(destination)){
 			return path;
 		}
 		
@@ -453,7 +463,7 @@ public class TaxiAgent extends SimAgent {
 		costMap[startI][startJ] = 0;
 		
 
-		// TODO Fill path
+		 
 		
 		
 		return path;
