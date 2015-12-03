@@ -8,7 +8,7 @@ import taxitycoon.agents.TaxiAgent;
 public class Waiting extends Behaviour {
 	private static final long serialVersionUID = 2163115385831517999L;
 	private TaxiAgent _taxiAgent;
-	private boolean test = false;
+	private static boolean test = false;
 
 	public Waiting() {
 		super();
@@ -37,8 +37,8 @@ public class Waiting extends Behaviour {
 		}
 		
 		if (!test){
-			_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
 			test = true;
+			_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
 		}
 		
 	}

@@ -466,7 +466,7 @@ public class TaxiAgent extends SimAgent {
 			return path;
 		}
 		
-		/* Create cost map and fill with -1 */
+		/* Create cost map and fill with 0 possible locations, -1 impossible locations */
 		int costMap[][] = new int[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
@@ -487,6 +487,7 @@ public class TaxiAgent extends SimAgent {
 		/* Add start pos */
 		queue.add(_currentPosition);
 		
+		/* Calculate costs */
 		while(!queue.isEmpty()){
 			Pair<Integer, Integer> currentPos = queue.poll();
 			
@@ -504,6 +505,7 @@ public class TaxiAgent extends SimAgent {
 			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0(), currentPos.getValue1() - 1));
 			
 			for(Pair<Integer, Integer> nextPos : nextPositions){
+				/* Skip points out of bonds */
 				if (!_isPointWithinBonds(nextPos)){
 					continue;
 				}
@@ -522,6 +524,7 @@ public class TaxiAgent extends SimAgent {
 		
 		Pair<Integer, Integer> currentPos = destination;
 		
+		/* Get the shortest path */
 		while(!currentPos.equals(_currentPosition)){
 			path.push(currentPos);
 			int currentLevel = costMap[currentPos.getValue0()][currentPos.getValue1()];
@@ -533,6 +536,7 @@ public class TaxiAgent extends SimAgent {
 			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0(), currentPos.getValue1() - 1));
 			
 			for(Pair<Integer, Integer> nextPos : nextPositions){
+				/* Skip points out of bonds */
 				if (!_isPointWithinBonds(nextPos)){
 					continue;
 				}
