@@ -28,9 +28,10 @@ public class InTransit extends Behaviour {
 			_pathToDestination = _taxiAgent.getShortestPathTo(_destination);
 		}
 		
-		/* No path obtained */
+		/* No path obtained or reached destination */
 		if (_pathToDestination.isEmpty()){
 			_taxiAgent.replaceBehaviour(new Waiting());
+			return;
 		}
 		
 		/* Check if we ran out of gas */
@@ -42,7 +43,9 @@ public class InTransit extends Behaviour {
 		_taxiAgent.increaseInTransitTick();
 		
 		/* Move towards destination */
-		
+		_taxiAgent.move(_pathToDestination.getFirst());
+		System.out.println(_pathToDestination.getFirst().toString());
+		_pathToDestination.removeFirst();
 
 	}
 
