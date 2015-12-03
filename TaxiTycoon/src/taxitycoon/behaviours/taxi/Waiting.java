@@ -30,7 +30,7 @@ public class Waiting extends Behaviour {
 			return;
 		}
 		
-		taxiAgent.relativeMove(new Pair<Integer, Integer>(0,1));
+		taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
 
 	}
 

@@ -51,6 +51,16 @@ public abstract class SimAgent extends Agent {
 		_baseMapSetupDone = true;
 	}
 	
+	/* Check if point is within map bounds */
+	protected static boolean _isPointWithinBonds(int i, int j){
+		/* Check that we are within bonds */
+		return (i >= 0 || j >= 0 || i < _mapSize.getValue0() || j < _mapSize.getValue1());
+	}
+	
+	protected static boolean _isPointWithinBonds(Pair<Integer, Integer> point){
+		return _isPointWithinBonds(point.getValue0(), point.getValue1());
+	}
+	
 	/* Direct map position methods */
 	protected boolean _move(Pair<Integer, Integer> newPosition){
 		/* Check if it is out of bonds */

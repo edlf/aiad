@@ -95,11 +95,12 @@ public class TaxiAgent extends SimAgent {
 		
 		_taxiMapCalculated = true;
 	}
+
 	
 	/* Get position connections */
 	private static int _getPositionConnections(int i, int j){
 		/* Check that we are within bonds */
-		if (i < 0 || j < 0 || i >= _mapSize.getValue0() || j >= _mapSize.getValue1()){
+		if (!_isPointWithinBonds(i,j)){
 			return -1;
 		}
 		
@@ -284,7 +285,7 @@ public class TaxiAgent extends SimAgent {
 		Pair<Integer, Integer> newPosition = new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1());
 		
 		/* Check if its out of bonds */
-		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
+		if (!_isPointWithinBonds(newPosition)){
 			return false;
 		}
 		
@@ -417,6 +418,11 @@ public class TaxiAgent extends SimAgent {
 	public int getCostToPoint(Pair<Integer, Integer> point){
 		// TODO: Check if possible to get to point
 		return SimAgent.getCostBetweenTwoPoints(_currentPosition, point);
+	}
+
+	public ArrayList<Pair<Integer, Integer>> getShortestPathTo(Pair<Integer, Integer> destination) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

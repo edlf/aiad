@@ -3,6 +3,7 @@ package taxitycoon.behaviours.taxicentral;
 import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiCentral;
+import taxitycoon.messages.taxicentral.TaxiRequest;
 
 public class MainBehaviour extends Behaviour {
 
@@ -21,6 +22,9 @@ public class MainBehaviour extends Behaviour {
 			// Process the message
 		}
 
+		
+		TaxiRequest taxiRequestMessage = new TaxiRequest();
+		// taxiRequestMessage
 	}
 
 	@Override

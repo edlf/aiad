@@ -65,7 +65,7 @@ public class PassengerAgent extends SimAgent {
 		Pair<Integer, Integer> newPosition = new Pair<Integer, Integer>(_currentPosition.getValue0() + delta.getValue0(), _currentPosition.getValue1() + delta.getValue1());
 		
 		/* Check if its out of bonds */
-		if (newPosition.getValue0() < 0 || newPosition.getValue1() < 0 || newPosition.getValue0() >= _mapSize.getValue0() || newPosition.getValue1() >= _mapSize.getValue1()){
+		if (!_isPointWithinBonds(newPosition)){
 			return false;
 		}
 		
