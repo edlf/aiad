@@ -1,11 +1,10 @@
 package taxitycoon.behaviours.taxi;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.javatuples.Pair;
 
 import sajas.core.behaviours.Behaviour;
-import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiAgent;
 
 public class InTransit extends Behaviour {
@@ -13,7 +12,7 @@ public class InTransit extends Behaviour {
 	private TaxiAgent _taxiAgent;
 	
 	private Pair<Integer, Integer> _destination;
-	private ArrayList<Pair<Integer, Integer>> _pathToDestination;
+	private LinkedList<Pair<Integer, Integer>> _pathToDestination;
 	
 	public InTransit(Pair<Integer, Integer> destination) {
 		super();
@@ -29,7 +28,8 @@ public class InTransit extends Behaviour {
 			_pathToDestination = _taxiAgent.getShortestPathTo(_destination);
 		}
 		
-		if (_pathToDestination == null){
+		/* No path obtained */
+		if (_pathToDestination.isEmpty()){
 			_taxiAgent.replaceBehaviour(new Waiting());
 		}
 		

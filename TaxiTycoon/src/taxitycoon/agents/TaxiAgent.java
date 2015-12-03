@@ -1,8 +1,10 @@
 package taxitycoon.agents;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.javatuples.Pair;
+
 import taxitycoon.behaviours.taxi.*;
 
 /**
@@ -433,8 +435,8 @@ public class TaxiAgent extends SimAgent {
 		return SimAgent.getCostBetweenTwoPoints(_currentPosition, point);
 	}
 
-	public ArrayList<Pair<Integer, Integer>> getShortestPathTo(Pair<Integer, Integer> destination) {
-		ArrayList<Pair<Integer, Integer>> path = new ArrayList<>();
+	public LinkedList<Pair<Integer, Integer>> getShortestPathTo(Pair<Integer, Integer> destination) {
+		LinkedList<Pair<Integer, Integer>> path = new LinkedList<>();
 		
 		/* Check if the destination is within bonds */
 		if (!_isPointWithinBonds(destination)){
@@ -451,20 +453,78 @@ public class TaxiAgent extends SimAgent {
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
 				if (_map[i][j] == _mapRoad){
-					costMap[i][j] = 999999;
+					costMap[i][j] = 0;
 				} else {
 					costMap[i][j] = -1;	
 				}
 			}
 		}
 		
-		/* Set current position with 0 cost */
+		/* Set current position with 1 cost */
 		int startI = _currentPosition.getValue0(), startJ = _currentPosition.getValue1();
-		costMap[startI][startJ] = 0;
-		
+		costMap[startI][startJ] = 1;
 
-		 
+		LinkedList<Pair<Integer, Integer>> queue = new LinkedList<>();
 		
+		/* Add start pos */
+		queue.add(_currentPosition);
+		
+		while(!queue.isEmpty()){
+			Pair<Integer, Integer> currentPos = queue.poll();
+			
+			/* Are we there yet? */
+			if (currentPos.equals(destination)){
+				break;
+			}
+			
+			int currentCost = costMap[currentPos.getValue0()][currentPos.getValue1()];
+			
+			ArrayList<Pair<Integer, Integer>> nextPositions = new ArrayList<>();
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0() + 1, currentPos.getValue1()));
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0(), currentPos.getValue1() + 1));
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0() - 1, currentPos.getValue1()));
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0(), currentPos.getValue1() - 1));
+			
+			for(Pair<Integer, Integer> nextPos : nextPositions){
+				if (!_isPointWithinBonds(nextPos)){
+					continue;
+				}
+				
+				if(costMap[nextPos.getValue0()][nextPos.getValue1()] == 0){
+					queue.add(nextPos);
+					costMap[nextPos.getValue0()][nextPos.getValue1()] = currentCost + 1;
+				}
+			}		
+		}
+		
+		/* We got nothing, return an empty path */
+		if (costMap[destination.getValue0()][destination.getValue1()] == 0){
+			return path;
+		}
+		
+		Pair<Integer, Integer> currentPos = destination;
+		
+		while(!currentPos.equals(_currentPosition)){
+			path.push(currentPos);
+			int currentLevel = costMap[currentPos.getValue0()][currentPos.getValue1()];
+			
+			ArrayList<Pair<Integer, Integer>> nextPositions = new ArrayList<>();
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0() + 1, currentPos.getValue1()));
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0(), currentPos.getValue1() + 1));
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0() - 1, currentPos.getValue1()));
+			nextPositions.add(new Pair<Integer, Integer>(currentPos.getValue0(), currentPos.getValue1() - 1));
+			
+			for(Pair<Integer, Integer> nextPos : nextPositions){
+				if (!_isPointWithinBonds(nextPos)){
+					continue;
+				}
+				
+				if(costMap[nextPos.getValue0()][nextPos.getValue1()] == currentLevel - 1){
+					currentPos = nextPos;
+					break;
+				}
+			}
+		}
 		
 		return path;
 	}
