@@ -96,7 +96,6 @@ public class TaxiAgent extends SimAgent {
 		_taxiMapCalculated = true;
 	}
 
-	
 	/* Get position connections */
 	private static int _getPositionConnections(int i, int j){
 		/* Check that we are within bonds */
@@ -426,12 +425,24 @@ public class TaxiAgent extends SimAgent {
 	}
 
 	public ArrayList<Pair<Integer, Integer>> getShortestPathTo(Pair<Integer, Integer> destination) {
+		ArrayList<Pair<Integer, Integer>> path = new ArrayList<>();
+		
 		if (!_isPointWithinBonds(destination)){
-			return new ArrayList<>();
+			return path;
 		}
 		
-		// TODO Auto-generated method stub
-		return new ArrayList<>();
+		/* Create cost map and fill with -1 */
+		int costMap[][] = new int[_mapSize.getValue0()][_mapSize.getValue1()];
+		for (int i = 0; i < _mapSize.getValue0(); i++){
+			for (int j = 0; j < _mapSize.getValue1(); j++){	
+				costMap[i][j] = -1;
+			}
+		}
+		
+		// TODO Fill path
+		
+		
+		return path;
 	}
 	
 	
