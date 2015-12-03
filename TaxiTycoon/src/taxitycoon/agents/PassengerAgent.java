@@ -53,8 +53,13 @@ public class PassengerAgent extends SimAgent {
 	
 	/* Non static methods */
 	public PassengerAgent(Pair<Integer, Integer> initialPos) {
-		_startPosition = initialPos;
-		_currentPosition = initialPos;
+		if(_isPointWithinBonds(initialPos)) {
+			this._startPosition = initialPos;
+		} else {
+			System.out.println("BUG: Invalid initial position for passenger agent");
+			this._startPosition = new Pair<Integer, Integer>(0, 0);
+		}	
+		_currentPosition = _startPosition;
 		
 		_currentBehaviour = null;
 		_destination = new Pair<Integer, Integer>(29, 29);

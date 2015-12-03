@@ -274,9 +274,14 @@ public class TaxiAgent extends SimAgent {
 	
 	/* Non static methods */
 	public TaxiAgent(Pair<Integer, Integer> initialPos) {
-		this._startPosition = initialPos;
-		this._currentPosition = initialPos;
+		if(_isPointWithinBonds(initialPos)) {
+			this._startPosition = initialPos;
+		} else {
+			System.out.println("BUG: Invalid initial position for taxi agent");
+			this._startPosition = new Pair<Integer, Integer>(0, 0);
+		}
 		
+		this._currentPosition = _startPosition;
 		this._currentBehaviour = null;
 	}
 	
@@ -434,11 +439,20 @@ public class TaxiAgent extends SimAgent {
 		/* Create cost map and fill with -1 */
 		int costMap[][] = new int[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
-			for (int j = 0; j < _mapSize.getValue1(); j++){	
-				costMap[i][j] = -1;
+			for (int j = 0; j < _mapSize.getValue1(); j++){
+				if (_map[i][j] == _mapRoad){
+					costMap[i][j] = 999999;
+				} else {
+					costMap[i][j] = -1;	
+				}
 			}
 		}
 		
+		/* Set current position with 0 cost */
+		int startI = _currentPosition.getValue0(), startJ = _currentPosition.getValue1();
+		costMap[startI][startJ] = 0;
+		
+
 		// TODO Fill path
 		
 		
