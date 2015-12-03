@@ -13,6 +13,7 @@ public class TaxiAgent extends SimAgent {
 	static private boolean _taxiMapCalculated = false;
 	static private char[][] _map = null; /* col x line */
 	static private ArrayList<Pair<Integer, Integer>> _intersectionPositions = new ArrayList<>();
+	static private ArrayList<Pair<Integer, Integer>> _deadEndPositions = new ArrayList<>();
 	static final private int _gasMax = 600;
 	static final private int _gasReserve = 60;
 	
@@ -59,16 +60,19 @@ public class TaxiAgent extends SimAgent {
 			_map[refuelStation.getValue0()][refuelStation.getValue1()] = _mapRefuel;
 		}
 		
-		/* Check for intersections */
+		/* Check for intersections and dead ends */
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
 				if(_checkPositionForIntersection(i, j)){
 					_intersectionPositions.add(new Pair<Integer, Integer>(i, j));
+				} else if(_checkPositionForDeadEnd(i, j)){
+					_deadEndPositions.add(new Pair<Integer, Integer>(i, j));
 				}
 			}
 		}
 		
 		System.out.println("Found " + _intersectionPositions.size() + " intersections.");
+		System.out.println("Found " + _deadEndPositions.size() + " dead ends.");
 		
 		_taxiMapCalculated = true;
 	}
@@ -118,6 +122,181 @@ public class TaxiAgent extends SimAgent {
 				(_map[i][j-1] == _mapRoad && _map[i][j+1] == _mapRoad && _map[i-1][j] == _mapRoad) || //
 				(_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j+1] == _mapRoad) || // regular T
 				(_map[i-1][j] == _mapRoad && _map[i+1][j] == _mapRoad && _map[i][j-1] == _mapRoad));  // upside T
+	}
+	
+	private static boolean _checkPositionForDeadEnd(int i, int j){
+		/* Check that we are within bonds */
+		if (i < 0 || j < 0 || i >= _mapSize.getValue0() || j >= _mapSize.getValue1()){
+			return false;
+		}
+		
+		/* Check if it is road */
+		if (_map[i][j] != _mapRoad){
+			return false;
+		}
+		
+		int numberOfConnections = 0;
+		
+		/* Map corners */
+		if (i == 0 && j == 0){
+			/* Right, Up */
+			if(_checkPositionForRoadUp(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadRight(i,j)) {
+				numberOfConnections++;
+			}
+			
+			return (numberOfConnections == 1);
+		}
+
+		if(i == (_mapSize.getValue0() - 1) && j == 0){
+			/* Left, Up */
+			if(_checkPositionForRoadUp(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadLeft(i,j)) {
+				numberOfConnections++;
+			}
+
+			return (numberOfConnections == 1);
+		}
+		
+		if(i == 0 && j == (_mapSize.getValue1() - 1)){
+			/* Right, Down */
+			if(_checkPositionForRoadDown(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadRight(i,j)) {
+				numberOfConnections++;
+			}
+			
+			return (numberOfConnections == 1);
+		}
+			
+		if	((i == (_mapSize.getValue0() - 1)) && j == (_mapSize.getValue1() - 1)){
+			/* Left, Down */
+			if(_checkPositionForRoadDown(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadLeft(i,j)) {
+				numberOfConnections++;
+			}
+
+			return (numberOfConnections == 1);
+		}
+		
+		/* Left bar */
+		if(i == 0) {
+			// |-
+			if(_checkPositionForRoadUp(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadDown(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadRight(i,j)) {
+				numberOfConnections++;
+			}
+			
+			return (numberOfConnections == 1);
+		}
+		
+		/* Right bar */
+		if(i == (_mapSize.getValue0() - 1)) {
+			// -|
+			if(_checkPositionForRoadUp(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadDown(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadLeft(i,j)) {
+				numberOfConnections++;
+			}
+			
+			return (numberOfConnections == 1);
+		}
+		
+		/* Top bar */
+		if(j == 0) {
+			// T
+			if(_checkPositionForRoadDown(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadLeft(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadRight(i,j)) {
+				numberOfConnections++;
+			}
+			
+			return (numberOfConnections == 1);
+		}
+		
+		/* Down bar */
+		if(j == (_mapSize.getValue1() - 1)) {
+			// inverted T
+			if(_checkPositionForRoadUp(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadLeft(i,j)) {
+				numberOfConnections++;
+			}
+			
+			if(_checkPositionForRoadRight(i,j)) {
+				numberOfConnections++;
+			}
+			
+			return (numberOfConnections == 1);
+		}
+		
+		/* Regular points */
+		
+		if(_checkPositionForRoadUp(i,j)) {
+			numberOfConnections++;
+		}
+		
+		if(_checkPositionForRoadDown(i,j)) {
+			numberOfConnections++;
+		}
+		
+		if(_checkPositionForRoadLeft(i,j)) {
+			numberOfConnections++;
+		}
+		
+		if(_checkPositionForRoadRight(i,j)) {
+			numberOfConnections++;
+		}
+		
+		return (numberOfConnections == 1);
+	}
+	
+	private static boolean _checkPositionForRoadUp(int i, int j){
+		return _map[i][j + 1] == _mapRoad;
+	}
+	
+	private static boolean _checkPositionForRoadDown(int i, int j){
+		return _map[i][j - 1] == _mapRoad;
+	}
+	
+	private static boolean _checkPositionForRoadLeft(int i, int j){
+		return _map[i - 1][j] == _mapRoad;
+	}
+	
+	private static boolean _checkPositionForRoadRight(int i, int j){
+		return _map[i + 1][j] == _mapRoad;
 	}
 	
 	/* Non static methods */
