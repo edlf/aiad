@@ -13,27 +13,35 @@ import taxitycoon.messages.passenger.*;
 
 public class Waiting extends Behaviour {
 	private static final long serialVersionUID = 5553375322108245921L;
+	private PassengerAgent _passengerAgent;
 
+	public Waiting() {
+		super();
+		_passengerAgent = null;
+	}
+	
 	@Override
-	public void action() {
-		PassengerAgent passengerAgent = (PassengerAgent) myAgent;
+	public void action() {	
+		if (_passengerAgent == null){
+			_passengerAgent = (PassengerAgent) myAgent;
+		}
 		
 		/* Should not happen, check if we have reached the destination */
-		if (passengerAgent.hasReachedDestination()){
+		if (_passengerAgent.hasReachedDestination()){
 			System.out.println("BUG: PassengerAgent reached destination while on waiting behaviour");
-			passengerAgent.replaceBehaviour(new TravelComplete());
+			_passengerAgent.replaceBehaviour(new TravelComplete());
 			return;
 		}
 		
 		/* Check if we have a taxi available */
-		if(passengerAgent.isOnStop()){
+		if(_passengerAgent.isOnStop()){
 			
 			/* Get in what taxi stop were on and add ourself to the passenger queue */
-			for (TaxiStop taxiStop : passengerAgent.getTaxiStopsArray()){
-				if (taxiStop.getPosition().equals(passengerAgent.getPosition())){
+			for (TaxiStop taxiStop : _passengerAgent.getTaxiStopsArray()){
+				if (taxiStop.getPosition().equals(_passengerAgent.getPosition())){
 					
 					/* Check if we have a taxi available and is our turn */
-					if(taxiStop.hasTaxiAvailable() && taxiStop.isMyTurn(passengerAgent)){
+					if(taxiStop.hasTaxiAvailable() && taxiStop.isMyTurn(_passengerAgent)){
 						
 						/* Send request to taxi at head of queue */
 						AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(taxiStop.getTaxiAtHeadOfQueue());
@@ -50,7 +58,7 @@ public class Waiting extends Behaviour {
 		/* Send a message to taxi central asking for taxis */
 		
 		/* Guess we are still waiting */
-		passengerAgent.increaseWaitingTick();
+		_passengerAgent.increaseWaitingTick();
 	}
 
 	@Override

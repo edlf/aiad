@@ -5,34 +5,41 @@ import java.util.ArrayList;
 import org.javatuples.Pair;
 
 import sajas.core.behaviours.Behaviour;
+import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiAgent;
 
 public class InTransit extends Behaviour {
 	private static final long serialVersionUID = 6454337518008277717L;
-
+	private TaxiAgent _taxiAgent;
+	
 	private Pair<Integer, Integer> _destination;
 	private ArrayList<Pair<Integer, Integer>> _pathToDestination;
 	
 	public InTransit(Pair<Integer, Integer> destination) {
-		_destination = destination;
-		_pathToDestination = null;
+		super();
+		_taxiAgent = null;
+
+		_destination = destination;		
 	}
 	
 	@Override
 	public void action() {
-		TaxiAgent taxiAgent = (TaxiAgent) myAgent;
+		if (_taxiAgent == null){
+			_taxiAgent = (TaxiAgent) myAgent;
+			_pathToDestination = _taxiAgent.getShortestPathTo(_destination);
+		}
 		
 		if (_pathToDestination == null){
-			_pathToDestination = taxiAgent.getShortestPathTo(_destination);
+			_taxiAgent.replaceBehaviour(new Waiting());
 		}
 		
 		/* Check if we ran out of gas */
-		if(taxiAgent.getGasInTank() == 0){
-			taxiAgent.replaceBehaviour(new NoGas());
+		if(_taxiAgent.getGasInTank() == 0){
+			_taxiAgent.replaceBehaviour(new NoGas());
 			return;
 		}
 		
-		taxiAgent.increaseInTransitTick();
+		_taxiAgent.increaseInTransitTick();
 		
 		/* Move towards destination */
 		

@@ -416,13 +416,22 @@ public class TaxiAgent extends SimAgent {
 	
 	/* Travel costs */
 	public int getCostToPoint(Pair<Integer, Integer> point){
+		if (!_isPointWithinBonds(point)){
+			return -1;
+		}
+		
+		
 		// TODO: Check if possible to get to point
 		return SimAgent.getCostBetweenTwoPoints(_currentPosition, point);
 	}
 
 	public ArrayList<Pair<Integer, Integer>> getShortestPathTo(Pair<Integer, Integer> destination) {
+		if (!_isPointWithinBonds(destination)){
+			return new ArrayList<>();
+		}
+		
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>();
 	}
 	
 	

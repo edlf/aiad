@@ -6,32 +6,41 @@ import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 
 public class Waiting extends Behaviour {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2163115385831517999L;
+	private TaxiAgent _taxiAgent;
+	private boolean test = false;
 
+	public Waiting() {
+		super();
+		_taxiAgent = null;
+		
+	}
+	
 	@Override
-	public void action() {
-		TaxiAgent taxiAgent = (TaxiAgent) myAgent;
+	public void action(){
+		if (_taxiAgent == null){
+			_taxiAgent = (TaxiAgent) myAgent;
+		}
 		
 		/* Check if we ran out of gas */
-		if(taxiAgent.getGasInTank() == 0){
-			taxiAgent.replaceBehaviour(new NoGas());
+		if(_taxiAgent.getGasInTank() == 0){
+			_taxiAgent.replaceBehaviour(new NoGas());
 			return;
 		}
 		
-		taxiAgent.increaseWaitingTick();
+		_taxiAgent.increaseWaitingTick();
 		
 		/* Check if we are on reserve */
-		if(taxiAgent.isGasOnReserve()){
-			taxiAgent.replaceBehaviour(new Refueling());
+		if(_taxiAgent.isGasOnReserve()){
+			_taxiAgent.replaceBehaviour(new Refuelling());
 			return;
 		}
 		
-		taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
-
+		if (!test){
+			_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
+			test = true;
+		}
+		
 	}
 
 	@Override

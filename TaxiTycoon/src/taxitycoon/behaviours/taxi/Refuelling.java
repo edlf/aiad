@@ -3,11 +3,11 @@ package taxitycoon.behaviours.taxi;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 
-public class PickingPassengers extends Behaviour {
-	private static final long serialVersionUID = 2595075077727643900L;
+public class Refuelling extends Behaviour {
+	private static final long serialVersionUID = 9159828344904437717L;
 	private TaxiAgent _taxiAgent;
 	
-	public PickingPassengers() {
+	public Refuelling() {
 		super();
 		_taxiAgent = null;
 		
@@ -25,8 +25,16 @@ public class PickingPassengers extends Behaviour {
 			return;
 		}
 		
-		_taxiAgent.increasePickingPassengerTick();
+		_taxiAgent.increaseRefuelingTick();
+		
+		/* Check if we are on a refuelling station */
+		if(_taxiAgent.isOnRefuelStation()){
+			_taxiAgent.gasRefuel();
+			_taxiAgent.replaceBehaviour(new Waiting());
+			return;
+		}
 
+		/* Keep moving towards gas station */
 	}
 
 	@Override

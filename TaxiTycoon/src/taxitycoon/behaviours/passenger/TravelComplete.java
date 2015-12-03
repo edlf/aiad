@@ -11,17 +11,25 @@ import taxitycoon.agents.PassengerAgent;
 
 public class TravelComplete extends Behaviour {
 	private static final long serialVersionUID = 5553375322108245922L;
+	private PassengerAgent _passengerAgent;
 
+	public TravelComplete() {
+		super();
+		_passengerAgent = null;
+	}
+	
 	@Override
 	public void action() {
-		PassengerAgent passengerAgent = (PassengerAgent) myAgent;
+		if (_passengerAgent == null){
+			_passengerAgent = (PassengerAgent) myAgent;
+		}
 		
-		if(!passengerAgent.hasReachedDestination()){
+		if(!_passengerAgent.hasReachedDestination()){
 			System.out.println("BUG: Passenger not on destination but on TravelComplete behavior.");
 		}
 		
-		passengerAgent.printStats();
-		passengerAgent.doDelete();
+		_passengerAgent.printStats();
+		_passengerAgent.doDelete();
 	}
 
 	@Override
