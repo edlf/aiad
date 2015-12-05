@@ -1,6 +1,6 @@
 package taxitycoon.behaviours.passenger;
 
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.OneShotBehaviour;
 import taxitycoon.agents.PassengerAgent;
 
 /**
@@ -9,7 +9,7 @@ import taxitycoon.agents.PassengerAgent;
  * Removes passenger agent from the container.
  */
 
-public class TravelComplete extends Behaviour {
+public class TravelComplete extends OneShotBehaviour {
 	private static final long serialVersionUID = 5553375322108245922L;
 	private PassengerAgent _passengerAgent;
 
@@ -30,10 +30,5 @@ public class TravelComplete extends Behaviour {
 		
 		_passengerAgent.printStats();
 		_passengerAgent.doDelete();
-	}
-
-	@Override
-	public boolean done() {
-		return true;
 	}
 }
