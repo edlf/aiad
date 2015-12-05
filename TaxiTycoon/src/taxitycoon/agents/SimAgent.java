@@ -89,7 +89,7 @@ public abstract class SimAgent extends Agent {
 		return _currentPosition.getValue1();
 	}
 	
-	public ArrayList<TaxiStop> getTaxiStopsArray(){
+	public static ArrayList<TaxiStop> getTaxiStopsArray(){
 		return _taxiStops;
 	}
 	

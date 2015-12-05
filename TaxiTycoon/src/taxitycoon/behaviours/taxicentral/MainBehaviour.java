@@ -4,6 +4,7 @@ import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiCentral;
 import taxitycoon.messages.taxicentral.TaxiRequest;
+import taxitycoon.staticobjects.TaxiStop;
 
 public class MainBehaviour extends Behaviour {
 
@@ -15,6 +16,13 @@ public class MainBehaviour extends Behaviour {
 	@Override
 	public void action() {
 		TaxiCentral taxiCentral = (TaxiCentral) myAgent;
+		
+		for (TaxiStop taxiStop : taxiCentral.getTaxiStops()){
+			if(taxiStop.getPassengerAtHeadOfQueue() != null){
+				System.out.println(taxiStop.getPassengerAtHeadOfQueue().toString());
+			}
+			
+		}
 		
 		/* Get message from queue */
 		ACLMessage msg = taxiCentral.receive();

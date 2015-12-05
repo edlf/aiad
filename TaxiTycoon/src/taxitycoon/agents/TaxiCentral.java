@@ -1,14 +1,26 @@
 package taxitycoon.agents;
 
+import java.util.ArrayList;
+
+import org.javatuples.Pair;
+
 import jade.domain.FIPAException;
 import sajas.core.Agent;
 import sajas.core.behaviours.Behaviour;
 import sajas.domain.DFService;
 import taxitycoon.behaviours.taxicentral.*;
+import taxitycoon.messages.passenger.AskTaxiForTravel;
+import taxitycoon.staticobjects.TaxiStop;
 
 public class TaxiCentral extends Agent {
 	private Behaviour _currentBehaviour =  null;
 
+	private static ArrayList<TaxiStop> _taxiStops;
+	
+	public static void createAgentMap(ArrayList<TaxiStop> taxiStops){
+		_taxiStops = taxiStops;
+	}
+	
 	/* Setup and takedown methods */
 	@Override
 	protected void setup(){
@@ -41,4 +53,20 @@ public class TaxiCentral extends Agent {
 		addBehaviour(_currentBehaviour);
 		System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
+	
+	public static TaxiStop getTaxiStopAt(Pair<Integer, Integer> pos){
+		/* Get in what taxi stop were on and add ourself to the passenger queue */
+		for (TaxiStop taxiStop : _taxiStops){
+			if (taxiStop.getPosition().equals(pos)){
+				return taxiStop;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static ArrayList<TaxiStop> getTaxiStops(){
+		return _taxiStops;
+	}
+	
 }

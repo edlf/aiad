@@ -50,6 +50,10 @@ public class TaxiStop extends StaticMapObject {
 		}
 	}
 	
+	public PassengerAgent getPassengerAtHeadOfQueue(){
+		return passengersInQueue.poll();
+	}
+	
 	public boolean isMyTurn(PassengerAgent passengerAgent){
 		return (passengersInQueue.poll() == passengerAgent);
 	}
