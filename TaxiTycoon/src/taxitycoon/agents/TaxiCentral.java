@@ -9,7 +9,6 @@ import sajas.core.Agent;
 import sajas.core.behaviours.Behaviour;
 import sajas.domain.DFService;
 import taxitycoon.behaviours.taxicentral.*;
-import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class TaxiCentral extends Agent {
@@ -65,7 +64,7 @@ public class TaxiCentral extends Agent {
 		return null;
 	}
 	
-	public static ArrayList<TaxiStop> getTaxiStops(){
+	public ArrayList<TaxiStop> getTaxiStops(){
 		return _taxiStops;
 	}
 	

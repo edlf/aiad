@@ -43,27 +43,31 @@ public class Waiting extends Behaviour {
 			 */
 			TaxiStop taxiStop = TaxiCentral.getTaxiStopAt(_passengerAgent.getPosition());
 
-			/* Add to queue */
-			taxiStop.addPassengerToQueue(_passengerAgent);
+			/* Check if are already in the queue */
+			if(taxiStop.isPassengerInQueue(_passengerAgent)){
+				/* Check if we have a taxi available and is our turn */
+				if (taxiStop.hasTaxiAvailable() && taxiStop.isMyTurn(_passengerAgent)) {
 
-			/* Check if we have a taxi available and is our turn */
-			if (taxiStop.hasTaxiAvailable() && taxiStop.isMyTurn(_passengerAgent)) {
+					/* Send request to taxi at head of queue */
+					AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(taxiStop.getTaxiAtHeadOfQueue());
+					askTaxiForTravelMessage.sendMessage();
 
-				/* Send request to taxi at head of queue */
-				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(taxiStop.getTaxiAtHeadOfQueue());
-				askTaxiForTravelMessage.sendMessage();
+					return;
+				}
 
-				return;
-			}
+				if (taxiStop.hasTaxiAvailable()) {
 
-			if (taxiStop.hasTaxiAvailable()) {
+					return;
+				} else {
+					// System.out.println(_passengerAgent.toString());
 
-				return;
+					return;
+				}
+				
 			} else {
-				// System.out.println(_passengerAgent.toString());
-
-				return;
-			}
+				/* Add to queue */
+				taxiStop.addPassengerToQueue(_passengerAgent);
+			}		
 
 		} else {
 			System.out.println("BUG: PassengerAgent with waiting behaviour and not on a stop or destination");

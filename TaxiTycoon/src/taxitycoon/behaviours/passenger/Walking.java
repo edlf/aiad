@@ -41,8 +41,8 @@ public class Walking extends Behaviour {
 		}
 		
 		/* If on taxi stop */
-		if(_passengerAgent.hasReachedDestination()){
-			_passengerAgent.replaceBehaviour(new TravelComplete());
+		if(_passengerAgent.isOnStop()){
+			_passengerAgent.replaceBehaviour(new Waiting());
 			return;
 		}
 		

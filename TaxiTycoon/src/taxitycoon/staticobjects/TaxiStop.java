@@ -27,11 +27,11 @@ public class TaxiStop extends StaticMapObject {
 	}
 	
 	public boolean isMyTurn(TaxiAgent taxiAgent){
-		return (taxisInQueue.poll() == taxiAgent);
+		return (taxisInQueue.peek() == taxiAgent);
 	}
 	
 	public TaxiAgent getTaxiAtHeadOfQueue(){
-		return taxisInQueue.poll();
+		return taxisInQueue.peek();
 	}
 	
 	public boolean hasTaxiAvailable(){
@@ -50,11 +50,15 @@ public class TaxiStop extends StaticMapObject {
 		}
 	}
 	
+	public boolean isPassengerInQueue(PassengerAgent passengerAgent){
+		return passengersInQueue.contains(passengerAgent);
+	}
+	
 	public PassengerAgent getPassengerAtHeadOfQueue(){
-		return passengersInQueue.poll();
+		return passengersInQueue.peek();
 	}
 	
 	public boolean isMyTurn(PassengerAgent passengerAgent){
-		return (passengersInQueue.poll() == passengerAgent);
+		return (passengersInQueue.peek() == passengerAgent);
 	}
 }

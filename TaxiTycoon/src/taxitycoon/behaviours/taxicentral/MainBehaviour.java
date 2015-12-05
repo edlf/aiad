@@ -19,7 +19,7 @@ public class MainBehaviour extends Behaviour {
 		
 		for (TaxiStop taxiStop : taxiCentral.getTaxiStops()){
 			if(taxiStop.getPassengerAtHeadOfQueue() != null){
-				System.out.println(taxiStop.getPassengerAtHeadOfQueue().toString());
+				//System.out.println(taxiStop.getPassengerAtHeadOfQueue().toString());
 			}
 			
 		}
@@ -32,7 +32,7 @@ public class MainBehaviour extends Behaviour {
 
 		
 		TaxiRequest taxiRequestMessage = new TaxiRequest();
-		// taxiRequestMessage
+		taxiRequestMessage = null;
 	}
 
 	@Override
