@@ -2,7 +2,7 @@ package taxitycoon.behaviours.passenger;
 
 import org.javatuples.Pair;
 
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.PassengerAgent;
 
 /**
@@ -15,7 +15,7 @@ import taxitycoon.agents.PassengerAgent;
  * Behaviour. If it reaches a Taxi Stop it changes to the Waiting behaviour.
  */
 
-public class Walking extends Behaviour {
+public class Walking extends CyclicBehaviour {
 	private static final long serialVersionUID = -7548278065214083296L;
 	private PassengerAgent _passengerAgent;
 	private int tic = 0;
@@ -70,10 +70,5 @@ public class Walking extends Behaviour {
 		}
 		
 		_passengerAgent.increaseWalkingTick();
-	}
-
-	@Override
-	public boolean done() {
-		return false;
 	}
 }

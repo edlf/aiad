@@ -1,12 +1,12 @@
 package taxitycoon.behaviours.taxi;
 
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
 import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.staticobjects.TaxiStop;
 
-public class Waiting extends Behaviour {
+public class Waiting extends CyclicBehaviour {
 	private static final long serialVersionUID = 2163115385831517999L;
 	private TaxiAgent _taxiAgent;
 
@@ -59,10 +59,4 @@ public class Waiting extends Behaviour {
 		}
 		
 	}
-
-	@Override
-	public boolean done() {
-		return false;
-	}
-
 }

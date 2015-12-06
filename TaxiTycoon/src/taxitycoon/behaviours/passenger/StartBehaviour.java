@@ -1,7 +1,7 @@
 package taxitycoon.behaviours.passenger;
 
 import org.javatuples.Pair;
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.OneShotBehaviour;
 import taxitycoon.agents.PassengerAgent;
 
 /**
@@ -10,7 +10,7 @@ import taxitycoon.agents.PassengerAgent;
  * Does initial checks, and changes to appropriate behaviours.
  */
 
-public class StartBehaviour extends Behaviour {
+public class StartBehaviour extends OneShotBehaviour {
 	private static final long serialVersionUID = 6833600371259913934L;
 	private PassengerAgent _passengerAgent;
 	
@@ -48,10 +48,5 @@ public class StartBehaviour extends Behaviour {
 		} else {
 			_passengerAgent.replaceBehaviour(new Walking(nearestStop));
 		}
-	}
-
-	@Override
-	public boolean done() {
-		return false;
 	}
 }

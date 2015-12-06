@@ -1,9 +1,9 @@
 package taxitycoon.behaviours.taxi;
 
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.OneShotBehaviour;
 import taxitycoon.agents.TaxiAgent;
 
-public class StartBehaviour extends Behaviour {
+public class StartBehaviour extends OneShotBehaviour {
 	private static final long serialVersionUID = 6972973475342866016L;
 	private TaxiAgent _taxiAgent;
 
@@ -37,10 +37,4 @@ public class StartBehaviour extends Behaviour {
 		/* If not go to the nearest stop */
 		_taxiAgent.replaceBehaviour(new InTransit(_taxiAgent.getNearestTaxiStop().getPosition()));
 	}
-
-	@Override
-	public boolean done() {
-		return false;
-	}
-
 }
