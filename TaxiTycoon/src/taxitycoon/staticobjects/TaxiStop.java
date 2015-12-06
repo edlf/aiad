@@ -22,6 +22,7 @@ public class TaxiStop extends StaticMapObject {
 	
 	public void removeTaxiFromQueue(TaxiAgent taxiAgent){
 		if (_taxisInQueue.contains(taxiAgent)){
+			System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] taxi leaving the queue");
 			_taxisInQueue.remove(taxiAgent);
 		}
 	}
