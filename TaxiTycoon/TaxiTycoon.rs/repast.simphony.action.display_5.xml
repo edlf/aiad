@@ -1,13 +1,13 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Map</name>
+  <name>TaxiTycoon Map</name>
   <type>2D</type>
   <styles>
     <entry>
-      <string>taxitycoon.staticobjects.RefuelStation</string>
+      <string>taxitycoon.staticobjects.TaxiStop</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>taxitycoon.staticobjects.TaxiStop</string>
+      <string>taxitycoon.staticobjects.RefuelStation</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
@@ -15,7 +15,7 @@
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>taxitycoon.staticobjects.Grass</string>
+      <string>taxitycoon.agents.PassengerAgent</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
@@ -23,34 +23,34 @@
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>taxitycoon.agents.PassengerAgent</string>
+      <string>taxitycoon.staticobjects.Grass</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>taxitycoon.staticobjects.RefuelStation</string>
-      <string>taxitycoon.Refuel.style.xml</string>
-    </entry>
-    <entry>
       <string>taxitycoon.staticobjects.TaxiStop</string>
       <string>taxitycoon.TaxiStop.style.xml</string>
+    </entry>
+    <entry>
+      <string>taxitycoon.staticobjects.RefuelStation</string>
+      <string>taxitycoon.Refuel.style.xml</string>
     </entry>
     <entry>
       <string>taxitycoon.agents.TaxiAgent</string>
       <string>taxitycoon.TaxiAgent.style_0.xml</string>
     </entry>
     <entry>
-      <string>taxitycoon.staticobjects.Grass</string>
-      <string>taxitycoon.Grass.style.xml</string>
+      <string>taxitycoon.agents.PassengerAgent</string>
+      <string>taxitycoon.PassengerAgent.style_0.xml</string>
     </entry>
     <entry>
       <string>taxitycoon.staticobjects.Road</string>
       <string>taxitycoon.Road.style.xml</string>
     </entry>
     <entry>
-      <string>taxitycoon.agents.PassengerAgent</string>
-      <string>taxitycoon.PassengerAgent.style_0.xml</string>
+      <string>taxitycoon.staticobjects.Grass</string>
+      <string>taxitycoon.Grass.style.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -63,7 +63,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1808045512</hashCode>
+    <hashCode>1133130739</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>Grid</layoutProjection>

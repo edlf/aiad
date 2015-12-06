@@ -419,16 +419,48 @@ public class TaxiAgent extends SimAgent {
 		return _ticksWaiting;
 	}
 	
+	public double getWaitingTicksPercent(){
+		if (_totalTicks == 0){
+			return 0.0;
+		}
+		
+		return ((double) _ticksWaiting) / ((double) _totalTicks);
+	}
+	
 	public long getRefuelingTicks(){
 		return _ticksRefueling;
+	}
+	
+	public double getRefuelingTicksPercent(){
+		if (_totalTicks == 0){
+			return 0.0;
+		}
+		
+		return ((double) _ticksRefueling) / ((double) _totalTicks);
 	}
 	
 	public long getPickingPassengerTicks(){
 		return _ticksPickingPassenger;
 	}
 	
+	public double getPickingPassengerTicksPercent(){
+		if (_totalTicks == 0){
+			return 0.0;
+		}
+		
+		return ((double) _ticksPickingPassenger) / ((double) _totalTicks);
+	}
+	
 	public long getInTransitTicks(){
 		return _ticksInTransit;
+	}
+	
+	public double getInTransitTicksPercent(){
+		if (_totalTicks == 0){
+			return 0.0;
+		}
+		
+		return ((double) _ticksInTransit) / ((double) _totalTicks);
 	}
 	
 	/* Fuel costs */
