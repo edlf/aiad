@@ -175,17 +175,28 @@ public class PassengerAgent extends SimAgent {
 		return _ticksWaiting;
 	}
 	
+	public double getTicksWaitingPercent(){
+		return getTickPercent(_ticksWaiting);
+	}
+	
 	public long getTicksWalking(){
 		return _ticksWalking;
+	}
+	
+	public double getTicksWalkingPercent(){
+		return getTickPercent(_ticksWalking);
 	}
 	
 	public long getTicksInTaxi(){
 		return _ticksInTaxi;
 	}
 	
+	public double getTicksInTaxiPercent(){
+		return getTickPercent(_ticksInTaxi);
+	}
+	
 	public void printStats(){
-		System.out.println(getLocalName() + " spent ticks: " + getTotalTicks());
-		System.out.println(getLocalName() + " walking: " + getTicksWalking() + " waiting: " + getTicksWaiting() + " in taxi: " + getTicksInTaxi());
+		System.out.println(getLocalName() + " walking: " + getTicksWalkingPercent() + "% waiting: " + getTicksWaitingPercent() + "% in taxi: " + getTicksInTaxiPercent() + "%");
 	}
 	
 	/* Travel costs */

@@ -143,5 +143,13 @@ public abstract class SimAgent extends Agent {
 		return _totalTicks;
 	}
 	
+	protected double getTickPercent(long parcialTick){
+		if (_totalTicks == 0){
+			return 0.0;
+		}
+		
+		return ((double) parcialTick) / ((double) _totalTicks) * 100.0;
+	}
+	
 	abstract protected void increaseTick();
 }

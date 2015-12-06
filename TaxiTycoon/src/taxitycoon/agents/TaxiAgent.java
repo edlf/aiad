@@ -420,11 +420,7 @@ public class TaxiAgent extends SimAgent {
 	}
 	
 	public double getWaitingTicksPercent(){
-		if (_totalTicks == 0){
-			return 0.0;
-		}
-		
-		return ((double) _ticksWaiting) / ((double) _totalTicks);
+		return getTickPercent(_ticksWaiting);
 	}
 	
 	public long getRefuelingTicks(){
@@ -432,11 +428,7 @@ public class TaxiAgent extends SimAgent {
 	}
 	
 	public double getRefuelingTicksPercent(){
-		if (_totalTicks == 0){
-			return 0.0;
-		}
-		
-		return ((double) _ticksRefueling) / ((double) _totalTicks);
+		return getTickPercent(_ticksRefueling);
 	}
 	
 	public long getPickingPassengerTicks(){
@@ -444,11 +436,7 @@ public class TaxiAgent extends SimAgent {
 	}
 	
 	public double getPickingPassengerTicksPercent(){
-		if (_totalTicks == 0){
-			return 0.0;
-		}
-		
-		return ((double) _ticksPickingPassenger) / ((double) _totalTicks);
+		return getTickPercent(_ticksPickingPassenger);
 	}
 	
 	public long getInTransitTicks(){
@@ -456,11 +444,7 @@ public class TaxiAgent extends SimAgent {
 	}
 	
 	public double getInTransitTicksPercent(){
-		if (_totalTicks == 0){
-			return 0.0;
-		}
-		
-		return ((double) _ticksInTransit) / ((double) _totalTicks);
+		return getTickPercent(_ticksInTransit);
 	}
 	
 	/* Fuel costs */
