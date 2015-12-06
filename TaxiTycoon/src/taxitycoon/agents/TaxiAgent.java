@@ -447,6 +447,10 @@ public class TaxiAgent extends SimAgent {
 		return getTickPercent(_ticksInTransit);
 	}
 	
+	public double getGasTankLevelPercent(){	
+		return ((double) _gas) / ((double) _gasMax) * 100.0;
+	}
+	
 	/* Fuel costs */
 	public void gasRefuel(){
 		_numberOfRefuels++;
