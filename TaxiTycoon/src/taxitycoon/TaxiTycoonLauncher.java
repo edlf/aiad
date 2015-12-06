@@ -39,6 +39,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private ContainerController _mainContainer;
 
 	public TaxiTycoonLauncher() {
+		System.out.println("### TaxiTycoon logging started. ###");
 		_mapLoader = new MapLoader("map.csv");
 	}
 
