@@ -21,7 +21,7 @@
         <id>In Transit Tick</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getInTransitTicksPercent</methodName>
-        <aggType>SUM</aggType>
+        <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
@@ -30,7 +30,7 @@
         <id>Refuel Tick</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getRefuelingTicksPercent</methodName>
-        <aggType>SUM</aggType>
+        <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
@@ -39,7 +39,7 @@
         <id>Waiting Tick</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getWaitingTicksPercent</methodName>
-        <aggType>SUM</aggType>
+        <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>
