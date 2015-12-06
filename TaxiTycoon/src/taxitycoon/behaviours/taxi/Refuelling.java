@@ -3,8 +3,6 @@ package taxitycoon.behaviours.taxi;
 import java.util.LinkedList;
 
 import org.javatuples.Pair;
-
-import sajas.core.behaviours.Behaviour;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 

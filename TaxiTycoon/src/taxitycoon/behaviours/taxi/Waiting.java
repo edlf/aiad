@@ -4,7 +4,6 @@ import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
-import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class Waiting extends CyclicBehaviour {
