@@ -16,7 +16,7 @@ public class TaxiStop extends StaticMapObject {
 	}
 	
 	public void addTaxiToQueue(TaxiAgent taxiAgent){
-		System.out.println("TaxiStop" + _pos.toString() + " new taxi in queue");
+		System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] new taxi in queue");
 		taxisInQueue.add(taxiAgent);
 	}
 	
@@ -39,7 +39,7 @@ public class TaxiStop extends StaticMapObject {
 	}
 	
 	public void addPassengerToQueue(PassengerAgent passengerAgent){
-		System.out.println("TaxiStop" + _pos.toString() + " new passenger in queue");
+		System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] new passenger in queue");
 		passengersInQueue.add(passengerAgent);
 	}
 	

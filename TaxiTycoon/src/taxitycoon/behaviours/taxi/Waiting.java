@@ -1,7 +1,5 @@
 package taxitycoon.behaviours.taxi;
 
-import org.javatuples.*;
-
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 

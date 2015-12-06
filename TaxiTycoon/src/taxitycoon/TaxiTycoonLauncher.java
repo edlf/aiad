@@ -8,6 +8,7 @@ import jade.wrapper.StaleProxyException;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
@@ -48,6 +49,9 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 
 	@Override
 	protected void launchJADE() {
+		RunEnvironment runEnvironment = RunEnvironment.getInstance();
+		runEnvironment.setScheduleTickDelay(10);
+		
 		_createRepresentation();
 		_mainContainer = Runtime.instance().createMainContainer(null);
 		launchAgents();
