@@ -48,32 +48,32 @@ public class Waiting extends CyclicBehaviour {
 			} 
 
 			/* Check if are already in the queue */
-			if(_taxiStop.isPassengerInQueue(_passengerAgent)){
-				/* Check if we have a taxi available and is our turn */
-				if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurn(_passengerAgent)) {
-
-					/* Send request to taxi at head of queue */
-					AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_taxiStop.getTaxiAtHeadOfQueue());
-					askTaxiForTravelMessage.sendMessage();
-
-					return;
-				}
-
-				if (_taxiStop.hasTaxiAvailable()) {
-
-					return;
-				} else {
-					/* Send a message to taxi central asking for taxis */
-					// System.out.println(_passengerAgent.toString());
-
-					return;
-				}
-				
-			} else {
-				/* Add to queue */
+			if(!_taxiStop.isPassengerInQueue(_passengerAgent)){
 				_taxiStop.addPassengerToQueue(_passengerAgent);
 			}		
 
+			/* Check if we have a taxi available and is our turn */
+			if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurn(_passengerAgent)) {
+
+				/* Send request to taxi at head of queue */
+				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_taxiStop.getTaxiAtHeadOfQueue());
+				askTaxiForTravelMessage.sendMessage();
+
+				return;
+			}
+
+			if (_taxiStop.hasTaxiAvailable()) {
+
+				return;
+			} else {
+				/* Send a message to taxi central asking for taxis */
+				// System.out.println(_passengerAgent.toString());
+
+				return;
+			}
+			
+			/* Read messages since another taxi might go to the same destination */
+			
 		} else {
 			System.out.println("BUG: PassengerAgent with waiting behaviour and not on a stop or destination");
 		}

@@ -16,27 +16,27 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>In Transit Tick</string>
+      <string>In Transit</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>In Transit Tick</id>
+        <id>In Transit</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getInTransitTicksPercent</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Refuel Tick</string>
+      <string>Refuel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Refuel Tick</id>
+        <id>Refuel</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getRefuelingTicksPercent</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Waiting Tick</string>
+      <string>Waiting</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Waiting Tick</id>
+        <id>Waiting</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getWaitingTicksPercent</methodName>
         <aggType>MEAN</aggType>

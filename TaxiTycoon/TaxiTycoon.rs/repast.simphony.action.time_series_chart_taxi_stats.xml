@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Time Series Chart</name>
+  <name>Taxi Stats</name>
   <dataSet>Taxi Stats</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
   <yAxisLabel></yAxisLabel>
-  <chartTitle>Taxi stats</chartTitle>
+  <chartTitle>Taxi Statistics</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,9 +21,9 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Refuel Tick</string>
+      <string>Refuel</string>
       <SeriesData>
-        <label>Refuel Tick</label>
+        <label>Refuel</label>
         <color>
           <red>0</red>
           <green>255</green>
@@ -33,9 +33,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>In Transit Tick</string>
+      <string>In Transit</string>
       <SeriesData>
-        <label>In Transit Tick</label>
+        <label>In Transit</label>
         <color>
           <red>255</red>
           <green>0</green>
@@ -45,9 +45,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Waiting Tick</string>
+      <string>Waiting</string>
       <SeriesData>
-        <label>Waiting Tick</label>
+        <label>Waiting</label>
         <color>
           <red>255</red>
           <green>0</green>
