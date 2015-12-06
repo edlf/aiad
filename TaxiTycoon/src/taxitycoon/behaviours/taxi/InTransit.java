@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import org.javatuples.Pair;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
+import taxitycoon.messages.taxi.AcceptRide;
+import taxitycoon.messages.taxi.UpdatePassengerLocation;
 
 public class InTransit extends Behaviour {
 	private static final long serialVersionUID = 6454337518008277717L;
@@ -59,7 +61,12 @@ public class InTransit extends Behaviour {
 		_taxiAgent.increaseInTransitTick();
 		
 		/* Move towards destination */
-		_taxiAgent.move(_pathToDestination.getFirst());
+		Pair<Integer,Integer> nextPos = _pathToDestination.getFirst();
+		_taxiAgent.move(nextPos);
+		if(_taxiAgent.hasPassengers()){
+			UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(nextPos);
+			_taxiAgent.send(updatePassengerLocation);
+		}
 		_pathToDestination.removeFirst();
 
 	}

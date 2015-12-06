@@ -1,5 +1,6 @@
 package taxitycoon.behaviours.passenger;
 
+import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiAgent;
@@ -33,6 +34,22 @@ public class InTaxi extends Behaviour {
 		}
 		
 		_passengerAgent.increaseInTaxiTick();
+		
+		/* Update our location from the taxi */
+		ACLMessage msg = _passengerAgent.receive();
+		if (msg != null) {
+			String title = msg.getContent();
+			System.out.println("MSG: Passenger got message:" +  title);
+			
+			switch (msg.getPerformative()) {
+			case ACLMessage.INFORM:
+				break;
+				
+			default:
+				System.out.println("MSG: Passenger received unkown message.");
+				break;
+			}
+		}
 		
 		/* Check if we are currently inside a taxi and not on the destination*/
 		if (_passengerAgent.isOnTaxi() && !_passengerAgent.hasReachedDestination()){
