@@ -344,7 +344,7 @@ public class TaxiAgent extends SimAgent {
 	
 	@Override
 	protected void _addInitialBehaviour(){
-		replaceBehaviour(new Waiting());
+		replaceBehaviour(new StartBehaviour());
 	}
 	
 	protected void increaseTick(){

@@ -7,10 +7,6 @@ import taxitycoon.messages.taxicentral.TaxiRequest;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class MainBehaviour extends Behaviour {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6376348164782963415L;
 
 	@Override

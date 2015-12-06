@@ -1,22 +1,23 @@
 package taxitycoon.behaviours.taxi;
 
-import org.javatuples.*;
+import org.javatuples.Pair;
 
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 
-public class Waiting extends Behaviour {
-	private static final long serialVersionUID = 2163115385831517999L;
+public class StartBehaviour extends Behaviour {
+	private static final long serialVersionUID = 6972973475342866016L;
 	private TaxiAgent _taxiAgent;
+	private static boolean test = false;
 
-	public Waiting() {
+	public StartBehaviour(){
 		super();
 		_taxiAgent = null;
 		
 	}
 	
 	@Override
-	public void action(){
+	public void action() {
 		if (_taxiAgent == null){
 			_taxiAgent = (TaxiAgent) myAgent;
 		}
@@ -27,14 +28,16 @@ public class Waiting extends Behaviour {
 			return;
 		}
 		
-		_taxiAgent.increaseWaitingTick();
-		
 		/* Check if we are on reserve */
 		if(_taxiAgent.isGasOnReserve()){
 			_taxiAgent.replaceBehaviour(new Refuelling());
 			return;
 		}
 		
+		if (!test){
+			test = true;
+			_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
+		}
 	}
 
 	@Override
