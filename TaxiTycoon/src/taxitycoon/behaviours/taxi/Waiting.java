@@ -1,10 +1,11 @@
 package taxitycoon.behaviours.taxi;
 
+import org.javatuples.Pair;
+
 import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
-import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.messages.taxi.AcceptRide;
 import taxitycoon.staticobjects.TaxiStop;
 
@@ -62,12 +63,35 @@ public class Waiting extends CyclicBehaviour {
 		ACLMessage msg = _taxiAgent.receive();
 		if (msg != null) {
 			String title = msg.getContent();
-			msg.getOntology();
-			
 			System.out.println("MSG: Taxi got message:" +  title);
 			
-			AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue());
-			_taxiAgent.send(acceptRideMessage);
+			switch (msg.getPerformative()) {
+			case ACLMessage.REQUEST:
+				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue());
+				_taxiAgent.send(acceptRideMessage);
+				_taxiAgent.addPassenger();
+				_taxiStop.removeTaxiFromQueue(_taxiAgent);
+				_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
+				
+				/* Ask other passengers for the destination */
+				break;
+				
+			case ACLMessage.ACCEPT_PROPOSAL:
+				
+				break;
+				
+			case ACLMessage.REJECT_PROPOSAL:
+				
+				break;
+
+			default:
+				System.out.println("MSG: Taxi received unkown message.");
+				break;
+			}
+			
+			
+			
+
 		}
 	}
 }

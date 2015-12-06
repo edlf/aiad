@@ -486,7 +486,12 @@ public class TaxiAgent extends SimAgent {
 		}
 		
 		/* Check if we are on road and the destination is also on road */
-		if(!isOnRoad() || !(isOnRoad(destination) || isOnTaxiStop(destination))){
+		if(!(isOnRoad() || isOnRefuelStation() || isOnTaxiStop())){
+			return path;
+		}
+		
+		/* Check destination */
+		if(!(isOnRoad(destination) || isOnTaxiStop(destination) || isOnRefuelStation(destination))){
 			return path;
 		}
 		
@@ -575,6 +580,14 @@ public class TaxiAgent extends SimAgent {
 		return path;
 	}
 
+	private boolean isOnTaxiStop() {
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+	}
+
+	private boolean isOnRefuelStation(Pair<Integer, Integer> point) {
+		return (_map[point.getValue0()][point.getValue1()] == _mapRefuel);
+	}
+
 	private boolean isOnTaxiStop(Pair<Integer, Integer> point) {
 		return (_map[point.getValue0()][point.getValue1()] == _mapStop);
 	}
@@ -615,5 +628,17 @@ public class TaxiAgent extends SimAgent {
 		}
 		
 		return "";
+	}
+	
+	public boolean hasPassengers(){
+		return (_numberOfPassengers > 0);
+	}
+	
+	public void addPassenger(){
+		_numberOfPassengers++;
+	}
+	
+	public void clearPassengers(){
+		_numberOfPassengers = 0;
 	}
 }

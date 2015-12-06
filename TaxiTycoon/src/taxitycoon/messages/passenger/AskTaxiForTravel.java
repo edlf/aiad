@@ -14,7 +14,7 @@ public class AskTaxiForTravel extends ACLMessage {
 	private static final long serialVersionUID = 7947125494408586405L;
 
 	public AskTaxiForTravel(Pair<Integer, Integer> destinationPosition, TaxiAgent messageReceiver){
-		super(ACLMessage.QUERY_IF);
+		super(ACLMessage.REQUEST);
 		
 		addReceiver(new AID(messageReceiver.getLocalName(), AID.ISLOCALNAME));
 		setLanguage("English");

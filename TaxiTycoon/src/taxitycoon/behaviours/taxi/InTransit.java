@@ -31,7 +31,13 @@ public class InTransit extends Behaviour {
 		
 		/* Check if travel has ended */
 		if(_taxiAgent.getPosition().equals(_destination)){
-			_taxiAgent.replaceBehaviour(new Waiting());
+			if (_taxiAgent.hasPassengers()){
+				_taxiAgent.clearPassengers();
+				_taxiAgent.replaceBehaviour(new StartBehaviour());
+			} else {
+				_taxiAgent.replaceBehaviour(new Waiting());
+			}
+			
 			return;		
 		}
 		

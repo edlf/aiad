@@ -62,7 +62,7 @@ public class PassengerAgent extends SimAgent {
 		_currentPosition = _startPosition;
 		
 		_currentBehaviour = null;
-		_destination = new Pair<Integer, Integer>(29, 29);
+		_destination = new Pair<Integer, Integer>(28, 28);
 		
 	}
 
@@ -161,6 +161,10 @@ public class PassengerAgent extends SimAgent {
 	
 	public boolean isOnStop(){
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+	}
+	
+	public void setOnTaxi(){
+		_inTaxi = true;
 	}
 	
 	public boolean isOnTaxi(){

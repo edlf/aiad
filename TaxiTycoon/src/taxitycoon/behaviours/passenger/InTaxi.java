@@ -2,6 +2,7 @@ package taxitycoon.behaviours.passenger;
 
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
+import taxitycoon.agents.TaxiAgent;
 
 /**
  * Passenger agent behaviour while in taxi

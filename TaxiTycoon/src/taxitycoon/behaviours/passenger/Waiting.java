@@ -70,9 +70,23 @@ public class Waiting extends CyclicBehaviour {
 				ACLMessage msg = _passengerAgent.receive();
 				if (msg != null) {
 					String title = msg.getContent();
-					msg.getOntology();
-					
 					System.out.println("MSG: Passenger got message:" +  title);
+					
+					switch (msg.getPerformative()) {
+					case ACLMessage.ACCEPT_PROPOSAL:
+						_passengerAgent.setOnTaxi();
+						_taxiStop.removePassengerFromQueue(_passengerAgent);
+						_passengerAgent.replaceBehaviour(new InTaxi());
+						break;
+						
+					case ACLMessage.REJECT_PROPOSAL:
+						
+						break;
+
+					default:
+						System.out.println("MSG: Passenger received unkown message.");
+						break;
+					}
 				}
 			} else {
 				/* Send request to taxi at head of queue */
