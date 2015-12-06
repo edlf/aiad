@@ -1,10 +1,11 @@
 <repast.simphony.visualization.editedStyle.DefaultEditedStyleData2D>
   <shapeWkt>circle</shapeWkt>
-  <size>16</size>
-  <sizeMax>16</sizeMax>
-  <sizeMin>8</sizeMin>
-  <sizeScale>1</sizeScale>
+  <size>16.0</size>
+  <sizeMax>16.0</sizeMax>
+  <sizeMin>8.0</sizeMin>
+  <sizeScale>1.0</sizeScale>
   <label></label>
+  <labelMethod>getStatus</labelMethod>
   <labelPosition>bottom</labelPosition>
   <labelPrecision>3</labelPrecision>
   <labelOffset>5.0</labelOffset>

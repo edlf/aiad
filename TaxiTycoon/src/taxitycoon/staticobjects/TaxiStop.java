@@ -8,8 +8,8 @@ import taxitycoon.agents.PassengerAgent;
 
 public class TaxiStop extends StaticMapObject {
 	
-	private ConcurrentLinkedQueue<PassengerAgent> passengersInQueue = new ConcurrentLinkedQueue<>();
-	private ConcurrentLinkedQueue<TaxiAgent> taxisInQueue = new ConcurrentLinkedQueue<>();
+	private ConcurrentLinkedQueue<PassengerAgent> _passengersInQueue = new ConcurrentLinkedQueue<>();
+	private ConcurrentLinkedQueue<TaxiAgent> _taxisInQueue = new ConcurrentLinkedQueue<>();
 	
 	public TaxiStop(Pair<Integer, Integer> pos){
 		_pos = pos;
@@ -17,48 +17,56 @@ public class TaxiStop extends StaticMapObject {
 	
 	public void addTaxiToQueue(TaxiAgent taxiAgent){
 		System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] new taxi in queue");
-		taxisInQueue.add(taxiAgent);
+		_taxisInQueue.add(taxiAgent);
 	}
 	
 	public void removeTaxiFromQueue(TaxiAgent taxiAgent){
-		if (taxisInQueue.contains(taxiAgent)){
-			taxisInQueue.remove(taxiAgent);
+		if (_taxisInQueue.contains(taxiAgent)){
+			_taxisInQueue.remove(taxiAgent);
 		}
 	}
 	
 	public boolean isMyTurn(TaxiAgent taxiAgent){
-		return (taxisInQueue.peek() == taxiAgent);
+		return (_taxisInQueue.peek() == taxiAgent);
 	}
 	
 	public TaxiAgent getTaxiAtHeadOfQueue(){
-		return taxisInQueue.peek();
+		return _taxisInQueue.peek();
 	}
 	
 	public boolean hasTaxiAvailable(){
-		return !taxisInQueue.isEmpty();
+		return !_taxisInQueue.isEmpty();
 	}
 	
 	public void addPassengerToQueue(PassengerAgent passengerAgent){
 		System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] new passenger in queue");
-		passengersInQueue.add(passengerAgent);
+		_passengersInQueue.add(passengerAgent);
 	}
 	
 	public void removePassengerFromQueue(PassengerAgent passengerAgent){
-		if (passengersInQueue.contains(passengerAgent)){
+		if (_passengersInQueue.contains(passengerAgent)){
 			System.out.println("TaxiStop" + _pos.toString() + " passenger has left the queue");
-			passengersInQueue.remove(passengerAgent);
+			_passengersInQueue.remove(passengerAgent);
 		}
 	}
 	
 	public boolean isPassengerInQueue(PassengerAgent passengerAgent){
-		return passengersInQueue.contains(passengerAgent);
+		return _passengersInQueue.contains(passengerAgent);
 	}
 	
 	public PassengerAgent getPassengerAtHeadOfQueue(){
-		return passengersInQueue.peek();
+		return _passengersInQueue.peek();
 	}
 	
 	public boolean isMyTurn(PassengerAgent passengerAgent){
-		return (passengersInQueue.peek() == passengerAgent);
+		return (_passengersInQueue.peek() == passengerAgent);
+	}
+	
+	public String getStatus(){
+		return "P[" + _passengersInQueue.size() + "] T[" + _taxisInQueue.size() + "]";
+	}
+
+	public boolean isTaxiInQueue(TaxiAgent taxiAgent) {
+		return _taxisInQueue.contains(taxiAgent);
 	}
 }

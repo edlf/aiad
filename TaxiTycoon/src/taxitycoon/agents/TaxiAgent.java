@@ -94,8 +94,10 @@ public class TaxiAgent extends SimAgent {
 		}
 		
 		System.out.println("Found " + _intersectionPositions.size() + " intersections.");
-		System.out.println("Found " + _deadEndPositions.size() + " dead ends.");
-		
+		if (_deadEndPositions.size() !=0){
+			System.out.println("Found " + _deadEndPositions.size() + " dead ends.");
+		}
+			
 		_taxiMapCalculated = true;
 	}
 
@@ -471,7 +473,7 @@ public class TaxiAgent extends SimAgent {
 		int costMap[][] = new int[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				if (_map[i][j] == _mapRoad || _map[i][j] == _mapStop){
+				if (_map[i][j] == _mapRoad || _map[i][j] == _mapStop || _map[i][j] == _mapRefuel){
 					costMap[i][j] = 0;
 				} else {
 					costMap[i][j] = -1;	

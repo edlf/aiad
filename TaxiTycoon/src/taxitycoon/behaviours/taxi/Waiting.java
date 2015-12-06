@@ -2,6 +2,9 @@ package taxitycoon.behaviours.taxi;
 
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
+import taxitycoon.agents.TaxiCentral;
+import taxitycoon.messages.passenger.AskTaxiForTravel;
+import taxitycoon.staticobjects.TaxiStop;
 
 public class Waiting extends Behaviour {
 	private static final long serialVersionUID = 2163115385831517999L;
@@ -33,7 +36,27 @@ public class Waiting extends Behaviour {
 			return;
 		}
 		
+		/* Check if we are in a stop */
+		if (_taxiAgent.isOnStop()) {
 
+			/*
+			 * Get in what taxi stop were on and add ourself to the taxi
+			 * queue
+			 */
+			TaxiStop taxiStop = TaxiCentral.getTaxiStopAt(_taxiAgent.getPosition());
+
+			/* Check if are already in the queue */
+			if(taxiStop.isTaxiInQueue(_taxiAgent)){
+
+				
+			} else {
+				/* Add to queue */
+				taxiStop.addTaxiToQueue(_taxiAgent);
+			}		
+
+		} else {
+			System.out.println("BUG: TaxiAgent with waiting behaviour and not on a stop");
+		}
 		
 	}
 
