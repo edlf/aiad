@@ -1,5 +1,6 @@
 package taxitycoon.behaviours.taxi;
 
+import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
@@ -9,11 +10,12 @@ import taxitycoon.staticobjects.TaxiStop;
 public class Waiting extends CyclicBehaviour {
 	private static final long serialVersionUID = 2163115385831517999L;
 	private TaxiAgent _taxiAgent;
+	private TaxiStop _taxiStop;
 
 	public Waiting() {
 		super();
 		_taxiAgent = null;
-		
+		_taxiStop = null;
 	}
 	
 	@Override
@@ -38,25 +40,28 @@ public class Waiting extends CyclicBehaviour {
 		
 		/* Check if we are in a stop */
 		if (_taxiAgent.isOnStop()) {
+			if (_taxiStop == null){
+				_taxiStop = TaxiCentral.getTaxiStopAt(_taxiAgent.getPosition());
+			}
 
-			/*
-			 * Get in what taxi stop were on and add ourself to the taxi
-			 * queue
-			 */
-			TaxiStop taxiStop = TaxiCentral.getTaxiStopAt(_taxiAgent.getPosition());
-
-			/* Check if are already in the queue */
-			if(taxiStop.isTaxiInQueue(_taxiAgent)){
-
-				
+			if(_taxiStop.isTaxiInQueue(_taxiAgent)){
+				onStopLogic();
 			} else {
-				/* Add to queue */
-				taxiStop.addTaxiToQueue(_taxiAgent);
+				_taxiStop.addTaxiToQueue(_taxiAgent);
 			}		
 
 		} else {
 			System.out.println("BUG: TaxiAgent with waiting behaviour and not on a stop");
 		}
 		
+	}
+	
+	private void onStopLogic(){
+		/* Check for messages */
+		ACLMessage msg = _taxiAgent.receive();
+		if (msg != null) {
+			String title = msg.getContent();
+			System.out.println("TAXI got message:" +  title);
+		}
 	}
 }

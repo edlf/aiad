@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.javatuples.Pair;
 
 import taxitycoon.behaviours.taxi.*;
+import taxitycoon.staticobjects.RefuelStation;
 import taxitycoon.staticobjects.TaxiStop;
 
 /**
@@ -580,7 +581,7 @@ public class TaxiAgent extends SimAgent {
 
 	public TaxiStop getNearestTaxiStop() {
 		TaxiStop nearest = null;
-		int currentCost = 9999999;
+		int currentCost = Integer.MAX_VALUE;
 		
 		for(TaxiStop taxiStop: _taxiStops){
 			int stopCost = getCostToPoint(taxiStop.getPosition());
@@ -593,5 +594,18 @@ public class TaxiAgent extends SimAgent {
 		return nearest;
 	}
 	
-	
+	public RefuelStation getNearestRefuelStation() {
+		RefuelStation nearest = null;
+		int currentCost = Integer.MAX_VALUE;
+		
+		for(RefuelStation refuelStation: _refuelStations){
+			int stopCost = getCostToPoint(refuelStation.getPosition());
+			if(stopCost < currentCost){
+				nearest = refuelStation;
+				currentCost = stopCost;
+			}
+		}
+		
+		return nearest;
+	}
 }

@@ -31,6 +31,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private int currentTaxiID = 0;
 	private int currentPassengerID = 0;
 	private ArrayList<TaxiStop> _taxiStops = new ArrayList<>();
+	private ArrayList<RefuelStation> _refuelStations = new ArrayList<>();
 	
 	/* Graphical representation */
 	private Grid<Object> _grid;
@@ -39,7 +40,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private ContainerController _mainContainer;
 
 	public TaxiTycoonLauncher() {
-		System.out.println("### TaxiTycoon logging started. ###");
+		System.out.println("###### TaxiTycoon logging started. ######");
 		_mapLoader = new MapLoader("map.csv");
 	}
 
@@ -88,6 +89,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		for (Pair<Integer, Integer> refuelPos : _mapLoader.getRefuelPositions()){
 			RefuelStation refuelStation  = new RefuelStation(refuelPos);
 			_grid.getAdder().add(_grid, refuelStation);
+			_refuelStations.add(refuelStation);
 			mainContext.add(refuelStation);
 			_grid.moveTo(refuelStation, refuelStation.getX(), refuelStation.getY());
 		}
@@ -102,7 +104,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 		}
 		
 		/* Store grid and map size on all moving agents */
-		SimAgent.setupMap(_grid, _mapLoader.getMapSize(), _taxiStops);
+		SimAgent.setupMap(_grid, _mapLoader.getMapSize(), _taxiStops, _refuelStations);
 		
 		/* Create static map for each agent type */
 		TaxiAgent.createAgentMap(_mapLoader.getRoadPositions(), _mapLoader.getTaxiStopPositions(), _mapLoader.getRefuelPositions());
