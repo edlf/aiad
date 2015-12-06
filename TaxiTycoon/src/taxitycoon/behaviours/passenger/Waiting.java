@@ -1,5 +1,6 @@
 package taxitycoon.behaviours.passenger;
 
+import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiCentral;
@@ -66,11 +67,16 @@ public class Waiting extends CyclicBehaviour {
 		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurn(_passengerAgent)) {
 
 			if(_waitingForReply) {
-
+				ACLMessage msg = _passengerAgent.receive();
+				if (msg != null) {
+					String title = msg.getContent();
+					msg.getOntology();
+					
+					System.out.println("MSG: Passenger got message:" +  title);
+				}
 			} else {
 				/* Send request to taxi at head of queue */
-				System.out.println("Passenger sent message");
-				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_taxiStop.getTaxiAtHeadOfQueue());
+				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
 				_waitingForReply = true;
 			}

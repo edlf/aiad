@@ -4,6 +4,8 @@ import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
+import taxitycoon.messages.passenger.AskTaxiForTravel;
+import taxitycoon.messages.taxi.AcceptRide;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class Waiting extends CyclicBehaviour {
@@ -60,7 +62,12 @@ public class Waiting extends CyclicBehaviour {
 		ACLMessage msg = _taxiAgent.receive();
 		if (msg != null) {
 			String title = msg.getContent();
-			System.out.println("TAXI got message:" +  title);
+			msg.getOntology();
+			
+			System.out.println("MSG: Taxi got message:" +  title);
+			
+			AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue());
+			_taxiAgent.send(acceptRideMessage);
 		}
 	}
 }

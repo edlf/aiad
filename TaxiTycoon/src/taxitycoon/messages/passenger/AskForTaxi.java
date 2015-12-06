@@ -16,7 +16,7 @@ public class AskForTaxi extends ACLMessage {
 		
 		addReceiver(new AID(TaxiCentral.class.getSimpleName(), AID.ISLOCALNAME));
 		setLanguage("English");
-		setOntology("Taxitycoon-passenger-ontology");
+		setOntology("Taxitycoon-Passenger-AskForTaxi");
 		setContent("Taxi Request"); 
 	}
 	
