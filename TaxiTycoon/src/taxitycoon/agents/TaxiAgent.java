@@ -608,4 +608,12 @@ public class TaxiAgent extends SimAgent {
 		
 		return nearest;
 	}
+	
+	public String getStatus(){
+		if (_numberOfPassengers > 0){
+			return "[" + _numberOfPassengers + " of " + _maximumCapacity + "]";
+		}
+		
+		return "";
+	}
 }

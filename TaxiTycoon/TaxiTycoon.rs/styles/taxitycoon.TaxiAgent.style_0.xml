@@ -5,10 +5,11 @@
   <sizeMin>8</sizeMin>
   <sizeScale>1</sizeScale>
   <label></label>
+  <labelMethod>getStatus</labelMethod>
   <labelPosition>bottom</labelPosition>
   <labelPrecision>3</labelPrecision>
   <labelOffset>5.0</labelOffset>
-  <labelFontSize>14</labelFontSize>
+  <labelFontSize>10</labelFontSize>
   <labelFontType>0</labelFontType>
   <labelFontFamily>Arial</labelFontFamily>
   <labelColor>
