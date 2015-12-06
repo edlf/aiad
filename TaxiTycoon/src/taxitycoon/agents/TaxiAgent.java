@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.javatuples.Pair;
 
 import taxitycoon.behaviours.taxi.*;
+import taxitycoon.staticobjects.TaxiStop;
 
 /**
  * Taxi agent
@@ -462,7 +463,7 @@ public class TaxiAgent extends SimAgent {
 		}
 		
 		/* Check if we are on road and the destination is also on road */
-		if(!isOnRoad() || !isOnRoad(destination)){
+		if(!isOnRoad() || !(isOnRoad(destination) || isOnTaxiStop(destination))){
 			return path;
 		}
 		
@@ -470,7 +471,7 @@ public class TaxiAgent extends SimAgent {
 		int costMap[][] = new int[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				if (_map[i][j] == _mapRoad){
+				if (_map[i][j] == _mapRoad || _map[i][j] == _mapStop){
 					costMap[i][j] = 0;
 				} else {
 					costMap[i][j] = -1;	
@@ -549,6 +550,25 @@ public class TaxiAgent extends SimAgent {
 		}
 		
 		return path;
+	}
+
+	private boolean isOnTaxiStop(Pair<Integer, Integer> point) {
+		return (_map[point.getValue0()][point.getValue1()] == _mapStop);
+	}
+
+	public TaxiStop getNearestTaxiStop() {
+		TaxiStop nearest = null;
+		int currentCost = 9999999;
+		
+		for(TaxiStop taxiStop: _taxiStops){
+			int stopCost = getCostToPoint(taxiStop.getPosition());
+			if(stopCost < currentCost){
+				nearest = taxiStop;
+				currentCost = stopCost;
+			}
+		}
+		
+		return nearest;
 	}
 	
 	

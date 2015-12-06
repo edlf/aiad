@@ -51,7 +51,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	protected void launchJADE() {
 		RunEnvironment runEnvironment = RunEnvironment.getInstance();
 		runEnvironment.setScheduleTickDelay(10);
-		
+	
 		_createRepresentation();
 		_mainContainer = Runtime.instance().createMainContainer(null);
 		launchAgents();

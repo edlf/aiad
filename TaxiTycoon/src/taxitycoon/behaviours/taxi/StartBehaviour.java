@@ -1,14 +1,11 @@
 package taxitycoon.behaviours.taxi;
 
-import org.javatuples.Pair;
-
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiAgent;
 
 public class StartBehaviour extends Behaviour {
 	private static final long serialVersionUID = 6972973475342866016L;
 	private TaxiAgent _taxiAgent;
-	private static boolean test = false;
 
 	public StartBehaviour(){
 		super();
@@ -34,10 +31,11 @@ public class StartBehaviour extends Behaviour {
 			return;
 		}
 		
-		if (!test){
-			test = true;
-			_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
-		}
+		/* Check if taxi central wants us to go to a specific stop */
+		
+		
+		/* If not go to the nearest stop */
+		_taxiAgent.replaceBehaviour(new InTransit(_taxiAgent.getNearestTaxiStop().getPosition()));
 	}
 
 	@Override
