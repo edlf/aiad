@@ -21,7 +21,4 @@ public class AskTaxiForTravel extends ACLMessage {
 		
 	}
 	
-	public void sendMessage(){
-		
-	}
 }

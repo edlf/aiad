@@ -71,7 +71,7 @@ public class Waiting extends CyclicBehaviour {
 				/* Send request to taxi at head of queue */
 				System.out.println("Passenger sent message");
 				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_taxiStop.getTaxiAtHeadOfQueue());
-				askTaxiForTravelMessage.sendMessage();
+				_passengerAgent.send(askTaxiForTravelMessage);
 				_waitingForReply = true;
 			}
 
