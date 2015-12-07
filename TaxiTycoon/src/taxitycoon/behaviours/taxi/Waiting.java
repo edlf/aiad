@@ -7,7 +7,9 @@ import sajas.core.AID;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
+import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.messages.taxi.AcceptRide;
+import taxitycoon.messages.taxi.RequestPassenerDestination;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class Waiting extends CyclicBehaviour {
@@ -68,6 +70,7 @@ public class Waiting extends CyclicBehaviour {
 			System.out.println("MSG: Taxi got message:" +  title);
 			
 			switch (msg.getPerformative()) {
+			
 			case ACLMessage.REQUEST:
 				System.out.println("MSG: Taxi: AcceptRideMessage");
 				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue().getAID());
@@ -77,6 +80,10 @@ public class Waiting extends CyclicBehaviour {
 				_taxiAgent.replaceBehaviour(new InTransit(new Pair<Integer, Integer>(28, 28)));
 				
 				/* Ask other passengers for the destination */
+				RequestPassenerDestination requestPassenerDestination = new RequestPassenerDestination();
+				
+				//_taxiAgent.send(askTaxiForTravelMessage);
+				
 				break;
 				
 			case ACLMessage.ACCEPT_PROPOSAL:
