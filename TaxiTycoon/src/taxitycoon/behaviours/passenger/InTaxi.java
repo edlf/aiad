@@ -41,9 +41,7 @@ public class InTaxi extends Behaviour {
 		/* Update our location from the taxi */
 		ACLMessage msg = _passengerAgent.receive();
 		if (msg != null) {
-			String title = msg.getContent();
-			System.out.println("MSG: Passenger got message:" +  title);
-			
+			String title = msg.getContent();		
 			switch (msg.getPerformative()) {
 			case ACLMessage.INFORM:
 				String[] pos = title.split(",");

@@ -3,6 +3,8 @@ package taxitycoon.agents;
 import java.util.ArrayList;
 
 import org.javatuples.Pair;
+
+import taxitycoon.TaxiTycoonLauncher;
 import taxitycoon.behaviours.passenger.*;
 
 /**
@@ -200,7 +202,9 @@ public class PassengerAgent extends SimAgent {
 	}
 	
 	public void printStats(){
-		System.out.println(getLocalName() + " walking: " + getTicksWalkingPercent() + "% waiting: " + getTicksWaitingPercent() + "% in taxi: " + getTicksInTaxiPercent() + "%");
+		System.out.println(getLocalName() + " walking: " + TaxiTycoonLauncher.roundDouble(getTicksWalkingPercent()) +
+				"% waiting: " + TaxiTycoonLauncher.roundDouble(getTicksWaitingPercent()) + "% in taxi: " + 
+				TaxiTycoonLauncher.roundDouble(getTicksInTaxiPercent()) + "%");
 	}
 	
 	/* Travel costs */

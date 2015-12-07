@@ -145,4 +145,8 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements ContextBuilde
 	private void addTaxiCentralAgent() throws StaleProxyException {
 		_mainContainer.acceptNewAgent(TaxiCentral.class.getSimpleName(), new TaxiCentral()).start();
 	}
+	
+	public static String roundDouble(double input){
+		return String.format("%,.2f", input);
+	}
 }
