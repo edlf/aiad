@@ -66,29 +66,8 @@ public class Waiting extends CyclicBehaviour {
 		/* Check if we have a taxi available and is our turn */
 		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurn(_passengerAgent)) {
 
-			if(_waitingForReply) {
-				ACLMessage msg = _passengerAgent.receive();
-				if (msg != null) {
-					String title = msg.getContent();
-					System.out.println("MSG: Passenger got message:" +  title);
-					
-					switch (msg.getPerformative()) {
-					case ACLMessage.ACCEPT_PROPOSAL:
-						_passengerAgent.setOnTaxi();
-						_taxiStop.removePassengerFromQueue(_passengerAgent);
-						_passengerAgent.replaceBehaviour(new InTaxi());
-						break;
-						
-					case ACLMessage.REJECT_PROPOSAL:
-						
-						break;
-
-					default:
-						System.out.println("MSG: Passenger received unkown message.");
-						break;
-					}
-				}
-			} else {
+			 if(!_waitingForReply){
+				System.out.println("MSG: send message asktaxifortravel");
 				/* Send request to taxi at head of queue */
 				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getAID(), _passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
@@ -99,6 +78,31 @@ public class Waiting extends CyclicBehaviour {
 			return;
 		}
 
+		if(_waitingForReply) {
+			System.out.println("XX Passenger Waiting for response..");
+			ACLMessage msg = _passengerAgent.receive();
+			if (msg != null) {
+				String title = msg.getContent();
+				System.out.println("MSG: Passenger got message:" +  title);
+				
+				switch (msg.getPerformative()) {
+				case ACLMessage.ACCEPT_PROPOSAL:
+					_passengerAgent.setOnTaxi();
+					_taxiStop.removePassengerFromQueue(_passengerAgent);
+					_passengerAgent.replaceBehaviour(new InTaxi());
+					return;
+					
+				case ACLMessage.REJECT_PROPOSAL:
+					
+					break;
+
+				default:
+					System.out.println("MSG: Passenger received unkown message.");
+					break;
+				}
+			}
+		}
+		
 		if (_taxiStop.hasTaxiAvailable()) {
 
 			return;

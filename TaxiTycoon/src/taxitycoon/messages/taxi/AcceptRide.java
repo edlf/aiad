@@ -7,10 +7,10 @@ import taxitycoon.agents.PassengerAgent;
 public class AcceptRide extends ACLMessage {
 	private static final long serialVersionUID = -8561968757257431416L;
 
-	public AcceptRide(PassengerAgent passengerAgent) {
+	public AcceptRide(jade.core.AID aid) {
 		super(ACLMessage.ACCEPT_PROPOSAL);
 		
-		addReceiver(new AID(passengerAgent.getLocalName(), AID.ISLOCALNAME));
+		addReceiver(aid);
 		setLanguage("English");
 		setOntology("Taxitycoon-Passenger-ontology");
 		//setContent(destinationPosition.toString());

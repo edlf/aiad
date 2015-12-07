@@ -46,12 +46,11 @@ public class InTaxi extends Behaviour {
 			
 			switch (msg.getPerformative()) {
 			case ACLMessage.INFORM:
-				try {
-					Pair<Integer,Integer> newPos = (Pair<Integer, Integer>) msg.getContentObject();
-					_passengerAgent.relativeMove(newPos);
-				} catch (UnreadableException e) {
-					e.printStackTrace();
-				}
+				String[] pos = title.split(",");
+				int x = Integer.parseInt(pos[0]);
+				int y = Integer.parseInt(pos[1]);
+				Pair<Integer,Integer> newPos = new Pair<Integer, Integer> (x,y);		
+				_passengerAgent.move(newPos);
 				break;
 				
 			default:

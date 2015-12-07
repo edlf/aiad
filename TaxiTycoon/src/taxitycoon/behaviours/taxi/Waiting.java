@@ -69,7 +69,8 @@ public class Waiting extends CyclicBehaviour {
 			
 			switch (msg.getPerformative()) {
 			case ACLMessage.REQUEST:
-				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue());
+				System.out.println("MSG: Taxi: AcceptRideMessage");
+				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue().getAID());
 				_taxiAgent.send(acceptRideMessage);
 				_taxiAgent.addPassenger(senderAID);
 				_taxiStop.removeTaxiFromQueue(_taxiAgent);

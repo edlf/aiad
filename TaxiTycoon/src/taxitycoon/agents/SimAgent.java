@@ -79,6 +79,26 @@ public abstract class SimAgent extends Agent {
 		}
 	}
 	
+	public boolean move(Pair<Integer,Integer> dest){
+		if (_currentPosition.getValue0() == dest.getValue0() && Math.abs(_currentPosition.getValue1() - dest.getValue1()) == 1){
+			if (_currentPosition.getValue1() > dest.getValue1()){
+				return relativeMove(new Pair<Integer, Integer>(0, -1));
+			} else {
+				return relativeMove(new Pair<Integer, Integer>(0, 1));
+			}
+		}
+		
+		if (_currentPosition.getValue1() == dest.getValue1() && Math.abs(_currentPosition.getValue0() - dest.getValue0()) == 1){
+			if (_currentPosition.getValue0() > dest.getValue0()){
+				return relativeMove(new Pair<Integer, Integer>(-1,0));
+			} else {
+				return relativeMove(new Pair<Integer, Integer>(1, 0));
+			}
+		}
+		
+		return false;
+	}
+	
 	/* Getters for position */
 	public Pair<Integer, Integer> getPosition(){
 		return _currentPosition;
