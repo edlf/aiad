@@ -90,7 +90,7 @@ public class Waiting extends CyclicBehaviour {
 				}
 			} else {
 				/* Send request to taxi at head of queue */
-				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
+				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getAID(), _passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
 				_waitingForReply = true;
 			}

@@ -1,6 +1,9 @@
 package taxitycoon.behaviours.passenger;
 
+import org.javatuples.Pair;
+
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiAgent;
@@ -43,6 +46,12 @@ public class InTaxi extends Behaviour {
 			
 			switch (msg.getPerformative()) {
 			case ACLMessage.INFORM:
+				try {
+					Pair<Integer,Integer> newPos = (Pair<Integer, Integer>) msg.getContentObject();
+					_passengerAgent.relativeMove(newPos);
+				} catch (UnreadableException e) {
+					e.printStackTrace();
+				}
 				break;
 				
 			default:

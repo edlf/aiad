@@ -64,8 +64,10 @@ public class InTransit extends Behaviour {
 		Pair<Integer,Integer> nextPos = _pathToDestination.getFirst();
 		_taxiAgent.move(nextPos);
 		if(_taxiAgent.hasPassengers()){
-			UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(nextPos);
-			_taxiAgent.send(updatePassengerLocation);
+			for(jade.core.AID passengerAID : _taxiAgent.getPassengers()){
+				UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(passengerAID, nextPos);
+				_taxiAgent.send(updatePassengerLocation);
+			}
 		}
 		_pathToDestination.removeFirst();
 

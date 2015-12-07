@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import org.javatuples.Pair;
 
+import jade.core.AID;
 import taxitycoon.behaviours.taxi.*;
 import taxitycoon.staticobjects.RefuelStation;
 import taxitycoon.staticobjects.TaxiStop;
@@ -23,7 +24,7 @@ public class TaxiAgent extends SimAgent {
 	
 	/* Individual variables */
 	private int _maximumCapacity = 4;
-	private int _numberOfPassengers = 0;
+	private ArrayList <jade.core.AID> _passengers = new ArrayList<>();
 	private int _gas = _gasMax;
 	private int _numberOfRefuels = 0;
 	
@@ -377,7 +378,7 @@ public class TaxiAgent extends SimAgent {
 	
 	/* Taxi status queries */
 	public boolean isTaxiFull(){
-		return (_numberOfPassengers == _maximumCapacity);
+		return (_passengers.size() == _maximumCapacity);
 	}
 	
 	public boolean isOnRoad(){
@@ -623,22 +624,26 @@ public class TaxiAgent extends SimAgent {
 	}
 	
 	public String getStatus(){
-		if (_numberOfPassengers > 0){
-			return "[" + _numberOfPassengers + " of " + _maximumCapacity + "]";
+		if (_passengers.size() > 0){
+			return "[" + _passengers.size() + " of " + _maximumCapacity + "]";
 		}
 		
 		return "";
 	}
 	
 	public boolean hasPassengers(){
-		return (_numberOfPassengers > 0);
+		return (_passengers.size() > 0);
 	}
 	
-	public void addPassenger(){
-		_numberOfPassengers++;
+	public void addPassenger(jade.core.AID passengerAid){
+		_passengers.add(passengerAid);
 	}
 	
 	public void clearPassengers(){
-		_numberOfPassengers = 0;
+		_passengers.clear();
+	}
+
+	public ArrayList<AID> getPassengers(){
+		return _passengers;
 	}
 }
