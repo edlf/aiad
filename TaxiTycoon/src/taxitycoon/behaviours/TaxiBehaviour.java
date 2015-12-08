@@ -64,6 +64,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		getTaxiStatus();
 
+		System.out.println(_currentState);
 		switch (_currentState) {
 		case STATE_ERROR:
 			break;
@@ -266,7 +267,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				switch (msg.getPerformative()) {
 				
 				case ACLMessage.CONFIRM:
-					System.out.println("CONFIRM");
 					String[] pos = title.split(",");
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
@@ -275,7 +275,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					break;
 					
 				case ACLMessage.DISCONFIRM:
-					System.out.println("DENY");
 					changeStateTo(STATE_GO_TO_NEAREST_STOP);
 					break;
 					
@@ -286,7 +285,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			
 			currentTimeOut++;
 		} else {
-			System.out.println("Did not get reply");
 			/* Timeout: go to the nearest stop */
 			if (!_taxiAgent.isOnTaxiStop()) {
 				changeStateTo(STATE_GO_TO_NEAREST_STOP);
@@ -337,7 +335,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		if (msg != null) {
 			String title = msg.getContent();
 			jade.core.AID senderAID = msg.getSender();
-			System.out.println("MSG: Taxi got message:" + title);
 
 			switch (msg.getPerformative()) {
 
@@ -358,6 +355,17 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 				break;
 
+				/* Taxi central preferred stop */
+			case ACLMessage.INFORM:
+				String[] pos = title.split(",");
+				int x = Integer.parseInt(pos[0]);
+				int y = Integer.parseInt(pos[1]);
+				_currentDestination = new Pair<Integer, Integer> (x,y);	
+				changeStateTo(STATE_GO_TO_STOP);
+				
+				break;
+				
+				/* Passenger responses to destination location */
 			case ACLMessage.ACCEPT_PROPOSAL:
 
 				break;
@@ -367,7 +375,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				break;
 
 			default:
-				System.out.println("MSG: Taxi received unkown message.");
 				break;
 			}
 		}

@@ -17,9 +17,7 @@ public class AskTaxiForTravel extends ACLMessage {
 		super(ACLMessage.REQUEST);
 		
 		addReceiver(new AID(messageReceiver.getLocalName(), AID.ISLOCALNAME));
-		setLanguage("English");
-		setOntology("Taxitycoon-passenger-ontology");
-		setContent(destinationPosition.toString());
+		setContent(destinationPosition.getValue0()+","+destinationPosition.getValue1());
 
 		
 	}

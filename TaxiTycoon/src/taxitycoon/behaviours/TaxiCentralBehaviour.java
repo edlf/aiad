@@ -31,7 +31,7 @@ public class TaxiCentralBehaviour extends Behaviour {
 			
 			switch (message.getPerformative()) {
 			
-			/* Reply with highest priority taxi stop or reject the request if there is no preferential stop */
+			/* Taxi Request: Reply with highest priority taxi stop or reject the request if there is no preferential stop */
 			case ACLMessage.REQUEST_WHENEVER:
 				RequestPreferentialStopReply requestPreferentialStopReply;
 				if (currentMax > 0 || highestPriorityTaxiStop != null){
@@ -47,6 +47,11 @@ public class TaxiCentralBehaviour extends Behaviour {
 				
 				break;
 			
+				/* Passenger request */
+			case ACLMessage.REQUEST:
+				
+				break;
+				
 			default:
 					
 				break;

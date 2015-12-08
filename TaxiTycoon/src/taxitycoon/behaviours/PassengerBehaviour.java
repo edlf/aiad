@@ -6,6 +6,7 @@ import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiCentral;
+import taxitycoon.messages.passenger.AskForTaxi;
 import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.staticobjects.TaxiStop;
 
@@ -283,13 +284,10 @@ public class PassengerBehaviour extends Behaviour {
 			}
 		}
 
-		if (_taxiStop.hasTaxiAvailable()) {
-
-			return;
-		} else {
+		if (!_taxiStop.hasTaxiAvailable()) {			
 			/* Send a message to taxi central asking for taxis */
-			// System.out.println(_passengerAgent.toString());
-
+			AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
+			_passengerAgent.send(askForTaxi);
 			return;
 		}
 
