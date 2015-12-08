@@ -28,7 +28,7 @@ public abstract class SimAgent extends Agent {
 	/* Map Types */
 	protected static final char _mapRoad = '_';
 	protected static final char _mapGrass = 'G';
-	protected static final char _mapStop = 'S';
+	protected static final char _mapTaxiStop = 'S';
 	protected static final char _mapRefuel = 'R';
 	
 	/* Position */

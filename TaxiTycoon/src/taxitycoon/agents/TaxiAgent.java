@@ -57,7 +57,7 @@ public class TaxiAgent extends SimAgent {
 		
 		/* Fill stops */
 		for(Pair<Integer, Integer> stop : stops){
-			_map[stop.getValue0()][stop.getValue1()] = _mapStop;
+			_map[stop.getValue0()][stop.getValue1()] = _mapTaxiStop;
 		}
 		
 		/* Fill refuel stations */
@@ -312,7 +312,7 @@ public class TaxiAgent extends SimAgent {
 		}
 		
 		/* Check if it is stop */
-		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapStop){
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapTaxiStop){
 			gasReduce();
 			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
 		}
@@ -329,7 +329,7 @@ public class TaxiAgent extends SimAgent {
 	
 	@Override
 	protected void _addInitialBehaviour(){
-		replaceBehaviour(new StartBehaviour());
+		replaceBehaviour(new TaxiBehaviour());
 	}
 	
 	protected void increaseTick(){
@@ -373,8 +373,8 @@ public class TaxiAgent extends SimAgent {
 		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapRefuel);
 	}
 	
-	public boolean isOnStop(){
-		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+	public boolean isOnTaxiStop(){
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapTaxiStop);
 	}
 	
 	public int getGasInTank(){
@@ -480,7 +480,7 @@ public class TaxiAgent extends SimAgent {
 		int costMap[][] = new int[_mapSize.getValue0()][_mapSize.getValue1()];
 		for (int i = 0; i < _mapSize.getValue0(); i++){
 			for (int j = 0; j < _mapSize.getValue1(); j++){
-				if (_map[i][j] == _mapRoad || _map[i][j] == _mapStop || _map[i][j] == _mapRefuel){
+				if (_map[i][j] == _mapRoad || _map[i][j] == _mapTaxiStop || _map[i][j] == _mapRefuel){
 					costMap[i][j] = 0;
 				} else {
 					costMap[i][j] = -1;	
@@ -561,16 +561,12 @@ public class TaxiAgent extends SimAgent {
 		return path;
 	}
 
-	private boolean isOnTaxiStop() {
-		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
-	}
-
 	private boolean isOnRefuelStation(Pair<Integer, Integer> point) {
 		return (_map[point.getValue0()][point.getValue1()] == _mapRefuel);
 	}
 
 	private boolean isOnTaxiStop(Pair<Integer, Integer> point) {
-		return (_map[point.getValue0()][point.getValue1()] == _mapStop);
+		return (_map[point.getValue0()][point.getValue1()] == _mapTaxiStop);
 	}
 
 	public TaxiStop getNearestTaxiStop() {

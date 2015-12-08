@@ -47,7 +47,7 @@ public class PassengerAgent extends SimAgent {
 		/* Fill stops */
 		_stopsPositions = stops;
 		for(Pair<Integer, Integer> stop : stops){
-			_map[stop.getValue0()][stop.getValue1()] = _mapStop;
+			_map[stop.getValue0()][stop.getValue1()] = _mapTaxiStop;
 		}
 		
 		_passengerMapCalculated = true;
@@ -82,7 +82,7 @@ public class PassengerAgent extends SimAgent {
 		}
 		
 		/* Check if it is stop */
-		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapStop){
+		if (_map[newPosition.getValue0()][newPosition.getValue1()] == _mapTaxiStop){
 			return _move(new Pair<Integer, Integer>(newPosition.getValue0(), newPosition.getValue1()));
 		}
 		
@@ -162,7 +162,7 @@ public class PassengerAgent extends SimAgent {
 	}
 	
 	public boolean isOnStop(){
-		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapStop);
+		return (_map[_currentPosition.getValue0()][_currentPosition.getValue1()] == _mapTaxiStop);
 	}
 	
 	public void setOnTaxi(){
