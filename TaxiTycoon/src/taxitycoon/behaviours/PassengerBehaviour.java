@@ -260,7 +260,6 @@ public class PassengerBehaviour extends Behaviour {
 		}
 
 		if (_waitingForReply) {
-			System.out.println("XX Passenger Waiting for response..");
 			ACLMessage msg = _passengerAgent.receive();
 			if (msg != null) {
 				String title = msg.getContent();

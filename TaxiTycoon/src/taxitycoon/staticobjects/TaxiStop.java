@@ -74,4 +74,31 @@ public class TaxiStop extends StaticMapObject {
 	public boolean isTaxiInQueue(TaxiAgent taxiAgent) {
 		return _taxisInQueue.contains(taxiAgent);
 	}
+	
+	public int getNumberOfPassengersInQueue(){
+		return _passengersInQueue.size();
+	}
+	
+	public int getNumberOfTaxisInQueue(){
+		return _taxisInQueue.size();
+	}
+	
+	public int getTaxiStopPriority(){
+		int passengers =_passengersInQueue.size(); 
+		int taxis = _taxisInQueue.size();
+		
+		if (passengers == 0){
+			return 0;
+		}
+		
+		if(taxis > passengers){
+			return 0;
+		}
+		
+		return passengers - taxis;
+	}
+	
+	public boolean hasMoreTaxisThanPassengers(){
+		return _taxisInQueue.size() > _passengersInQueue.size();
+	}
 }

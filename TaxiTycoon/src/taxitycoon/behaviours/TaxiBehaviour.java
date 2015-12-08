@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import org.javatuples.Pair;
 
 import jade.lang.acl.ACLMessage;
+import sajas.core.AID;
 import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.SimAgent;
 import taxitycoon.agents.TaxiAgent;
@@ -44,11 +45,13 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private TaxiAgent _taxiAgent;
 	private TaxiStop _taxiStop;
 	private RefuelStation _refuelStation;
+	private jade.core.AID _taxiCentralAID;
 
 	public TaxiBehaviour() {
 		super();
 		_taxiAgent = null;
 		_taxiStop = null;
+		_taxiCentralAID = null;
 	}
 
 	/* Current state method call */
@@ -56,6 +59,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	public void action() {
 		if (_taxiAgent == null) {
 			_taxiAgent = (TaxiAgent) myAgent;
+			_taxiCentralAID = new AID(TaxiCentral.class.getSimpleName(), AID.ISLOCALNAME);
 		}
 
 		getTaxiStatus();
@@ -251,7 +255,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		/* Check if taxi central wants us to go to a specific stop */
 		if (currentTimeOut == 0){
-			RequestPreferentialStop requestPreferentialStop = new RequestPreferentialStop();
+			RequestPreferentialStop requestPreferentialStop = new RequestPreferentialStop(_taxiCentralAID);
 			_taxiAgent.send(requestPreferentialStop);
 		}
 		
@@ -262,6 +266,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				switch (msg.getPerformative()) {
 				
 				case ACLMessage.CONFIRM:
+					System.out.println("CONFIRM");
 					String[] pos = title.split(",");
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
@@ -270,6 +275,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					break;
 					
 				case ACLMessage.DISCONFIRM:
+					System.out.println("DENY");
 					changeStateTo(STATE_GO_TO_NEAREST_STOP);
 					break;
 					
@@ -280,7 +286,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			
 			currentTimeOut++;
 		} else {
-			
+			System.out.println("Did not get reply");
 			/* Timeout: go to the nearest stop */
 			if (!_taxiAgent.isOnTaxiStop()) {
 				changeStateTo(STATE_GO_TO_NEAREST_STOP);
@@ -379,7 +385,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	}
 	
 	private void changeStateTo(int newState) {
-		System.out.println(_taxiAgent.getLocalName() + " state: " + newState);
+		// System.out.println(_taxiAgent.getLocalName() + " state: " + newState);
 		_stateBegin = true;
 		_currentState = newState;
 	}
