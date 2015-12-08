@@ -20,7 +20,7 @@ public class TaxiAgent extends SimAgent {
 	static private ArrayList<Pair<Integer, Integer>> _intersectionPositions = new ArrayList<>();
 	static private ArrayList<Pair<Integer, Integer>> _deadEndPositions = new ArrayList<>();
 	static final private int _gasMax = 600;
-	static final private int _gasReserve = 60;
+	static final private int _gasReserve = _gasMax / 10;
 	
 	/* Individual variables */
 	private int _maximumCapacity = 4;

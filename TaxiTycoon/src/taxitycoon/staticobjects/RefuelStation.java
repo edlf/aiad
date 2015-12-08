@@ -29,4 +29,8 @@ public class RefuelStation extends StaticMapObject {
 	public String getStatus(){
 		return "T[" + _taxisInQueue.size() + "]";
 	}
+
+	public boolean isMyTurn(TaxiAgent taxiAgent) {
+		return (_taxisInQueue.peek() == taxiAgent);
+	}
 }

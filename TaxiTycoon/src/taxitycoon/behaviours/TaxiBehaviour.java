@@ -6,13 +6,13 @@ import org.javatuples.Pair;
 
 import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.CyclicBehaviour;
+import taxitycoon.agents.SimAgent;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
-import taxitycoon.messages.passenger.AskTaxiForTravel;
 import taxitycoon.messages.taxi.AcceptRide;
-import taxitycoon.messages.taxi.RequestPassenerDestination;
 import taxitycoon.messages.taxi.RequestPreferentialStop;
 import taxitycoon.messages.taxi.UpdatePassengerLocation;
+import taxitycoon.staticobjects.RefuelStation;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class TaxiBehaviour extends CyclicBehaviour {
@@ -27,10 +27,12 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private static final int STATE_REFUELING_NO_PASSENGERS = 5;
 	private static final int STATE_TRANSPORTING_PASSENGERS = 6;
 	private static final int STATE_GO_TO_STOP = 7;
+	private static final int STATE_TAXI_REFUELING = 8;
 
 	private int _currentState = 0;
-	private boolean stateBegin = true;
+	private boolean _stateBegin = true;
 	private static final int _defaultTimeOut = 5;
+	private static final int _RefuelTime = 8;
 	private int currentTimeOut = 0;
 
 	private boolean _outOfGas = false;
@@ -41,6 +43,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 	private TaxiAgent _taxiAgent;
 	private TaxiStop _taxiStop;
+	private RefuelStation _refuelStation;
 
 	public TaxiBehaviour() {
 		super();
@@ -70,7 +73,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			break;
 
 		case STATE_REFUELING_NO_PASSENGERS:
-
+			refuelingNoPassengersState();
 			break;
 
 		case STATE_GO_TO_NEAREST_STOP:
@@ -92,6 +95,10 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		case STATE_NO_GAS:
 			noGasState();
 			break;
+			
+		case STATE_TAXI_REFUELING:
+			refuelingState();
+			break;
 
 		default:
 			_currentState = STATE_ERROR;
@@ -99,10 +106,59 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		}
 
 	}
+	
+	private void refuelingState() {
+		if (_stateBegin) {
+			if (_taxiAgent.isOnRefuelStation()) {
+				_refuelStation = SimAgent.getRefuelStationAt(_taxiAgent.getPosition());
+			} else {
+				System.out.println("BUG: Taxi refuel state on non refuel tile");
+			}
+
+			_refuelStation.addTaxiToQueue(_taxiAgent);
+			
+			currentTimeOut = 0;
+			_stateBegin = false;
+		}
+		
+		if(_refuelStation.isMyTurn(_taxiAgent)){
+			if (currentTimeOut > _RefuelTime){
+				_taxiAgent.gasRefuel();
+				_refuelStation.removeTaxiFromQueue(_taxiAgent);
+				changeStateTo(STATE_START);
+			} else {
+				currentTimeOut++;
+			}
+		}
+	}
+
+	private void refuelingNoPassengersState(){
+		if (_stateBegin) {
+			_stateBegin = false;
+			_currentDestination = _taxiAgent.getNearestRefuelStation().getPosition();
+			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
+
+			/* No path obtained */
+			if (_pathToDestination.isEmpty()) {
+				System.out.println("Taxi cannot find a path to destination! " + _currentDestination);
+				changeStateTo(STATE_ERROR);
+				return;
+			}
+		}
+
+		/* Check if travel has ended */
+		if (_taxiAgent.getPosition().equals(_currentDestination)) {
+			changeStateTo(STATE_TAXI_REFUELING);
+			return;
+		}
+
+		_taxiAgent.increaseRefuelingTick();
+		move();
+	}
 
 	private void transportingPassengersState() {
-		if (stateBegin) {
-			stateBegin = false;
+		if (_stateBegin) {
+			_stateBegin = false;
 			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
 
 			/* No path obtained */
@@ -126,8 +182,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 	/* Go to nearest stop behaviour (DONE) */
 	private void goToNearestStopState() {
-		if (stateBegin) {
-			stateBegin = false;
+		if (_stateBegin) {
+			_stateBegin = false;
 			_currentDestination = _taxiAgent.getNearestTaxiStop().getPosition();
 			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
 
@@ -152,8 +208,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	
 	/* Go to specific stop behaviour (DONE) */
 	private void goToStopState() {
-		if (stateBegin) {
-			stateBegin = false;
+		if (_stateBegin) {
+			_stateBegin = false;
 			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
 
 			/* No path obtained */
@@ -176,9 +232,9 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	}
 
 	private void startState() {
-		if (stateBegin) {
+		if (_stateBegin) {
 			currentTimeOut = 0;
-			stateBegin = false;
+			_stateBegin = false;
 		}
 		
 		/* Check if we ran out of gas */
@@ -233,23 +289,23 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	}
 
 	private void noGasState() {
-		if (stateBegin) {
+		if (_stateBegin) {
 
-			stateBegin = false;
+			_stateBegin = false;
 		}
 	}
 
 	private void waitingState() {
-		if (stateBegin) {
+		if (_stateBegin) {
 
-			stateBegin = false;
+			_stateBegin = false;
 		}
 
 		_taxiAgent.increaseWaitingTick();
 	}
 
 	private void taxiStopState() {
-		if (stateBegin) {
+		if (_stateBegin) {
 			if (_taxiAgent.isOnTaxiStop()) {
 				_taxiStop = TaxiCentral.getTaxiStopAt(_taxiAgent.getPosition());
 			} else {
@@ -258,9 +314,15 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			_taxiStop.addTaxiToQueue(_taxiAgent);
 
-			stateBegin = false;
+			_stateBegin = false;
 		}
 		_taxiAgent.increaseWaitingTick();
+		
+		/* Check if we are on reserve */
+		if (_gasOnReserve) {
+			changeStateTo(STATE_REFUELING_NO_PASSENGERS);
+			return;
+		}
 		
 		/* Check for messages */
 		ACLMessage msg = _taxiAgent.receive();
@@ -308,19 +370,15 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	/* Get taxi status */
 	private void getTaxiStatus() {
 		/* Check if we ran out of gas */
-		if (_taxiAgent.getGasInTank() == 0) {
-			_outOfGas = true;
-		}
+		_outOfGas = (_taxiAgent.getGasInTank() == 0);
 
 		/* Check if we are on reserve */
-		if (_taxiAgent.isGasOnReserve()) {
-			_gasOnReserve = true;
-		}
+		_gasOnReserve = _taxiAgent.isGasOnReserve();
 	}
 	
 	private void changeStateTo(int newState) {
 		System.out.println(_taxiAgent.getLocalName() + " state: " + newState);
-		stateBegin = true;
+		_stateBegin = true;
 		_currentState = newState;
 	}
 	

@@ -1,8 +1,6 @@
 package taxitycoon.messages.taxi;
 
 import jade.lang.acl.ACLMessage;
-import sajas.core.AID;
-import taxitycoon.agents.PassengerAgent;
 
 public class AcceptRide extends ACLMessage {
 	private static final long serialVersionUID = -8561968757257431416L;

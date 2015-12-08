@@ -175,4 +175,13 @@ public abstract class SimAgent extends Agent {
 	}
 	
 	abstract protected void increaseTick();
+
+	public static RefuelStation getRefuelStationAt(Pair<Integer, Integer> position) {
+		for(RefuelStation refuelStation : _refuelStations){
+			if (refuelStation.getPosition().equals(position)){
+				return refuelStation;
+			}
+		}
+		return null;
+	}
 }
