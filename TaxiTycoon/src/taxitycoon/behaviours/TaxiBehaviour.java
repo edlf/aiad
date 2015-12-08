@@ -27,7 +27,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private static final int STATE_REFUELING_NO_PASSENGERS = 5;
 	private static final int STATE_TRANSPORTING_PASSENGERS = 6;
 	private static final int STATE_GO_TO_STOP = 7;
-	private static final int STATE_TAXI_REFUELING = 8;
+	private static final int STATE_TAXI_ON_REFUEL_STOP = 8;
 
 	private int _currentState = 0;
 	private boolean _stateBegin = true;
@@ -96,8 +96,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			noGasState();
 			break;
 			
-		case STATE_TAXI_REFUELING:
-			refuelingState();
+		case STATE_TAXI_ON_REFUEL_STOP:
+			onRefuelStopState();
 			break;
 
 		default:
@@ -107,7 +107,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 	}
 	
-	private void refuelingState() {
+	private void onRefuelStopState() {
 		if (_stateBegin) {
 			if (_taxiAgent.isOnRefuelStation()) {
 				_refuelStation = SimAgent.getRefuelStationAt(_taxiAgent.getPosition());
@@ -148,7 +148,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		/* Check if travel has ended */
 		if (_taxiAgent.getPosition().equals(_currentDestination)) {
-			changeStateTo(STATE_TAXI_REFUELING);
+			changeStateTo(STATE_TAXI_ON_REFUEL_STOP);
 			return;
 		}
 
@@ -293,6 +293,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			_stateBegin = false;
 		}
+		
+		/* Ask another taxi for gas? */
 	}
 
 	private void waitingState() {
