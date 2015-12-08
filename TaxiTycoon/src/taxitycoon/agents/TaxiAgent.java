@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import org.javatuples.Pair;
 
 import jade.core.AID;
-import taxitycoon.behaviours.taxi.*;
+import taxitycoon.behaviours.*;
 import taxitycoon.staticobjects.RefuelStation;
 import taxitycoon.staticobjects.TaxiStop;
 

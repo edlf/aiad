@@ -151,7 +151,7 @@ public abstract class SimAgent extends Agent {
 		
 		_currentBehaviour = newBehaviour;
 		addBehaviour(_currentBehaviour);
-		System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
+		// System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 
 	/* Cost methods */

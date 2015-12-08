@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.javatuples.Pair;
 
 import taxitycoon.TaxiTycoonLauncher;
-import taxitycoon.behaviours.passenger.*;
+import taxitycoon.behaviours.PassengerBehaviour;
 
 /**
  * Passenger agent
@@ -102,7 +102,7 @@ public class PassengerAgent extends SimAgent {
 	
 	@Override
 	protected void _addInitialBehaviour() {
-		replaceBehaviour(new StartBehaviour());
+		replaceBehaviour(new PassengerBehaviour());
 	}
 	
 	protected void increaseTick(){
@@ -125,7 +125,7 @@ public class PassengerAgent extends SimAgent {
 	}
 	
 	void changeToWalkingToNearestStopBehaviour(){
-		replaceBehaviour(new StartBehaviour());
+		replaceBehaviour(new PassengerBehaviour());
 	}
 	
 	public void setDestination(Pair<Integer, Integer> destination){

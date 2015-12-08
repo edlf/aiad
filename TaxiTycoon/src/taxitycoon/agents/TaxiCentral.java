@@ -8,7 +8,7 @@ import jade.domain.FIPAException;
 import sajas.core.Agent;
 import sajas.core.behaviours.Behaviour;
 import sajas.domain.DFService;
-import taxitycoon.behaviours.taxicentral.*;
+import taxitycoon.behaviours.TaxiCentralBehaviour;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class TaxiCentral extends Agent {
@@ -39,7 +39,7 @@ public class TaxiCentral extends Agent {
 	}
 	
 	private void _addBehaviour(){
-		replaceBehaviour(new MainBehaviour());
+		replaceBehaviour(new TaxiCentralBehaviour());
 	}
 	
 	/* Behaviour replacement method */
@@ -50,7 +50,7 @@ public class TaxiCentral extends Agent {
 		
 		_currentBehaviour = newBehaviour;
 		addBehaviour(_currentBehaviour);
-		System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
+		// System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 	
 	public static TaxiStop getTaxiStopAt(Pair<Integer, Integer> pos){
