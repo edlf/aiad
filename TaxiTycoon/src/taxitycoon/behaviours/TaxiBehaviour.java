@@ -115,6 +115,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		/* Check if travel has ended */
 		if (_taxiAgent.getPosition().equals(_currentDestination)) {
+			_taxiAgent.clearPassengers();
 			changeStateTo(STATE_START);
 			return;
 		}
