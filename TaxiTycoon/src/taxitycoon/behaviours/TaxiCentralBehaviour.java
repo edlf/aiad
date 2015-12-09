@@ -1,9 +1,14 @@
 package taxitycoon.behaviours;
 
+import java.util.HashMap;
+
+import org.javatuples.Pair;
+
 import jade.lang.acl.ACLMessage;
 import sajas.core.behaviours.Behaviour;
 import taxitycoon.agents.TaxiCentral;
 import taxitycoon.messages.taxicentral.RequestPreferentialStopReply;
+import taxitycoon.messages.taxicentral.TaxiRequest;
 import taxitycoon.staticobjects.TaxiStop;
 
 public class TaxiCentralBehaviour extends Behaviour {
@@ -24,10 +29,10 @@ public class TaxiCentralBehaviour extends Behaviour {
 		
 		/* Get message from queue */
 		ACLMessage message = _taxiCentral.receive();
-		if (message != null) {
+		while (message != null) {
 			String title = message.getContent();
 			jade.core.AID senderAID = message.getSender();
-			System.out.println("MSG: Taxi got message:" + title);
+			// System.out.println("Taxicentral:" + title);
 			
 			switch (message.getPerformative()) {
 			
@@ -44,7 +49,11 @@ public class TaxiCentralBehaviour extends Behaviour {
 				break;
 				
 			case ACLMessage.QUERY_IF:
-				
+				String[] pos = title.split(",");
+				int x = Integer.parseInt(pos[0]);
+				int y = Integer.parseInt(pos[1]);
+				TaxiRequest taxiRequest = new TaxiRequest(null, new Pair<Integer, Integer> (x,y));
+				_taxiCentral.send(taxiRequest);
 				break;
 			
 				/* Passenger request */
@@ -56,6 +65,8 @@ public class TaxiCentralBehaviour extends Behaviour {
 					
 				break;
 			}
+			
+			message = _taxiCentral.receive();
 		}
 
 		

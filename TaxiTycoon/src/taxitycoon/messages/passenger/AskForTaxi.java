@@ -15,8 +15,4 @@ public class AskForTaxi extends ACLMessage {
 		addReceiver(new AID(TaxiCentral.class.getSimpleName(), AID.ISLOCALNAME));
 		setContent(passengerPos.getValue0()+","+passengerPos.getValue1()); 
 	}
-	
-	public void sendMessage(){
-		// sendMessage();
-	}
 }

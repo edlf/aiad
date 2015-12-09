@@ -240,6 +240,7 @@ public class PassengerBehaviour extends Behaviour {
 				_taxiStop.addPassengerToQueue(_passengerAgent);
 			}
 
+			tic = 0;
 			stateBegin = false;
 		}
 
@@ -284,10 +285,16 @@ public class PassengerBehaviour extends Behaviour {
 			}
 		}
 
-		if (!_taxiStop.hasTaxiAvailable()) {			
-			/* Send a message to taxi central asking for taxis */
-			AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
-			_passengerAgent.send(askForTaxi);
+		if (!_taxiStop.hasTaxiAvailable()) {	
+			if (tic % 30 == 0) {
+				tic = 0;
+				
+				/* Send a message to taxi central asking for taxis */
+				AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
+				_passengerAgent.send(askForTaxi);	
+			}
+			
+			tic++;
 			return;
 		}
 

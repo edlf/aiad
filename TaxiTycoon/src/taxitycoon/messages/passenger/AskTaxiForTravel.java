@@ -15,11 +15,8 @@ public class AskTaxiForTravel extends ACLMessage {
 
 	public AskTaxiForTravel(jade.core.AID aid, Pair<Integer, Integer> destinationPosition, TaxiAgent messageReceiver){
 		super(ACLMessage.REQUEST);
-		
 		addReceiver(new AID(messageReceiver.getLocalName(), AID.ISLOCALNAME));
 		setContent(destinationPosition.getValue0()+","+destinationPosition.getValue1());
-
-		
 	}
 	
 }
