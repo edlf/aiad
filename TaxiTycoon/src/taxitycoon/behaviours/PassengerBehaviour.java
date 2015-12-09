@@ -88,7 +88,7 @@ public class PassengerBehaviour extends Behaviour {
 
 		/* Update our location from the taxi */
 		ACLMessage msg = _passengerAgent.receive();
-		if (msg != null) {
+		while (msg != null) {
 			String title = msg.getContent();
 			switch (msg.getPerformative()) {
 			case ACLMessage.INFORM:
@@ -103,6 +103,8 @@ public class PassengerBehaviour extends Behaviour {
 				System.out.println("MSG: Passenger received unkown message.");
 				break;
 			}
+			
+			msg = _passengerAgent.receive();
 		}
 
 		/* Check if we are currently inside a taxi and not on the destination */
@@ -249,13 +251,19 @@ public class PassengerBehaviour extends Behaviour {
 		/* Check if we have a taxi available and is our turn */
 		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurn(_passengerAgent)) {
 
-			if (!_waitingForReply) {
+			if (!_waitingForReply || tic == 0) {
 				System.out.println("MSG: send message asktaxifortravel");
 				/* Send request to taxi at head of queue */
 				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getAID(),
 						_passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
 				_waitingForReply = true;
+				tic = 0;
+			}
+			
+			/* Timeout */
+			if (tic % 30 == 0){
+				tic=0;
 			}
 
 			return;
@@ -282,6 +290,7 @@ public class PassengerBehaviour extends Behaviour {
 					System.out.println("MSG: Passenger received unkown message.");
 					break;
 				}
+				
 			}
 		}
 
@@ -291,6 +300,7 @@ public class PassengerBehaviour extends Behaviour {
 				
 				/* Send a message to taxi central asking for taxis */
 				AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
+				System.out.println("Ask for taxi");
 				_passengerAgent.send(askForTaxi);	
 			}
 			

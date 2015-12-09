@@ -188,9 +188,15 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private void goToNearestStopState() {
 		if (_stateBegin) {
 			_stateBegin = false;
+			
+			if(_taxiAgent.isOnTaxiStop()){
+				changeStateTo(STATE_TAXI_STOP);
+				return;
+			}
+			
 			_currentDestination = _taxiAgent.getNearestTaxiStop().getPosition();
 			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
-
+			
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
 				System.out.println("Taxi cannot find a path to destination! " + _currentDestination);
@@ -270,17 +276,15 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
 					_currentDestination = new Pair<Integer, Integer> (x,y);		
-					if (!_currentDestination.equals(_taxiAgent.getPosition()) && _taxiAgent.isOnTaxiStop()){
+					if (!_currentDestination.equals(_taxiAgent.getPosition())){
 						changeStateTo(STATE_GO_TO_STOP);
-					} else {
-						changeStateTo(STATE_TAXI_STOP);
+						
 					}
-					
-					break;
+					return;
 					
 				case ACLMessage.DISCONFIRM:
 					changeStateTo(STATE_GO_TO_NEAREST_STOP);
-					break;
+					return;
 					
 				default:
 					break;
@@ -338,7 +342,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		
 		/* Check for messages */
 		ACLMessage msg = _taxiAgent.receive();
-		if (msg != null) {
+		while (msg != null) {
 			String title = msg.getContent();
 			jade.core.AID senderAID = msg.getSender();
 
@@ -352,37 +356,44 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				_taxiStop.removeTaxiFromQueue(_taxiAgent);
 				// TODO FIX HARDCODED DESTINATION
 				_currentDestination = new Pair<Integer, Integer>(28, 28);
-				changeStateTo(STATE_TRANSPORTING_PASSENGERS);
+				
 
 				/* TODO Ask other passengers for the destination */
 				// RequestPassenerDestination requestPassenerDestination = new
 				// RequestPassenerDestination();
 				// _taxiAgent.send(askTaxiForTravelMessage);
 
-				break;
+				changeStateTo(STATE_TRANSPORTING_PASSENGERS);
+				return;
 
 				/* Taxi central preferred stop */
 			case ACLMessage.INFORM:
 				String[] pos = title.split(",");
 				int x = Integer.parseInt(pos[0]);
 				int y = Integer.parseInt(pos[1]);
-				_currentDestination = new Pair<Integer, Integer> (x,y);	
-				changeStateTo(STATE_GO_TO_STOP);
+				if (!_currentDestination.equals(new Pair<Integer, Integer> (x,y))){
+					_currentDestination = new Pair<Integer, Integer> (x,y);	
+					_taxiStop.removeTaxiFromQueue(_taxiAgent);
+					changeStateTo(STATE_GO_TO_STOP);
+					return;
+				}
 				
 				break;
 				
 				/* Passenger responses to destination location */
 			case ACLMessage.ACCEPT_PROPOSAL:
 
-				break;
+				return;
 
 			case ACLMessage.REJECT_PROPOSAL:
 
-				break;
+				return;
 
 			default:
 				break;
 			}
+			
+			msg = _taxiAgent.receive();
 		}
 	}
 	
