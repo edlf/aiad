@@ -261,7 +261,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		
 		if (currentTimeOut < _defaultTimeOut) {
 			ACLMessage msg = _taxiAgent.receive();
-			if (msg != null) {
+			while (msg != null) {
 				String title = msg.getContent();		
 				switch (msg.getPerformative()) {
 				
@@ -270,7 +270,12 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
 					_currentDestination = new Pair<Integer, Integer> (x,y);		
-					changeStateTo(STATE_GO_TO_STOP);
+					if (!_currentDestination.equals(_taxiAgent.getPosition()) && _taxiAgent.isOnTaxiStop()){
+						changeStateTo(STATE_GO_TO_STOP);
+					} else {
+						changeStateTo(STATE_TAXI_STOP);
+					}
+					
 					break;
 					
 				case ACLMessage.DISCONFIRM:
@@ -280,6 +285,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				default:
 					break;
 				}
+				
+				msg = _taxiAgent.receive();
 			}
 			
 			currentTimeOut++;
