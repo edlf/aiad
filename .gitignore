@@ -22,3 +22,7 @@ TaxiTycoon/debug.log*
 TaxiTycoon/velocity.log*
 *.log
 TAXI_MANAGEMENT.iml
+
+# Other
+TaxiTycoon/Repast.settings
+.metadata
