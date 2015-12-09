@@ -64,7 +64,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		getTaxiStatus();
 
-		System.out.println(_currentState);
 		switch (_currentState) {
 		case STATE_ERROR:
 			break;
