@@ -368,16 +368,17 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 				/* Taxi central preferred stop */
 			case ACLMessage.INFORM:
-				String[] pos = title.split(",");
-				int x = Integer.parseInt(pos[0]);
-				int y = Integer.parseInt(pos[1]);
-				if (!_currentDestination.equals(new Pair<Integer, Integer> (x,y))){
-					_currentDestination = new Pair<Integer, Integer> (x,y);	
-					_taxiStop.removeTaxiFromQueue(_taxiAgent);
-					changeStateTo(STATE_GO_TO_STOP);
-					return;
-				}
-				
+				if(_taxiStop.getNumberOfPassengersInQueue() == 0){
+					String[] pos = title.split(",");
+					int x = Integer.parseInt(pos[0]);
+					int y = Integer.parseInt(pos[1]);
+					if (!_currentDestination.equals(new Pair<Integer, Integer> (x,y))){
+						_currentDestination = new Pair<Integer, Integer> (x,y);	
+						_taxiStop.removeTaxiFromQueue(_taxiAgent);
+						changeStateTo(STATE_GO_TO_STOP);
+						return;
+					}
+				}			
 				break;
 				
 				/* Passenger responses to destination location */
