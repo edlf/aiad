@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import org.javatuples.Pair;
 
 import jade.lang.acl.ACLMessage;
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.TaxiCentral;
 import taxitycoon.messages.taxicentral.RequestPreferentialStopReply;
 import taxitycoon.messages.taxicentral.TaxiRequest;
 import taxitycoon.staticobjects.TaxiStop;
 
-public class TaxiCentralBehaviour extends Behaviour {
+public class TaxiCentralBehaviour extends CyclicBehaviour {
 	private static final long serialVersionUID = 6376348164782963415L;
 	private ArrayList<jade.core.AID> taxiAIDs = new ArrayList<>();
 
@@ -86,10 +86,4 @@ public class TaxiCentralBehaviour extends Behaviour {
 		//TaxiRequest taxiRequestMessage = new TaxiRequest();
 		//taxiRequestMessage = null;
 	}
-
-	@Override
-	public boolean done() {
-		return false;
-	}
-
 }

@@ -1,5 +1,6 @@
 package taxitycoon.behaviours;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.javatuples.Pair;
@@ -7,10 +8,12 @@ import org.javatuples.Pair;
 import jade.lang.acl.ACLMessage;
 import sajas.core.AID;
 import sajas.core.behaviours.CyclicBehaviour;
+import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.SimAgent;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
 import taxitycoon.messages.taxi.AcceptRide;
+import taxitycoon.messages.taxi.RequestPassenerDestination;
 import taxitycoon.messages.taxi.RequestPreferentialStop;
 import taxitycoon.messages.taxi.UpdatePassengerLocation;
 import taxitycoon.staticobjects.RefuelStation;
@@ -59,7 +62,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	public void action() {
 		if (_taxiAgent == null) {
 			_taxiAgent = (TaxiAgent) myAgent;
-			_taxiCentralAID = new AID(TaxiCentral.class.getSimpleName(), AID.ISLOCALNAME);
+			_taxiCentralAID = new AID(TaxiCentral.class.getSimpleName(),
+					AID.ISLOCALNAME);
 		}
 
 		getTaxiStatus();
@@ -91,7 +95,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		case STATE_TRANSPORTING_PASSENGERS:
 			transportingPassengersState();
 			break;
-			
+
 		case STATE_GO_TO_STOP:
 			goToStopState();
 			break;
@@ -99,7 +103,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		case STATE_NO_GAS:
 			noGasState();
 			break;
-			
+
 		case STATE_TAXI_ON_REFUEL_STOP:
 			onRefuelStopState();
 			break;
@@ -110,23 +114,24 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		}
 
 	}
-	
+
 	private void onRefuelStopState() {
 		if (_stateBegin) {
 			if (_taxiAgent.isOnRefuelStation()) {
-				_refuelStation = SimAgent.getRefuelStationAt(_taxiAgent.getPosition());
+				_refuelStation = SimAgent.getRefuelStationAt(_taxiAgent
+						.getPosition());
 			} else {
 				System.out.println("BUG: Taxi refuel state on non refuel tile");
 			}
 
 			_refuelStation.addTaxiToQueue(_taxiAgent);
-			
+
 			currentTimeOut = 0;
 			_stateBegin = false;
 		}
-		
-		if(_refuelStation.isMyTurn(_taxiAgent)){
-			if (currentTimeOut > _RefuelTime){
+
+		if (_refuelStation.isMyTurn(_taxiAgent)) {
+			if (currentTimeOut > _RefuelTime) {
 				_taxiAgent.gasRefuel();
 				_refuelStation.removeTaxiFromQueue(_taxiAgent);
 				changeStateTo(STATE_START);
@@ -136,15 +141,18 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		}
 	}
 
-	private void refuelingNoPassengersState(){
+	private void refuelingNoPassengersState() {
 		if (_stateBegin) {
 			_stateBegin = false;
-			_currentDestination = _taxiAgent.getNearestRefuelStation().getPosition();
-			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
+			_currentDestination = _taxiAgent.getNearestRefuelStation()
+					.getPosition();
+			_pathToDestination = _taxiAgent
+					.getShortestPathTo(_currentDestination);
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! " + _currentDestination);
+				System.out.println("Taxi cannot find a path to destination! "
+						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -163,11 +171,13 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private void transportingPassengersState() {
 		if (_stateBegin) {
 			_stateBegin = false;
-			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
+			_pathToDestination = _taxiAgent
+					.getShortestPathTo(_currentDestination);
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! " + _currentDestination);
+				System.out.println("Taxi cannot find a path to destination! "
+						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -188,18 +198,20 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private void goToNearestStopState() {
 		if (_stateBegin) {
 			_stateBegin = false;
-			
-			if(_taxiAgent.isOnTaxiStop()){
+
+			if (_taxiAgent.isOnTaxiStop()) {
 				changeStateTo(STATE_TAXI_STOP);
 				return;
 			}
-			
+
 			_currentDestination = _taxiAgent.getNearestTaxiStop().getPosition();
-			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
-			
+			_pathToDestination = _taxiAgent
+					.getShortestPathTo(_currentDestination);
+
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! " + _currentDestination);
+				System.out.println("Taxi cannot find a path to destination! "
+						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -215,16 +227,18 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		move();
 	}
-	
+
 	/* Go to specific stop behaviour (DONE) */
 	private void goToStopState() {
 		if (_stateBegin) {
 			_stateBegin = false;
-			_pathToDestination = _taxiAgent.getShortestPathTo(_currentDestination);
+			_pathToDestination = _taxiAgent
+					.getShortestPathTo(_currentDestination);
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! " + _currentDestination);
+				System.out.println("Taxi cannot find a path to destination! "
+						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -246,7 +260,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			currentTimeOut = 0;
 			_stateBegin = false;
 		}
-		
+
 		/* Check if we ran out of gas */
 		if (_outOfGas) {
 			changeStateTo(STATE_NO_GAS);
@@ -260,39 +274,40 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		}
 
 		/* Check if taxi central wants us to go to a specific stop */
-		if (currentTimeOut == 0){
-			RequestPreferentialStop requestPreferentialStop = new RequestPreferentialStop(_taxiCentralAID);
+		if (currentTimeOut == 0) {
+			RequestPreferentialStop requestPreferentialStop = new RequestPreferentialStop(
+					_taxiCentralAID);
 			_taxiAgent.send(requestPreferentialStop);
 		}
-		
+
 		if (currentTimeOut < _defaultTimeOut) {
 			ACLMessage msg = _taxiAgent.receive();
 			while (msg != null) {
-				String title = msg.getContent();		
+				String title = msg.getContent();
 				switch (msg.getPerformative()) {
-				
+
 				case ACLMessage.CONFIRM:
 					String[] pos = title.split(",");
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
-					_currentDestination = new Pair<Integer, Integer> (x,y);		
-					if (!_currentDestination.equals(_taxiAgent.getPosition())){
+					_currentDestination = new Pair<Integer, Integer>(x, y);
+					if (!_currentDestination.equals(_taxiAgent.getPosition())) {
 						changeStateTo(STATE_GO_TO_STOP);
-						
+
 					}
 					return;
-					
+
 				case ACLMessage.DISCONFIRM:
 					changeStateTo(STATE_GO_TO_NEAREST_STOP);
 					return;
-					
+
 				default:
 					break;
 				}
-				
+
 				msg = _taxiAgent.receive();
 			}
-			
+
 			currentTimeOut++;
 		} else {
 			/* Timeout: go to the nearest stop */
@@ -307,7 +322,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			_stateBegin = false;
 		}
-		
+
 		/* Ask another taxi for gas? */
 	}
 
@@ -333,13 +348,13 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			_stateBegin = false;
 		}
 		_taxiAgent.increaseWaitingTick();
-		
+
 		/* Check if we are on reserve */
 		if (_gasOnReserve) {
 			changeStateTo(STATE_REFUELING_NO_PASSENGERS);
 			return;
 		}
-		
+
 		/* Check for messages */
 		ACLMessage msg = _taxiAgent.receive();
 		while (msg != null) {
@@ -350,38 +365,48 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			case ACLMessage.REQUEST:
 				System.out.println("MSG: Taxi: AcceptRideMessage");
-				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop.getPassengerAtHeadOfQueue().getAID());
+				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop
+						.getPassengerAtHeadOfQueue().getAID());
 				_taxiAgent.send(acceptRideMessage);
 				_taxiAgent.addPassenger(senderAID);
 				_taxiStop.removeTaxiFromQueue(_taxiAgent);
 				// TODO FIX HARDCODED DESTINATION
 				_currentDestination = new Pair<Integer, Integer>(28, 28);
+
+				ArrayList<PassengerAgent> passengers = _taxiStop
+						.getPassengers();
+
+				passengers.remove(_taxiStop.getPassengerAtHeadOfQueue());
+
+				RequestPassenerDestination requestPassenerDestination = new RequestPassenerDestination();
 				
+				for (int i = 0; i < passengers.size(); i++) {
+					requestPassenerDestination.addReceiver(passengers.get(i).getAID());
+				}
 
 				/* TODO Ask other passengers for the destination */
-				// RequestPassenerDestination requestPassenerDestination = new
-				// RequestPassenerDestination();
-				// _taxiAgent.send(askTaxiForTravelMessage);
+				_taxiAgent.send(requestPassenerDestination);
 
 				changeStateTo(STATE_TRANSPORTING_PASSENGERS);
 				return;
 
 				/* Taxi central preferred stop */
 			case ACLMessage.INFORM:
-				if(_taxiStop.getNumberOfPassengersInQueue() == 0){
+				if (_taxiStop.getNumberOfPassengersInQueue() == 0) {
 					String[] pos = title.split(",");
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
-					if (!_currentDestination.equals(new Pair<Integer, Integer> (x,y))){
-						_currentDestination = new Pair<Integer, Integer> (x,y);	
+					if (!_currentDestination.equals(new Pair<Integer, Integer>(
+							x, y))) {
+						_currentDestination = new Pair<Integer, Integer>(x, y);
 						_taxiStop.removeTaxiFromQueue(_taxiAgent);
 						changeStateTo(STATE_GO_TO_STOP);
 						return;
 					}
-				}			
+				}
 				break;
-				
-				/* Passenger responses to destination location */
+
+			/* Passenger responses to destination location */
 			case ACLMessage.ACCEPT_PROPOSAL:
 
 				return;
@@ -389,17 +414,21 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			case ACLMessage.REJECT_PROPOSAL:
 
 				return;
+				
+			case ACLMessage.CONFIRM:
+				
+				break;
 
 			default:
 				break;
 			}
-			
+
 			msg = _taxiAgent.receive();
 		}
 	}
-	
+
 	/*** Common methods ***/
-	
+
 	/* Get taxi status */
 	private void getTaxiStatus() {
 		/* Check if we ran out of gas */
@@ -408,13 +437,14 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		/* Check if we are on reserve */
 		_gasOnReserve = _taxiAgent.isGasOnReserve();
 	}
-	
+
 	private void changeStateTo(int newState) {
-		// System.out.println(_taxiAgent.getLocalName() + " state: " + newState);
+		// System.out.println(_taxiAgent.getLocalName() + " state: " +
+		// newState);
 		_stateBegin = true;
 		_currentState = newState;
 	}
-	
+
 	private void move() {
 		if (_pathToDestination == null || _pathToDestination.isEmpty()) {
 			return;
@@ -425,7 +455,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		if (_taxiAgent.hasPassengers()) {
 			for (jade.core.AID passengerAID : _taxiAgent.getPassengers()) {
-				UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(passengerAID, nextPos);
+				UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(
+						passengerAID, nextPos);
 				_taxiAgent.send(updatePassengerLocation);
 			}
 		}

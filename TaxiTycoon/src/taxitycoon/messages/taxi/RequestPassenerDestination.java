@@ -12,4 +12,8 @@ public class RequestPassenerDestination extends ACLMessage {
 		addReceiver(destination);
 		
 	}
+	public RequestPassenerDestination(){
+		super(ACLMessage.REQUEST);
+		setContent("GET_DESTINATION");	
+	}
 }

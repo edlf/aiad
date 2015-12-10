@@ -1,8 +1,11 @@
 package taxitycoon.staticobjects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.javatuples.Pair;
+
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.PassengerAgent;
 
@@ -61,6 +64,10 @@ public class TaxiStop extends StaticMapObject {
 	
 	public PassengerAgent getPassengerAtHeadOfQueue(){
 		return _passengersInQueue.peek();
+	}
+	
+	public ArrayList<PassengerAgent> getPassengers(){
+		return new ArrayList<PassengerAgent>(Arrays.asList(_passengersInQueue.toArray(new PassengerAgent[0])));
 	}
 	
 	public boolean isMyTurn(PassengerAgent passengerAgent){

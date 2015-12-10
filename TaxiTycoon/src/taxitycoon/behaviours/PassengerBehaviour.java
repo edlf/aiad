@@ -3,14 +3,15 @@ package taxitycoon.behaviours;
 import org.javatuples.Pair;
 
 import jade.lang.acl.ACLMessage;
-import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.TaxiCentral;
 import taxitycoon.messages.passenger.AskForTaxi;
 import taxitycoon.messages.passenger.AskTaxiForTravel;
+import taxitycoon.messages.passenger.ReplyWithDestination;
 import taxitycoon.staticobjects.TaxiStop;
 
-public class PassengerBehaviour extends Behaviour {
+public class PassengerBehaviour extends CyclicBehaviour {
 	private static final long serialVersionUID = -842341654868835344L;
 	private static final int STATE_ERROR = -1;
 	private static final int STATE_START = 0;
@@ -283,7 +284,25 @@ public class PassengerBehaviour extends Behaviour {
 					return;
 
 				case ACLMessage.REJECT_PROPOSAL:
+					break;
 
+				default:
+					System.out.println("MSG: Passenger received unkown message.");
+					break;
+				}
+				
+			}
+		} else {
+			ACLMessage msg = _passengerAgent.receive();
+			if (msg != null) {
+				String title = msg.getContent();
+				System.out.println("MSG: Passenger got message:" + title);
+
+				switch (msg.getPerformative()) {
+				
+				case ACLMessage.REQUEST:
+					ReplyWithDestination reply = new ReplyWithDestination(msg.getSender(), _currentDestination);
+					_passengerAgent.send(reply);
 					break;
 
 				default:
@@ -328,10 +347,5 @@ public class PassengerBehaviour extends Behaviour {
 		System.out.println(_passengerAgent.getLocalName() + " state: " + newState);
 		stateBegin = true;
 		_currentState = newState;
-	}
-
-	@Override
-	public boolean done() {
-		return (_currentState == STATE_TRAVEL_COMPLETE && !stateBegin);
 	}
 }
