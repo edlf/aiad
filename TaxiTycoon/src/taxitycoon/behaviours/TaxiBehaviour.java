@@ -371,20 +371,22 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				_taxiAgent.addPassenger(senderAID);
 				_taxiStop.removeTaxiFromQueue(_taxiAgent);
 				// TODO FIX HARDCODED DESTINATION
-				_currentDestination = new Pair<Integer, Integer>(28, 28);
-
+				_currentDestination = _taxiStop.getPassengerAtHeadOfQueue().getDestination();
+				//_currentDestination = new Pair<Integer, Integer>(28, 28);
+					
 				ArrayList<PassengerAgent> passengers = _taxiStop
 						.getPassengers();
 
 				passengers.remove(_taxiStop.getPassengerAtHeadOfQueue());
 
 				RequestPassenerDestination requestPassenerDestination = new RequestPassenerDestination();
-				
+
 				for (int i = 0; i < passengers.size(); i++) {
-					requestPassenerDestination.addReceiver(passengers.get(i).getAID());
+					requestPassenerDestination.addReceiver(passengers.get(i)
+							.getAID());
 				}
 
-				/* TODO Ask other passengers for the destination */
+				/* Ask other passengers for the destination */
 				_taxiAgent.send(requestPassenerDestination);
 
 				changeStateTo(STATE_TRANSPORTING_PASSENGERS);
@@ -414,9 +416,9 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			case ACLMessage.REJECT_PROPOSAL:
 
 				return;
-				
+
 			case ACLMessage.CONFIRM:
-				
+
 				break;
 
 			default:
