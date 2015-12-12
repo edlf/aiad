@@ -367,8 +367,13 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			case ACLMessage.REQUEST:
 				System.out.println("MSG: Taxi: AcceptRideMessage");
-				AcceptRide acceptRideMessage = new AcceptRide(_taxiStop
-						.getPassengerAtHeadOfQueue().getAID());
+				PassengerAgent passengerAgent = _taxiStop.getPassengerAtHeadOfQueue();
+				
+				if(passengerAgent == null){
+					break;
+				}
+				
+				AcceptRide acceptRideMessage = new AcceptRide(passengerAgent.getAID());
 				_taxiAgent.send(acceptRideMessage);
 				_taxiAgent.addPassenger(senderAID);
 				_taxiStop.removeTaxiFromQueue(_taxiAgent);
