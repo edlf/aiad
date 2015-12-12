@@ -187,6 +187,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		if (_taxiAgent.getPosition().equals(_currentDestination)) {
 			_taxiAgent.clearPassengers();
 			changeStateTo(STATE_START);
+			//TODO Change this?
+			_taxiAgent.resetWaitingTicks();
 			return;
 		}
 

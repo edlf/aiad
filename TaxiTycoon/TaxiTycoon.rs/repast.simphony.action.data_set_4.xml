@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Taxi Stats</name>
+  <name>Taxi Gas Stats</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,43 +11,25 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1133130739</hashCode>
+    <hashCode>1752215360</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>In Transit</string>
+      <string>Ticks on Refuel</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>In Transit</id>
-        <className>taxitycoon.agents.TaxiAgent</className>
-        <methodName>getInTransitTicksPercent</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Refuel</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Refuel</id>
+        <id>Ticks on Refuel</id>
         <className>taxitycoon.agents.TaxiAgent</className>
         <methodName>getRefuelingTicksPercent</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Waiting</string>
+      <string>Gas Level (%)</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Waiting</id>
+        <id>Gas Level (%)</id>
         <className>taxitycoon.agents.TaxiAgent</className>
-        <methodName>getWaitingTicksPercent</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Gas Level</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Gas Level</id>
-        <className>taxitycoon.agents.TaxiAgent</className>
-        <methodName>getGasTankLevelPercent</methodName>
+        <methodName>getGasInTank</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
