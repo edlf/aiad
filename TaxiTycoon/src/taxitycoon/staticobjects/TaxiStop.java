@@ -32,8 +32,12 @@ public class TaxiStop extends StaticMapObject {
 		}
 	}
 	
-	public boolean isMyTurn(TaxiAgent taxiAgent){
+	public boolean isMyTurnTaxi(TaxiAgent taxiAgent){
 		return (_taxisInQueue.peek() == taxiAgent);
+	}
+	
+	public boolean isMyTurnPassenger(PassengerAgent passengerAgent){
+		return (_passengersInQueue.peek() == passengerAgent);
 	}
 	
 	public TaxiAgent getTaxiAtHeadOfQueue(){

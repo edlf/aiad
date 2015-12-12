@@ -366,6 +366,9 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			switch (msg.getPerformative()) {
 
 			case ACLMessage.REQUEST:
+				if(!_taxiStop.isMyTurnTaxi(_taxiAgent)){
+					break;
+				}
 				System.out.println("MSG: Taxi: AcceptRideMessage");
 				PassengerAgent passengerAgent = _taxiStop.getPassengerAtHeadOfQueue();
 				

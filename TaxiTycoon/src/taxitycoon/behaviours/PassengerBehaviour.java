@@ -250,7 +250,7 @@ public class PassengerBehaviour extends CyclicBehaviour {
 		_passengerAgent.increaseWaitingTick();
 
 		/* Check if we have a taxi available and is our turn */
-		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurn(_passengerAgent)) {
+		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurnPassenger(_passengerAgent)) {
 
 			if (!_waitingForReply || tic == 0) {
 				System.out.println("MSG: send message asktaxifortravel");
