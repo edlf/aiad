@@ -33,6 +33,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private static final int STATE_GO_TO_STOP = 7;
 	private static final int STATE_TAXI_ON_REFUEL_STOP = 8;
 
+	private static final int _maxStopDistanceForBroadcast = 30;
+	
 	private int _currentState = 0;
 	private boolean _stateBegin = true;
 	private static final int _defaultTimeOut = 5;
@@ -410,7 +412,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
 					Pair<Integer, Integer> ppos = new Pair<Integer, Integer>(x, y);
-					if (!_currentDestination.equals(ppos) && _taxiAgent.getCostToPoint(ppos) < 40) {
+					if (!_currentDestination.equals(ppos) && _taxiAgent.getCostToPoint(ppos) < _maxStopDistanceForBroadcast) {
 						_currentDestination = new Pair<Integer, Integer>(x, y);
 						_taxiStop.removeTaxiFromQueue(_taxiAgent);
 						changeStateTo(STATE_GO_TO_STOP);
