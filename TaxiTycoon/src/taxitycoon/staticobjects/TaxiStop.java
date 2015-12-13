@@ -98,15 +98,11 @@ public class TaxiStop extends StaticMapObject {
 		int passengers =_passengersInQueue.size(); 
 		int taxis = _taxisInQueue.size();
 		
-		if (passengers == 0){
+		if(passengers > taxis){
+			return passengers - taxis;
+		} else {
 			return 0;
 		}
-		
-		if(taxis > passengers){
-			return 0;
-		}
-		
-		return passengers - taxis;
 	}
 	
 	public boolean hasMoreTaxisThanPassengers(){

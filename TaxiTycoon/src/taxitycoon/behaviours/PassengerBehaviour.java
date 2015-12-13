@@ -259,14 +259,16 @@ public class PassengerBehaviour extends CyclicBehaviour {
 						_passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
 				_waitingForReply = true;
-				tic = 0;
 			}
 			
 			/* Timeout */
+			tic++;
+			
 			if (tic % 30 == 0){
 				tic=0;
 			}
-
+			
+			
 			return;
 		}
 
