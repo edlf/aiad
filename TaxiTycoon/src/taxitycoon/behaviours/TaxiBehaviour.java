@@ -274,6 +274,11 @@ public class TaxiBehaviour extends CyclicBehaviour {
 			changeStateTo(STATE_REFUELING_NO_PASSENGERS);
 			return;
 		}
+		
+		if (_taxiAgent.isOnTaxiStop()) {
+			changeStateTo(STATE_TAXI_STOP);
+			return;
+		}
 
 		/* Check if taxi central wants us to go to a specific stop */
 		if (currentTimeOut == 0) {
@@ -295,8 +300,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					_currentDestination = new Pair<Integer, Integer>(x, y);
 					if (!_currentDestination.equals(_taxiAgent.getPosition())) {
 						changeStateTo(STATE_GO_TO_STOP);
-					} else {
-						changeStateTo(STATE_TAXI_STOP);
 					}
 					return;
 
@@ -313,10 +316,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			currentTimeOut++;
 		} else {
-			/* Timeout: go to the nearest stop */
-			if (!_taxiAgent.isOnTaxiStop()) {
-				changeStateTo(STATE_GO_TO_NEAREST_STOP);
-			}
+			changeStateTo(STATE_GO_TO_NEAREST_STOP);
 		}
 	}
 
