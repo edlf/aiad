@@ -28,7 +28,6 @@ public class PassengerAgent extends SimAgent {
 	public static void createAgentMap(ArrayList<Pair<Integer, Integer>> roads,
 			ArrayList<Pair<Integer, Integer>> stops) {
 		if (_passengerMapCalculated) {
-			System.out.println("BUG: Passenger map already calculated.");
 			return;
 		}
 
@@ -59,8 +58,6 @@ public class PassengerAgent extends SimAgent {
 		if (_isPointWithinBonds(initialPos)) {
 			this._startPosition = initialPos;
 		} else {
-			System.out
-					.println("BUG: Invalid initial position for passenger agent");
 			this._startPosition = new Pair<Integer, Integer>(0, 0);
 		}
 		_currentPosition = _startPosition;
@@ -74,8 +71,6 @@ public class PassengerAgent extends SimAgent {
 		if (_isPointWithinBonds(initialPos)) {
 			this._startPosition = initialPos;
 		} else {
-			System.out
-					.println("BUG: Invalid initial position for passenger agent");
 			this._startPosition = new Pair<Integer, Integer>(0, 0);
 		}
 		_currentPosition = _startPosition;

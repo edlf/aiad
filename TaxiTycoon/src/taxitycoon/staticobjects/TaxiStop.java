@@ -19,16 +19,12 @@ public class TaxiStop extends StaticMapObject {
 	}
 	
 	public void addTaxiToQueue(TaxiAgent taxiAgent){
-		System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] new taxi in queue");
 		_taxisInQueue.add(taxiAgent);
 	}
 	
 	public void removeTaxiFromQueue(TaxiAgent taxiAgent){
 		if (_taxisInQueue.contains(taxiAgent)){
-			System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] taxi leaving the queue");
 			_taxisInQueue.remove(taxiAgent);
-		} else {
-			System.out.println("BUG: Attempting to remove non existing taxi from queue");
 		}
 	}
 	
@@ -49,16 +45,12 @@ public class TaxiStop extends StaticMapObject {
 	}
 	
 	public void addPassengerToQueue(PassengerAgent passengerAgent){
-		System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] new passenger in queue");
 		_passengersInQueue.add(passengerAgent);
 	}
 	
 	public void removePassengerFromQueue(PassengerAgent passengerAgent){
 		if (_passengersInQueue.contains(passengerAgent)){
-			System.out.println("TaxiStop[" + _pos.getValue0() + "," + _pos.getValue1() + "] passenger leaving the queue");
 			_passengersInQueue.remove(passengerAgent);
-		} else {
-			System.out.println("BUG: Attempting to remove non existing passenger from queue");
 		}
 	}
 	

@@ -176,7 +176,7 @@ public class TaxiTycoonLauncher extends RepastSLauncher implements
 			return new Pair<Integer, Integer>(_mapLoader.getMapSizeX() - 2,
 					_mapLoader.getMapSizeY() - 2);
 		default:
-			return new Pair<Integer, Integer>(0, 0);
+			return new Pair<Integer, Integer>(1, 1);
 		}
 	}
 

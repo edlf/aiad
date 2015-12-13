@@ -34,7 +34,6 @@ public class TaxiCentralBehaviour extends CyclicBehaviour {
 		while (message != null) {
 			String title = message.getContent();
 			jade.core.AID senderAID = message.getSender();
-			// System.out.println("Taxicentral:" + title);
 			
 			switch (message.getPerformative()) {
 			

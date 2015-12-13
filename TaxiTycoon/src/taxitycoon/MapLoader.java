@@ -49,8 +49,6 @@ public class MapLoader {
 	    				} else if (lineContent[i].equals(stopTile)) {
 	    					_taxiStopLocations.add(new Pair<Integer, Integer>(i, mapY));
 	    				}
-	    				//else if (lineContent[i].equals("X")) {
-	    				//}
 	    			}
 	    			
 	    			mapY++;

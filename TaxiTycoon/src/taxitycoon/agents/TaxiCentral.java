@@ -23,18 +23,14 @@ public class TaxiCentral extends Agent {
 	/* Setup and takedown methods */
 	@Override
 	protected void setup(){
-		System.out.println(getLocalName() + " setup()");
-		
 		_addBehaviour();
 	}
 	
 	@Override
 	protected void takeDown(){
-		System.out.println(getLocalName() + " takeDown()");
 		try {
 			DFService.deregister(this);
 		} catch (FIPAException e) {
-			System.out.println(getLocalName() + " error in takeDown()");
 		}
 	}
 	
@@ -50,7 +46,6 @@ public class TaxiCentral extends Agent {
 		
 		_currentBehaviour = newBehaviour;
 		addBehaviour(_currentBehaviour);
-		// System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 	
 	public static TaxiStop getTaxiStopAt(Pair<Integer, Integer> pos){

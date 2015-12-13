@@ -40,7 +40,6 @@ public class TaxiAgent extends SimAgent {
 			ArrayList<Pair<Integer, Integer>> stops,
 			ArrayList<Pair<Integer, Integer>> refuelStations) {
 		if (_taxiMapCalculated) {
-			System.out.println("BUG: Taxi map already calculated.");
 			return;
 		}
 
@@ -72,8 +71,6 @@ public class TaxiAgent extends SimAgent {
 			for (int j = 0; j < _mapSize.getValue1(); j++) {
 				switch (_getPositionConnections(i, j)) {
 				case 0:
-					System.out.println("Lost point found! [" + i + "," + j
-							+ "]");
 					break;
 
 				case 1:
@@ -98,13 +95,6 @@ public class TaxiAgent extends SimAgent {
 					break;
 				}
 			}
-		}
-
-		System.out.println("Found " + _intersectionPositions.size()
-				+ " intersections.");
-		if (_deadEndPositions.size() != 0) {
-			System.out.println("Found " + _deadEndPositions.size()
-					+ " dead ends.");
 		}
 
 		_taxiMapCalculated = true;
@@ -292,7 +282,6 @@ public class TaxiAgent extends SimAgent {
 		if (_isPointWithinBonds(initialPos)) {
 			this._startPosition = initialPos;
 		} else {
-			System.out.println("BUG: Invalid initial position for taxi agent");
 			this._startPosition = new Pair<Integer, Integer>(0, 0);
 		}
 
@@ -461,9 +450,6 @@ public class TaxiAgent extends SimAgent {
 		if (_gas > 0) {
 			_gas--;
 			_totalGasSpent++;
-		} else {
-			System.out
-					.println("BUG: Attempting to reduce gas when there is none");
 		}
 	}
 

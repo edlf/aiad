@@ -12,6 +12,7 @@ import taxitycoon.agents.PassengerAgent;
 import taxitycoon.agents.SimAgent;
 import taxitycoon.agents.TaxiAgent;
 import taxitycoon.agents.TaxiCentral;
+import taxitycoon.messages.passenger.ReplyWithDestination;
 import taxitycoon.messages.taxi.AcceptRide;
 import taxitycoon.messages.taxi.RequestPassenerDestination;
 import taxitycoon.messages.taxi.RequestPreferentialStop;
@@ -32,6 +33,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	private static final int STATE_TRANSPORTING_PASSENGERS = 6;
 	private static final int STATE_GO_TO_STOP = 7;
 	private static final int STATE_TAXI_ON_REFUEL_STOP = 8;
+	private static final int STATE_WAITING_FOR_OTHER_PASSENGERS = 9;
 
 	private static final int _maxStopDistanceForBroadcast = 30;
 	
@@ -109,6 +111,10 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		case STATE_TAXI_ON_REFUEL_STOP:
 			onRefuelStopState();
 			break;
+			
+		case STATE_WAITING_FOR_OTHER_PASSENGERS:
+			waitingForOtherPassengers();
+			break;
 
 		default:
 			_currentState = STATE_ERROR;
@@ -117,13 +123,62 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 	}
 
+	private void waitingForOtherPassengers(){
+		if (_stateBegin) {
+			currentTimeOut = 0;
+			
+			if (_taxiAgent.isOnTaxiStop()) {
+				_taxiStop = TaxiCentral.getTaxiStopAt(_taxiAgent.getPosition());
+			}
+			
+			_stateBegin = false;
+		}
+
+		_taxiAgent.increaseWaitingTick();
+		
+		ACLMessage msg = _taxiAgent.receive();
+		while (msg != null) {
+			String title = msg.getContent();
+			jade.core.AID senderAID = msg.getSender();
+
+			switch (msg.getPerformative()) {
+			case ACLMessage.CONFIRM:
+				if(_taxiAgent.isTaxiFull()){
+					break;
+				}
+				String[] pos = title.split(",");
+				int x = Integer.parseInt(pos[0]);
+				int y = Integer.parseInt(pos[1]);
+				Pair<Integer, Integer> ppos = new Pair<Integer, Integer>(x, y);
+				
+				if(ppos.equals(_currentDestination)){
+					AcceptRide acceptRideMessage = new AcceptRide(senderAID);
+					_taxiAgent.send(acceptRideMessage);
+					_taxiAgent.addPassenger(senderAID);
+				}
+
+				break;
+				
+			default:
+				break;
+			}
+			
+			msg = _taxiAgent.receive();
+		}
+		
+		if(currentTimeOut > _defaultTimeOut){
+			_taxiStop.removeTaxiFromQueue(_taxiAgent);
+			changeStateTo(STATE_TRANSPORTING_PASSENGERS);
+			return;
+		}
+		currentTimeOut++;
+	}
+	
 	private void onRefuelStopState() {
 		if (_stateBegin) {
 			if (_taxiAgent.isOnRefuelStation()) {
 				_refuelStation = SimAgent.getRefuelStationAt(_taxiAgent
 						.getPosition());
-			} else {
-				System.out.println("BUG: Taxi refuel state on non refuel tile");
 			}
 
 			_refuelStation.addTaxiToQueue(_taxiAgent);
@@ -153,8 +208,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! "
-						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -178,8 +231,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! "
-						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -214,8 +265,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! "
-						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -241,8 +290,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			/* No path obtained */
 			if (_pathToDestination.isEmpty()) {
-				System.out.println("Taxi cannot find a path to destination! "
-						+ _currentDestination);
 				changeStateTo(STATE_ERROR);
 				return;
 			}
@@ -344,8 +391,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 		if (_stateBegin) {
 			if (_taxiAgent.isOnTaxiStop()) {
 				_taxiStop = TaxiCentral.getTaxiStopAt(_taxiAgent.getPosition());
-			} else {
-				System.out.println("BUG: Taxi stop state on non stop tile");
 			}
 
 			_taxiStop.addTaxiToQueue(_taxiAgent);
@@ -370,10 +415,9 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			case ACLMessage.REQUEST:
 				if(!_taxiStop.isMyTurnTaxi(_taxiAgent)){
-					System.out.println("BUG: Taxi should not receive message");
 					break;
 				}
-				System.out.println("MSG: Taxi: AcceptRideMessage");
+
 				PassengerAgent passengerAgent = _taxiStop.getPassengerAtHeadOfQueue();
 				
 				if(passengerAgent == null){
@@ -383,11 +427,9 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				AcceptRide acceptRideMessage = new AcceptRide(passengerAgent.getAID());
 				_taxiAgent.send(acceptRideMessage);
 				_taxiAgent.addPassenger(senderAID);
-				_taxiStop.removeTaxiFromQueue(_taxiAgent);
 
 				_currentDestination = _taxiStop.getPassengerAtHeadOfQueue().getDestination();
 
-					
 				ArrayList<PassengerAgent> passengers = _taxiStop.getPassengers();
 
 				passengers.remove(_taxiStop.getPassengerAtHeadOfQueue());
@@ -395,14 +437,12 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				RequestPassenerDestination requestPassenerDestination = new RequestPassenerDestination();
 
 				for (int i = 0; i < passengers.size(); i++) {
-					requestPassenerDestination.addReceiver(passengers.get(i)
-							.getAID());
+					requestPassenerDestination.addReceiver(passengers.get(i).getAID());
 				}
 
 				/* Ask other passengers for the destination */
 				_taxiAgent.send(requestPassenerDestination);
-
-				changeStateTo(STATE_TRANSPORTING_PASSENGERS);
+				changeStateTo(STATE_WAITING_FOR_OTHER_PASSENGERS);
 				return;
 
 				/* Taxi central preferred stop */
@@ -454,8 +494,6 @@ public class TaxiBehaviour extends CyclicBehaviour {
 	}
 
 	private void changeStateTo(int newState) {
-		// System.out.println(_taxiAgent.getLocalName() + " state: " +
-		// newState);
 		_stateBegin = true;
 		_currentState = newState;
 	}
@@ -470,8 +508,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 		if (_taxiAgent.hasPassengers()) {
 			for (jade.core.AID passengerAID : _taxiAgent.getPassengers()) {
-				UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(
-						passengerAID, nextPos);
+				UpdatePassengerLocation updatePassengerLocation = new UpdatePassengerLocation(passengerAID, nextPos);
 				_taxiAgent.send(updatePassengerLocation);
 			}
 		}

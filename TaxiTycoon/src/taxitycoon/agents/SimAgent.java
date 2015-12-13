@@ -43,7 +43,6 @@ public abstract class SimAgent extends Agent {
 	/* Static sets */
 	static public void setupMap(Grid<Object> grid, Pair<Integer, Integer> mapSize, ArrayList<TaxiStop> taxiStops, ArrayList<RefuelStation> refuelStations){
 		if (_baseMapSetupDone) {
-			System.out.println("BUG: Sim Agent map already calculated.");
 			return;
 		}
 		
@@ -122,8 +121,6 @@ public abstract class SimAgent extends Agent {
 	/* Setup and takedown methods */
 	@Override
 	protected void setup(){
-		System.out.println(getLocalName() + " setup()");
-		
 		/* Move to initial position */
 		_move(_startPosition);
 		
@@ -132,11 +129,9 @@ public abstract class SimAgent extends Agent {
 	
 	@Override
 	protected void takeDown(){
-		System.out.println(getLocalName() + " takeDown()");
 		try {
 			DFService.deregister(this);
 		} catch (FIPAException e) {
-			System.out.println(getLocalName() + " error in takeDown()");
 		}
 	}
 	
@@ -151,7 +146,6 @@ public abstract class SimAgent extends Agent {
 		
 		_currentBehaviour = newBehaviour;
 		addBehaviour(_currentBehaviour);
-		// System.out.println(getLocalName() + " behaviour change: " + newBehaviour.getClass().getSimpleName());
 	}
 
 	/* Cost methods */

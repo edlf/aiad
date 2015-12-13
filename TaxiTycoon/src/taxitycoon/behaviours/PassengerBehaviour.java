@@ -25,6 +25,7 @@ public class PassengerBehaviour extends CyclicBehaviour {
 	private int _currentState = 0;
 	private boolean stateBegin = true;
 	private boolean _waitingForReply = false;
+	private boolean waitingForRideSharing = false;
 	private int tic = 0;
 
 	private Pair<Integer, Integer> _currentDestination;
@@ -101,7 +102,6 @@ public class PassengerBehaviour extends CyclicBehaviour {
 				break;
 
 			default:
-				System.out.println("MSG: Passenger received unkown message.");
 				break;
 			}
 			
@@ -243,6 +243,8 @@ public class PassengerBehaviour extends CyclicBehaviour {
 				_taxiStop.addPassengerToQueue(_passengerAgent);
 			}
 
+			_currentDestination = _passengerAgent.getDestination();
+			
 			tic = 0;
 			stateBegin = false;
 		}
@@ -250,10 +252,9 @@ public class PassengerBehaviour extends CyclicBehaviour {
 		_passengerAgent.increaseWaitingTick();
 
 		/* Check if we have a taxi available and is our turn */
-		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurnPassenger(_passengerAgent)) {
+		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurnPassenger(_passengerAgent) && !waitingForRideSharing) {
 
 			if (!_waitingForReply || tic == 0) {
-				System.out.println("Passenger: Ask Task For Travel");
 				/* Send request to taxi at head of queue */
 				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getAID(), _passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
@@ -264,7 +265,6 @@ public class PassengerBehaviour extends CyclicBehaviour {
 				ACLMessage msg = _passengerAgent.receive();
 				if (msg != null) {
 					String title = msg.getContent();
-					System.out.println("MSG: Passenger got message:" + title);
 
 					switch (msg.getPerformative()) {
 					case ACLMessage.ACCEPT_PROPOSAL:
@@ -277,7 +277,6 @@ public class PassengerBehaviour extends CyclicBehaviour {
 						break;
 
 					default:
-						System.out.println("MSG: Passenger received unkown message.");
 						break;
 					}
 					
@@ -289,7 +288,6 @@ public class PassengerBehaviour extends CyclicBehaviour {
 				if (tic % 30 == 0){
 					tic=0;
 					_waitingForReply = false;
-					System.out.println("Passenger gave up on waiting for reply");
 				}
 				
 			}
@@ -297,39 +295,49 @@ public class PassengerBehaviour extends CyclicBehaviour {
 			return;
 		}
 
-		if (!_taxiStop.hasTaxiAvailable()) {	
-			if (tic % 40 == 0) {
-				tic = 0;
-				
-				/* Send a message to taxi central asking for taxis */
-				AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
-				System.out.println("Ask for taxi");
-				_passengerAgent.send(askForTaxi);	
-			}
-			
-			tic++;
-			return;
-		} else {
+		if (_taxiStop.hasTaxiAvailable()) {
 			ACLMessage msg = _passengerAgent.receive();
-			if (msg != null) {
+			while (msg != null) {
 				String title = msg.getContent();
-				System.out.println("MSG: Passenger got message:" + title);
-
 				switch (msg.getPerformative()) {
 				
 				case ACLMessage.REQUEST:
 					ReplyWithDestination reply = new ReplyWithDestination(msg.getSender(), _currentDestination);
 					_passengerAgent.send(reply);
+					waitingForRideSharing = true;
 					break;
 
+				case ACLMessage.ACCEPT_PROPOSAL:
+					_taxiStop.removePassengerFromQueue(_passengerAgent);
+					_passengerAgent.setOnTaxi();
+					changeStateTo(STATE_IN_TAXI);
+					return;
+					
 				default:
-					System.out.println("MSG: Passenger received unkown message.");
 					break;
 				}
 				
+				msg = _passengerAgent.receive();
 			}
+			
+		} else {
+			if (tic % 40 == 0) {
+				tic = 0;
+				
+				/* Send a message to taxi central asking for taxis */
+				AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
+				_passengerAgent.send(askForTaxi);	
+			}
+			
+			tic++;
+			return;
 		}
 
+		tic++;
+		if (tic % 10 == 0){
+			waitingForRideSharing = false;
+		}
+		
 		/* Read messages since another taxi might go to the same destination */
 	}
 
@@ -338,16 +346,11 @@ public class PassengerBehaviour extends CyclicBehaviour {
 			stateBegin = false;
 		}
 
-		if (!_passengerAgent.hasReachedDestination()) {
-			System.out.println("BUG: Passenger not on destination but on TravelComplete behavior.");
-		}
-
 		_passengerAgent.printStats();
 		_passengerAgent.doDelete();
 	}
 
 	private void changeStateTo(int newState) {
-		System.out.println(_passengerAgent.getLocalName() + " state: " + newState);
 		stateBegin = true;
 		_currentState = newState;
 	}
