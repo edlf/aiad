@@ -409,7 +409,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					String[] pos = title.split(",");
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
-					if (!_currentDestination.equals(new Pair<Integer, Integer>(x, y))) {
+					Pair<Integer, Integer> ppos = new Pair<Integer, Integer>(x, y);
+					if (!_currentDestination.equals(ppos) && _taxiAgent.getCostToPoint(ppos) < 40) {
 						_currentDestination = new Pair<Integer, Integer>(x, y);
 						_taxiStop.removeTaxiFromQueue(_taxiAgent);
 						changeStateTo(STATE_GO_TO_STOP);
