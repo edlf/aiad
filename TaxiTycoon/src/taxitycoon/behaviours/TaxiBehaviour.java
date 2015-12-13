@@ -295,7 +295,8 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					_currentDestination = new Pair<Integer, Integer>(x, y);
 					if (!_currentDestination.equals(_taxiAgent.getPosition())) {
 						changeStateTo(STATE_GO_TO_STOP);
-
+					} else {
+						changeStateTo(STATE_TAXI_STOP);
 					}
 					return;
 
@@ -367,6 +368,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 
 			case ACLMessage.REQUEST:
 				if(!_taxiStop.isMyTurnTaxi(_taxiAgent)){
+					System.out.println("BUG: Taxi should not receive message");
 					break;
 				}
 				System.out.println("MSG: Taxi: AcceptRideMessage");
@@ -380,12 +382,11 @@ public class TaxiBehaviour extends CyclicBehaviour {
 				_taxiAgent.send(acceptRideMessage);
 				_taxiAgent.addPassenger(senderAID);
 				_taxiStop.removeTaxiFromQueue(_taxiAgent);
-				// TODO FIX HARDCODED DESTINATION
+
 				_currentDestination = _taxiStop.getPassengerAtHeadOfQueue().getDestination();
-				//_currentDestination = new Pair<Integer, Integer>(28, 28);
+
 					
-				ArrayList<PassengerAgent> passengers = _taxiStop
-						.getPassengers();
+				ArrayList<PassengerAgent> passengers = _taxiStop.getPassengers();
 
 				passengers.remove(_taxiStop.getPassengerAtHeadOfQueue());
 
@@ -408,8 +409,7 @@ public class TaxiBehaviour extends CyclicBehaviour {
 					String[] pos = title.split(",");
 					int x = Integer.parseInt(pos[0]);
 					int y = Integer.parseInt(pos[1]);
-					if (!_currentDestination.equals(new Pair<Integer, Integer>(
-							x, y))) {
+					if (!_currentDestination.equals(new Pair<Integer, Integer>(x, y))) {
 						_currentDestination = new Pair<Integer, Integer>(x, y);
 						_taxiStop.removeTaxiFromQueue(_taxiAgent);
 						changeStateTo(STATE_GO_TO_STOP);

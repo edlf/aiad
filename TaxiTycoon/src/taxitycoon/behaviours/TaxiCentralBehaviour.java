@@ -45,7 +45,7 @@ public class TaxiCentralBehaviour extends CyclicBehaviour {
 				}
 				
 				RequestPreferentialStopReply requestPreferentialStopReply;
-				if (currentMax > 0 || highestPriorityTaxiStop != null){
+				if (currentMax > 0 && highestPriorityTaxiStop != null){
 					requestPreferentialStopReply = new RequestPreferentialStopReply(senderAID, highestPriorityTaxiStop.getPosition());	
 				} else {
 					requestPreferentialStopReply = new RequestPreferentialStopReply(senderAID);	

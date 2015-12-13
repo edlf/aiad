@@ -2,7 +2,7 @@ package taxitycoon.staticobjects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.*;
 
 import org.javatuples.Pair;
 
@@ -11,8 +11,8 @@ import taxitycoon.agents.PassengerAgent;
 
 public class TaxiStop extends StaticMapObject {
 	
-	private ConcurrentLinkedQueue<PassengerAgent> _passengersInQueue = new ConcurrentLinkedQueue<>();
-	private ConcurrentLinkedQueue<TaxiAgent> _taxisInQueue = new ConcurrentLinkedQueue<>();
+	private BlockingQueue<PassengerAgent> _passengersInQueue = new LinkedBlockingQueue<>();
+	private BlockingQueue<TaxiAgent> _taxisInQueue = new LinkedBlockingQueue<>();
 	
 	public TaxiStop(Pair<Integer, Integer> pos){
 		_pos = pos;

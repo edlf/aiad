@@ -253,47 +253,62 @@ public class PassengerBehaviour extends CyclicBehaviour {
 		if (_taxiStop.hasTaxiAvailable() && _taxiStop.isMyTurnPassenger(_passengerAgent)) {
 
 			if (!_waitingForReply || tic == 0) {
-				System.out.println("MSG: send message asktaxifortravel");
+				System.out.println("Passenger: Ask Task For Travel");
 				/* Send request to taxi at head of queue */
-				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getAID(),
-						_passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
+				AskTaxiForTravel askTaxiForTravelMessage = new AskTaxiForTravel(_passengerAgent.getAID(), _passengerAgent.getDestination(), _taxiStop.getTaxiAtHeadOfQueue());
 				_passengerAgent.send(askTaxiForTravelMessage);
 				_waitingForReply = true;
 			}
 			
-			/* Timeout */
-			tic++;
-			
-			if (tic % 30 == 0){
-				tic=0;
-			}
-			
-			
-			return;
-		}
+			if (_waitingForReply) {
+				ACLMessage msg = _passengerAgent.receive();
+				if (msg != null) {
+					String title = msg.getContent();
+					System.out.println("MSG: Passenger got message:" + title);
 
-		if (_waitingForReply) {
-			ACLMessage msg = _passengerAgent.receive();
-			if (msg != null) {
-				String title = msg.getContent();
-				System.out.println("MSG: Passenger got message:" + title);
+					switch (msg.getPerformative()) {
+					case ACLMessage.ACCEPT_PROPOSAL:
+						_taxiStop.removePassengerFromQueue(_passengerAgent);
+						_passengerAgent.setOnTaxi();
+						changeStateTo(STATE_IN_TAXI);
+						return;
 
-				switch (msg.getPerformative()) {
-				case ACLMessage.ACCEPT_PROPOSAL:
-					_passengerAgent.setOnTaxi();
-					_taxiStop.removePassengerFromQueue(_passengerAgent);
-					changeStateTo(STATE_IN_TAXI);
-					return;
+					case ACLMessage.REJECT_PROPOSAL:
+						break;
 
-				case ACLMessage.REJECT_PROPOSAL:
-					break;
-
-				default:
-					System.out.println("MSG: Passenger received unkown message.");
-					break;
+					default:
+						System.out.println("MSG: Passenger received unkown message.");
+						break;
+					}
+					
+				}
+				
+				/* Timeout */
+				tic++;
+				
+				if (tic % 30 == 0){
+					tic=0;
+					_waitingForReply = false;
+					System.out.println("Passenger gave up on waiting for reply");
 				}
 				
 			}
+				
+			return;
+		}
+
+		if (!_taxiStop.hasTaxiAvailable()) {	
+			if (tic % 40 == 0) {
+				tic = 0;
+				
+				/* Send a message to taxi central asking for taxis */
+				AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
+				System.out.println("Ask for taxi");
+				_passengerAgent.send(askForTaxi);	
+			}
+			
+			tic++;
+			return;
 		} else {
 			ACLMessage msg = _passengerAgent.receive();
 			if (msg != null) {
@@ -313,20 +328,6 @@ public class PassengerBehaviour extends CyclicBehaviour {
 				}
 				
 			}
-		}
-
-		if (!_taxiStop.hasTaxiAvailable()) {	
-			if (tic % 30 == 0) {
-				tic = 0;
-				
-				/* Send a message to taxi central asking for taxis */
-				AskForTaxi askForTaxi = new AskForTaxi(_passengerAgent.getPosition());
-				System.out.println("Ask for taxi");
-				_passengerAgent.send(askForTaxi);	
-			}
-			
-			tic++;
-			return;
 		}
 
 		/* Read messages since another taxi might go to the same destination */
